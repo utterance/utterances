@@ -1,0 +1,24 @@
+{
+  "name": "utterances",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf output",
+    "src": "tsc --project",
+    "rollup": "rollup output/index.js --format iife --output utterances.js",
+    "prebuild": "yarn run clean",
+    "build": "yarn run tsc && yarn run rollup",
+    "watch-output": "chokidar \"output/**/*.*\" --command \"yarn run rollup\"",
+    "serve": "browser-sync start --server --port 9000 --no-open --no-ui --no-online",
+    "predevelop": "yarn run build",
+    "develop": "concurrently --kill-others \"yarn run watch-output\" \"yarn run tsc -- --watch\" \"yarn run serve\""
+  },
+  "devDependencies": {
+    "browser-sync": "^2.18.8",
+    "chokidar-cli": "^1.2.0",
+    "concurrently": "^3.4.0",
+    "rollup": "^0.41.6",
+    "typescript": "rc"
+  }
+}
