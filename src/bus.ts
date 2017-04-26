@@ -10,6 +10,8 @@ export function setHostOrigin(origin: string) {
   addEventListener('resize', publishResize);
 }
 
+let lastHeight = -1;
+
 export function publishResize() {
   const { body, documentElement: html } = document;
   const height = Math.max(
@@ -18,6 +20,10 @@ export function publishResize() {
     html.clientHeight,
     html.scrollHeight,
     html.offsetHeight);
+  if (height === lastHeight) {
+    return;
+  }
+  lastHeight = height;
   const message: ResizeMessage = { type: 'resize', height };
   parent.postMessage(message, hostOrigin);
 }

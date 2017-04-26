@@ -103,8 +103,8 @@ export function loadJsonFile<T>(path: string) {
   });
 }
 
-export function loadIssueByKeyword(keyword: string) {
-  const q = `${keyword} type:issue in:title repo:${owner}/${repo}`;
+export function loadIssueByTerm(term: string) {
+  const q = `"${term}" type:issue in:title repo:${owner}/${repo}`;
   const request = githubRequest(`search/issues?q=${encodeURIComponent(q)}&sort=created&order=asc`);
   return githubFetch(request).then<IssueSearchResponse>(response => {
     if (!response.ok) {
@@ -165,13 +165,13 @@ export function loadUser(): Promise<User | null> {
     });
 }
 
-export function createIssue(issueKeyword: string) {
-  const url = `${UTTERANCES_API}/repos/${owner}/${repo}/issues`;
-  const request = new Request(url, {
+export function createIssue(issueTerm: string, documentUrl: string, title: string, description: string) {
+  const request = new Request(`${UTTERANCES_API}/repos/${owner}/${repo}/issues`, {
     method: 'POST',
     body: JSON.stringify({
-      title: issueKeyword,
-      body: 'This issue was created by a bot.'
+      title: issueTerm,
+      // tslint:disable-next-line:max-line-length
+      body: `# ${title}\n\n${description}\n\n${documentUrl}\n\n> :crystal_ball: *Issue created by [utteranc.es](https://utteranc.es) bot*`
     })
   });
   request.headers.set('Accept', GITHUB_ENCODING__REACTIONS_PREVIEW);

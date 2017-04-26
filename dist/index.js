@@ -24,22 +24,27 @@ function param(obj) {
 
 function readQueryString() {
     var queryString = deparam(location.search.substr(1));
-    var issueKeyword = null;
+    var issueTerm = null;
     var issueNumber = null;
-    if ('issue_keyword' in queryString) {
-        issueKeyword = queryString.issue_keyword;
-        if (!/^\w+$/.test(issueKeyword)) {
-            throw new Error("issue_keyword must match /^\\w+$/. \"" + issueKeyword + "\".");
+    if ('issue-term' in queryString) {
+        issueTerm = queryString['issue-term'];
+        if (issueTerm !== undefined) {
+            if (issueTerm === '') {
+                throw new Error('When issue-term is specified, it cannot be blank.');
+            }
+            if (['title', 'url', 'pathname'].indexOf(issueTerm) !== -1) {
+                issueTerm = queryString[issueTerm];
+            }
         }
     }
-    else if ('issue_number' in queryString) {
-        issueNumber = +queryString.issue_number;
-        if (issueNumber.toString(10) !== queryString.issue_number) {
-            throw new Error("issue_number is invalid. \"" + queryString.issue_number);
+    else if ('issue-number' in queryString) {
+        issueNumber = +queryString['issue-number'];
+        if (issueNumber.toString(10) !== queryString['issue-number']) {
+            throw new Error("issue-number is invalid. \"" + queryString['issue-number']);
         }
     }
     else {
-        throw new Error('Invalid query string arguments. Either "issue_keyword" or "issue_number" must be specified.');
+        throw new Error('Invalid query string arguments. Either "issue-term" or "issue-number" must be specified.');
     }
     if (!('repo' in queryString)) {
         throw new Error('Invalid query string arguments. "repo" is required.');
@@ -52,13 +57,16 @@ function readQueryString() {
         throw new Error("Invalid repo: \"" + queryString.repo + "\"");
     }
     return {
-        origin: queryString.origin,
         owner: matches[1],
         repo: matches[2],
         branch: 'branch' in queryString ? queryString.branch : 'master',
-        configPath: 'config_path' in queryString ? queryString.config : 'utterances.json',
-        issueKeyword: issueKeyword,
-        issueNumber: issueNumber
+        configPath: 'config-path' in queryString ? queryString['config-path'] : 'utterances.json',
+        issueTerm: issueTerm,
+        issueNumber: issueNumber,
+        origin: queryString.origin,
+        url: queryString.origin + queryString.pathname,
+        title: queryString.title,
+        description: queryString.description
     };
 }
 var options = readQueryString();
@@ -235,8 +243,8 @@ function loadJsonFile(path) {
         return config;
     });
 }
-function loadIssueByKeyword(keyword) {
-    var q = keyword + " type:issue in:title repo:" + owner + "/" + repo;
+function loadIssueByTerm(term) {
+    var q = "\"" + term + "\" type:issue in:title repo:" + owner + "/" + repo;
     var request = githubRequest("search/issues?q=" + encodeURIComponent(q) + "&sort=created&order=asc");
     return githubFetch(request).then(function (response) {
         if (!response.ok) {
@@ -292,13 +300,12 @@ function loadUser() {
         return null;
     });
 }
-function createIssue(issueKeyword) {
-    var url = UTTERANCES_API + "/repos/" + owner + "/" + repo + "/issues";
-    var request = new Request(url, {
+function createIssue(issueTerm, documentUrl, title, description) {
+    var request = new Request(UTTERANCES_API + "/repos/" + owner + "/" + repo + "/issues", {
         method: 'POST',
         body: JSON.stringify({
-            title: issueKeyword,
-            body: 'This issue was created by a bot.'
+            title: issueTerm,
+            body: "# " + title + "\n\n" + description + "\n\n" + documentUrl + "\n\n> :crystal_ball: *Issue created by [utteranc.es](https://utteranc.es) bot*"
         })
     });
     request.headers.set('Accept', GITHUB_ENCODING__REACTIONS_PREVIEW);
@@ -423,9 +430,14 @@ function setHostOrigin(origin) {
     hostOrigin = origin;
     addEventListener('resize', publishResize);
 }
+var lastHeight = -1;
 function publishResize() {
     var body = document.body, html = document.documentElement;
     var height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+    if (height === lastHeight) {
+        return;
+    }
+    lastHeight = height;
     var message = { type: 'resize', height: height };
     parent.postMessage(message, hostOrigin);
 }
@@ -481,6 +493,7 @@ var NewCommentComponent = (function () {
         this.submit = submit;
         this.element = document.createElement('div');
         this.element.classList.add('comment-wrapper');
+        this.element.addEventListener('mousemove', publishResize);
         this.element.innerHTML = "\n      <div class=\"comment-avatar\">\n        <a target=\"_blank\">\n          <img class=\"avatar\" height=\"44\" width=\"44\">\n        </a>\n      </div>\n      <div class=\"comment current-user\">\n        <div class=\"comment-header\">\n          <div class=\"comment-header-text\">\n            <strong>\n              Write\n            </strong>\n          </div>\n        </div>\n        <div class=\"comment-body editable\">\n          <form class=\"comment-form\" accept-charset=\"UTF-8\">\n            <textarea class=\"comment-area\" placeholder=\"Leave a comment\" aria-label=\"comment\"></textarea>\n            <div class=\"comment-form-actions\">\n              <a class=\"markdown-info\" tabindex=\"-1\" target=\"_blank\"\n                  href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\">\n                Styling with Markdown is supported\n              </a>\n              <button class=\"btn btn-primary\" type=\"submit\">Comment</button>\n            </div>\n          </form>\n        </div>\n      </div>";
         this.setUser(user);
     }
@@ -534,7 +547,7 @@ function loadIssue() {
     if (options.issueNumber !== null) {
         return loadIssueByNumber(options.issueNumber);
     }
-    return loadIssueByKeyword(options.issueKeyword);
+    return loadIssueByTerm(options.issueTerm);
 }
 function normalizeConfig(filename, rawConfig) {
     if (!Array.isArray(rawConfig.origins)) {
@@ -571,8 +584,8 @@ function bootstrap(rawConfig, issue, user) {
                 commentPromise = postComment(issue.number, markdown);
             }
             else {
-                commentPromise = createIssue(options.issueKeyword).then(function (iss) {
-                    issue = iss;
+                commentPromise = createIssue(options.issueTerm, options.url, options.title, options.description).then(function (newIssue) {
+                    issue = newIssue;
                     timeline.setIssue(issue);
                     return postComment(issue.number, markdown);
                 });
@@ -590,6 +603,7 @@ function bootstrap(rawConfig, issue, user) {
     };
     var newCommentComponent = new NewCommentComponent(user, submit);
     document.body.appendChild(newCommentComponent.element);
+    publishResize();
 }
 
 }());

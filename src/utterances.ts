@@ -16,6 +16,10 @@ for (let i = 0; i < attributes.length; i++) {
   options[attribute.name] = attribute.value;
 }
 options.origin = location.origin;
+options.pathname = location.pathname;
+options.title = document.title;
+const descriptionMeta = document.querySelector(`meta[name='description']`) as HTMLMetaElement;
+options.description = descriptionMeta ? descriptionMeta.content : '';
 
 const page = script.src.replace(/\.js(?:$|\?)/, '.html');
 

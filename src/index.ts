@@ -5,7 +5,7 @@ import {
   User,
   setRepoContext,
   loadJsonFile,
-  loadIssueByKeyword,
+  loadIssueByTerm,
   loadIssueByNumber,
   loadCommentsPage,
   loadUser,
@@ -15,7 +15,7 @@ import {
 import { login } from './oauth';
 import { TimelineComponent } from './timeline-component';
 import { NewCommentComponent } from './new-comment-component';
-import { setHostOrigin } from './bus';
+import { setHostOrigin, publishResize } from './bus';
 
 setRepoContext(options);
 
@@ -85,7 +85,7 @@ function loadIssue(): Promise<Issue | null> {
   if (options.issueNumber !== null) {
     return loadIssueByNumber(options.issueNumber);
   }
-  return loadIssueByKeyword(options.issueKeyword as string);
+  return loadIssueByTerm(options.issueTerm as string);
 }
 
 type Readonly<T> = {
@@ -137,8 +137,13 @@ function bootstrap(rawConfig: RawConfig, issue: Issue | null, user: User | null)
       if (issue) {
         commentPromise = postComment(issue.number, markdown);
       } else {
-        commentPromise = createIssue(options.issueKeyword as string).then(iss => {
-          issue = iss;
+        commentPromise = createIssue(
+          options.issueTerm as string,
+          options.url,
+          options.title,
+          options.description
+        ).then(newIssue => {
+          issue = newIssue;
           timeline.setIssue(issue);
           return postComment(issue.number, markdown);
         });
@@ -157,6 +162,7 @@ function bootstrap(rawConfig: RawConfig, issue: Issue | null, user: User | null)
 
   const newCommentComponent = new NewCommentComponent(user, submit);
   document.body.appendChild(newCommentComponent.element);
+  publishResize();
 }
 
 // "(\w+)": ".*"

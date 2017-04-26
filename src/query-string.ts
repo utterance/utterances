@@ -3,20 +3,25 @@ import { deparam } from './deparam';
 function readQueryString() {
   const queryString = deparam(location.search.substr(1));
 
-  let issueKeyword: string | null = null;
+  let issueTerm: string | null = null;
   let issueNumber: number | null = null;
-  if ('issue_keyword' in queryString) {
-    issueKeyword = queryString.issue_keyword;
-    if (!/^\w+$/.test(issueKeyword)) {
-      throw new Error(`issue_keyword must match /^\\w+$/. "${issueKeyword}".`);
+  if ('issue-term' in queryString) {
+    issueTerm = queryString['issue-term'];
+    if (issueTerm !== undefined) {
+      if (issueTerm === '') {
+        throw new Error('When issue-term is specified, it cannot be blank.');
+      }
+      if (['title', 'url', 'pathname'].indexOf(issueTerm) !== -1) {
+        issueTerm = queryString[issueTerm];
+      }
     }
-  } else if ('issue_number' in queryString) {
-    issueNumber = +queryString.issue_number;
-    if (issueNumber.toString(10) !== queryString.issue_number) {
-      throw new Error(`issue_number is invalid. "${queryString.issue_number}`);
+  } else if ('issue-number' in queryString) {
+    issueNumber = +queryString['issue-number'];
+    if (issueNumber.toString(10) !== queryString['issue-number']) {
+      throw new Error(`issue-number is invalid. "${queryString['issue-number']}`);
     }
   } else {
-    throw new Error('Invalid query string arguments. Either "issue_keyword" or "issue_number" must be specified.');
+    throw new Error('Invalid query string arguments. Either "issue-term" or "issue-number" must be specified.');
   }
 
   if (!('repo' in queryString)) {
@@ -33,13 +38,16 @@ function readQueryString() {
   }
 
   return {
-    origin: queryString.origin,
     owner: matches[1],
     repo: matches[2],
     branch: 'branch' in queryString ? queryString.branch : 'master',
-    configPath: 'config_path' in queryString ? queryString.config : 'utterances.json',
-    issueKeyword,
-    issueNumber
+    configPath: 'config-path' in queryString ? queryString['config-path'] : 'utterances.json',
+    issueTerm,
+    issueNumber,
+    origin: queryString.origin,
+    url: queryString.origin + queryString.pathname,
+    title: queryString.title,
+    description: queryString.description
   };
 }
 
