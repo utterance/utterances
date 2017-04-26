@@ -1,12 +1,20 @@
 {
   "compilerOptions": {
-    "target": "es2016",
+    "target": "es5",
     "module": "es2015",
     "lib": [
       "dom",
       "es2017"
     ],
-    "strict": true,
+    "strictNullChecks": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "forceConsistentCasingInFileNames": true,
+    "removeComments": true,
     "outDir": "output"
   }
 }

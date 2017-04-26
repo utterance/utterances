@@ -1,0 +1,18 @@
+{
+  "extends": "tslint:latest",
+  "rules": {
+    "quotemark": [true, "single"],
+    "object-literal-sort-keys": false,
+    "ordered-imports": [false],
+    "whitespace": [true, "check-branch", "check-decl", "check-operator", "check-module", "check-separator", "check-type"],
+    "interface-name": [true, "never-prefix"],
+    "no-shadowed-variable": false,
+    "no-string-literal": false,
+    "trailing-comma": [false],
+    "member-ordering": ["fields-first"],
+    "array-type": ["array-simple"],
+    "arrow-parens": false,
+    "max-classes-per-file": [false],
+    "prefer-for-of": false
+  }
+}
