@@ -25,6 +25,10 @@ for (var i = 0; i < attributes.length; i++) {
     options[attribute.name] = attribute.value;
 }
 options.origin = location.origin;
+options.pathname = location.pathname;
+options.title = document.title;
+var descriptionMeta = document.querySelector("meta[name='description']");
+options.description = descriptionMeta ? descriptionMeta.content : '';
 var page = script.src.replace(/\.js(?:$|\?)/, '.html');
 var iframe = document.createElement('iframe');
 iframe.classList.add('utterances');
