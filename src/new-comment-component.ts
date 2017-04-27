@@ -25,7 +25,7 @@ export class NewCommentComponent {
         <div class="comment-header">
           <div class="comment-header-text">
             <strong>
-              Write
+              Join the discussion
             </strong>
           </div>
         </div>
@@ -69,7 +69,14 @@ export class NewCommentComponent {
     textarea.disabled = !user;
 
     const isEmpty = () => textarea.value.replace(/^\s+|\s+$/g, '').length === 0;
-    textarea.addEventListener('input', () => submitButton.disabled = isEmpty());
+    textarea.addEventListener('input', () => {
+      submitButton.disabled = isEmpty();
+      // const height = textarea.getBoundingClientRect().height;
+      if (textarea.scrollHeight < 450 && textarea.offsetHeight < textarea.scrollHeight) {
+        textarea.style.height = `${textarea.scrollHeight}px`;
+        publishResize();
+      }
+    });
 
     let submitting = false;
     form.addEventListener('submit', event => {
@@ -83,7 +90,7 @@ export class NewCommentComponent {
       submitButton.disabled = true;
 
       this.submit(textarea.value).catch().then(() => {
-        textarea.disabled = !user;
+        textarea.disabled = !this.user;
         submitButton.disabled = false;
       });
     });

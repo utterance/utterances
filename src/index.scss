@@ -5,7 +5,6 @@ body {
 }
 
 .comment-wrapper {
-  position: relative;
   max-width: 760px;
   margin: 15px auto;
 }
@@ -220,4 +219,9 @@ g-emoji {
   background-color: #28a745;
   background-image: -webkit-linear-gradient(270deg, #34d058 0%, #28a745 90%);
   background-image: linear-gradient(-180deg, #34d058 0%, #28a745 90%);
+}
+
+.powered-by,
+.powered-by > a {
+  color: #586069;
 }

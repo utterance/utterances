@@ -5,6 +5,7 @@ import { publishResize } from './bus';
 export class TimelineComponent {
   public readonly element: HTMLDivElement;
   private readonly timeline: CommentComponent[] = [];
+  private readonly countSpan: HTMLSpanElement;
 
   constructor(
     private user: User | null,
@@ -13,6 +14,16 @@ export class TimelineComponent {
   ) {
     this.element = document.createElement('div');
     this.element.classList.add('timeline');
+    this.element.innerHTML = `
+      <div class="comment-wrapper">
+        <span class="comment-count"></span>
+        <em class="powered-by">
+          - powered by
+          <a href="https://utteranc.es" target="_blank">utteranc.es</a>
+        </em>
+      </div>`;
+    this.countSpan = this.element.firstElementChild!.firstElementChild as HTMLSpanElement;
+    this.setIssue(issue);
   }
 
   public setUser(user: User | null) {
@@ -24,8 +35,9 @@ export class TimelineComponent {
     publishResize();
   }
 
-  public setIssue(issue: Issue) {
+  public setIssue(issue: Issue | null) {
     this.issue = issue;
+    this.countSpan.textContent = `${issue ? issue.comments : 0} Comments`;
   }
 
   public appendComment(comment: IssueComment) {

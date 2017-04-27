@@ -10,7 +10,7 @@
     "rollup": "yarn run rollup-utterances && yarn run rollup-index",
     "sass": "node-sass src/index.scss dist/index.css --include-path node_modules",
     "prebuild": "yarn run clean",
-    "build": "tsc && yarn run rollup && yarn run sass",
+    "build": "tsc && yarn run rollup && yarn run sass -- --output-style compressed",
     "watch-output": "chokidar \"output/**/*.js\" --command \"yarn run rollup\"",
     "serve": "browser-sync start --server dist --port 9000 --no-open --no-ui --no-online --no-ghost-mode",
     "predevelop": "yarn run build",

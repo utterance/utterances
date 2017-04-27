@@ -1,10 +1,9 @@
-import options from './query-string';
+import { pageAttributes as page } from './page-attributes';
 import {
   Issue,
   IssueComment,
   User,
   setRepoContext,
-  loadJsonFile,
   loadIssueByTerm,
   loadIssueByNumber,
   loadCommentsPage,
@@ -16,111 +15,27 @@ import { login } from './oauth';
 import { TimelineComponent } from './timeline-component';
 import { NewCommentComponent } from './new-comment-component';
 import { setHostOrigin, publishResize } from './bus';
+import { RepoConfig, loadRepoConfig } from './repo-config';
 
-setRepoContext(options);
-
-/*
-
-NOTES
-
-comments repo must be public
-
-MODES
-
-- reactions widget
-- comments widget
-
-QUERY STRING OPTIONS
-
-- repo foo/bar
-- config (optional)
-- branch (optional)
-
-- issue_keyword
-- issue_title, issue_body (optional)
-or
-- issue_number
-
-CONFIG
-
-- permitted origins
-- polling
-- permitted reactions
-- stylesheet url
-- issue create body?
-- comment create body?
-
-HOSTING
-
-iframe, allowtransparency
-
-GITHUB API
-
-use conditional requests: https://developer.github.com/v3/#conditional-requests
-
-DISPLAYING COMMENTS
-
-find the issue matching the criteria
-if it exists, fetch the comments
-if it does not exist, show no comments
-
-POLLING
-
-if polling is enabled, periodically fetch comments or the issue.
-
-COMMENTING
-
-- github oauth
-- existence of utterances.json file
--
-
-to comment, we need a github oauth token and we need the id of the issue to comment on.
-
-first have the user sign-in.
-
-fetch(``)
-*/
+setRepoContext(page);
 
 function loadIssue(): Promise<Issue | null> {
-  if (options.issueNumber !== null) {
-    return loadIssueByNumber(options.issueNumber);
+  if (page.issueNumber !== null) {
+    return loadIssueByNumber(page.issueNumber);
   }
-  return loadIssueByTerm(options.issueTerm as string);
+  return loadIssueByTerm(page.issueTerm as string);
 }
 
-type Readonly<T> = {
-  readonly [P in keyof T]: T[P];
-};
+Promise.all([loadRepoConfig(page.configPath), loadIssue(), loadUser()])
+  .then(([repoConfig, issue, user]) => bootstrap(repoConfig, issue, user));
 
-type Partial<T> = {
-  [P in keyof T]?: T[P];
-};
-
-interface Config {
-  origins: string[];
-}
-
-type NormalizedConfig = Readonly<Config>;
-type RawConfig = Partial<Config>;
-
-function normalizeConfig(filename: string, rawConfig: RawConfig): NormalizedConfig {
-  if (!Array.isArray(rawConfig.origins)) {
-    throw new Error(`${filename}: origins must be an array`);
+function bootstrap(config: RepoConfig, issue: Issue | null, user: User | null) {
+  if (config.origins.indexOf(page.origin) === -1) {
+    throw new Error(`The origins specified in ${page.configPath} do not include ${page.origin}`);
   }
-  return rawConfig as NormalizedConfig;
-}
+  setHostOrigin(page.origin);
 
-Promise.all([loadJsonFile<RawConfig>(options.configPath), loadIssue(), loadUser()])
-  .then(([config, issue, user]) => bootstrap(config, issue, user));
-
-function bootstrap(rawConfig: RawConfig, issue: Issue | null, user: User | null) {
-  const config = normalizeConfig(options.configPath, rawConfig);
-  if (config.origins.indexOf(options.origin) === -1) {
-    throw new Error(`The origins specified in ${options.configPath} do not include ${options.origin}`);
-  }
-  setHostOrigin(options.origin);
-
-  const timeline = new TimelineComponent(user, issue, options.owner);
+  const timeline = new TimelineComponent(user, issue, page.owner);
   document.body.appendChild(timeline.element);
 
   if (issue && issue.comments > 0) {
@@ -138,10 +53,10 @@ function bootstrap(rawConfig: RawConfig, issue: Issue | null, user: User | null)
         commentPromise = postComment(issue.number, markdown);
       } else {
         commentPromise = createIssue(
-          options.issueTerm as string,
-          options.url,
-          options.title,
-          options.description
+          page.issueTerm as string,
+          page.url,
+          page.title,
+          page.description
         ).then(newIssue => {
           issue = newIssue;
           timeline.setIssue(issue);
@@ -153,6 +68,7 @@ function bootstrap(rawConfig: RawConfig, issue: Issue | null, user: User | null)
         newCommentComponent.clear();
       });
     }
+
     return login().then(() => loadUser()).then(u => {
       user = u;
       timeline.setUser(user);
@@ -164,6 +80,3 @@ function bootstrap(rawConfig: RawConfig, issue: Issue | null, user: User | null)
   document.body.appendChild(newCommentComponent.element);
   publishResize();
 }
-
-// "(\w+)": ".*"
-// $1: string;
