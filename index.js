@@ -22,54 +22,54 @@ function param(obj) {
     return parts.join('&');
 }
 
-function readQueryString() {
-    var queryString = deparam(location.search.substr(1));
+function readPageAttributes() {
+    var params = deparam(location.search.substr(1));
     var issueTerm = null;
     var issueNumber = null;
-    if ('issue-term' in queryString) {
-        issueTerm = queryString['issue-term'];
+    if ('issue-term' in params) {
+        issueTerm = params['issue-term'];
         if (issueTerm !== undefined) {
             if (issueTerm === '') {
                 throw new Error('When issue-term is specified, it cannot be blank.');
             }
             if (['title', 'url', 'pathname'].indexOf(issueTerm) !== -1) {
-                issueTerm = queryString[issueTerm];
+                issueTerm = params[issueTerm];
             }
         }
     }
-    else if ('issue-number' in queryString) {
-        issueNumber = +queryString['issue-number'];
-        if (issueNumber.toString(10) !== queryString['issue-number']) {
-            throw new Error("issue-number is invalid. \"" + queryString['issue-number']);
+    else if ('issue-number' in params) {
+        issueNumber = +params['issue-number'];
+        if (issueNumber.toString(10) !== params['issue-number']) {
+            throw new Error("issue-number is invalid. \"" + params['issue-number']);
         }
     }
     else {
         throw new Error('Invalid query string arguments. Either "issue-term" or "issue-number" must be specified.');
     }
-    if (!('repo' in queryString)) {
+    if (!('repo' in params)) {
         throw new Error('Invalid query string arguments. "repo" is required.');
     }
-    if (!('origin' in queryString)) {
+    if (!('origin' in params)) {
         throw new Error('Invalid query string arguments. "origin" is required.');
     }
-    var matches = /^([a-z][\w-]+)\/([a-z][\w-]+)$/i.exec(queryString.repo);
+    var matches = /^([a-z][\w-]+)\/([a-z][\w-]+)$/i.exec(params.repo);
     if (matches === null) {
-        throw new Error("Invalid repo: \"" + queryString.repo + "\"");
+        throw new Error("Invalid repo: \"" + params.repo + "\"");
     }
     return {
         owner: matches[1],
         repo: matches[2],
-        branch: 'branch' in queryString ? queryString.branch : 'master',
-        configPath: 'config-path' in queryString ? queryString['config-path'] : 'utterances.json',
+        branch: 'branch' in params ? params.branch : 'master',
+        configPath: 'config-path' in params ? params['config-path'] : 'utterances.json',
         issueTerm: issueTerm,
         issueNumber: issueNumber,
-        origin: queryString.origin,
-        url: queryString.origin + queryString.pathname,
-        title: queryString.title,
-        description: queryString.description
+        origin: params.origin,
+        url: params.url,
+        title: params.title,
+        description: params.description
     };
 }
-var options = readQueryString();
+var pageAttributes = readPageAttributes();
 
 var authorizeUri = 'https://github.com/login/oauth/authorize';
 var tokenUri = 'https://utterances-oauth.herokuapp.com/access-token';
@@ -450,6 +450,9 @@ var TimelineComponent = (function () {
         this.timeline = [];
         this.element = document.createElement('div');
         this.element.classList.add('timeline');
+        this.element.innerHTML = "\n      <div class=\"comment-wrapper\">\n        <span class=\"comment-count\"></span>\n        <em class=\"powered-by\">\n          - powered by\n          <a href=\"https://utteranc.es\" target=\"_blank\">utteranc.es</a>\n        </em>\n      </div>";
+        this.countSpan = this.element.firstElementChild.firstElementChild;
+        this.setIssue(issue);
     }
     TimelineComponent.prototype.setUser = function (user) {
         this.user = user;
@@ -461,6 +464,7 @@ var TimelineComponent = (function () {
     };
     TimelineComponent.prototype.setIssue = function (issue) {
         this.issue = issue;
+        this.countSpan.textContent = (issue ? issue.comments : 0) + " Comments";
     };
     TimelineComponent.prototype.appendComment = function (comment) {
         var component = new CommentComponent(comment, this.user ? this.user.login : null, this.repoOwner);
@@ -494,7 +498,7 @@ var NewCommentComponent = (function () {
         this.element = document.createElement('div');
         this.element.classList.add('comment-wrapper');
         this.element.addEventListener('mousemove', publishResize);
-        this.element.innerHTML = "\n      <div class=\"comment-avatar\">\n        <a target=\"_blank\">\n          <img class=\"avatar\" height=\"44\" width=\"44\">\n        </a>\n      </div>\n      <div class=\"comment current-user\">\n        <div class=\"comment-header\">\n          <div class=\"comment-header-text\">\n            <strong>\n              Write\n            </strong>\n          </div>\n        </div>\n        <div class=\"comment-body editable\">\n          <form class=\"comment-form\" accept-charset=\"UTF-8\">\n            <textarea class=\"comment-area\" placeholder=\"Leave a comment\" aria-label=\"comment\"></textarea>\n            <div class=\"comment-form-actions\">\n              <a class=\"markdown-info\" tabindex=\"-1\" target=\"_blank\"\n                  href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\">\n                Styling with Markdown is supported\n              </a>\n              <button class=\"btn btn-primary\" type=\"submit\">Comment</button>\n            </div>\n          </form>\n        </div>\n      </div>";
+        this.element.innerHTML = "\n      <div class=\"comment-avatar\">\n        <a target=\"_blank\">\n          <img class=\"avatar\" height=\"44\" width=\"44\">\n        </a>\n      </div>\n      <div class=\"comment current-user\">\n        <div class=\"comment-header\">\n          <div class=\"comment-header-text\">\n            <strong>\n              Join the discussion\n            </strong>\n          </div>\n        </div>\n        <div class=\"comment-body editable\">\n          <form class=\"comment-form\" accept-charset=\"UTF-8\">\n            <textarea class=\"comment-area\" placeholder=\"Leave a comment\" aria-label=\"comment\"></textarea>\n            <div class=\"comment-form-actions\">\n              <a class=\"markdown-info\" tabindex=\"-1\" target=\"_blank\"\n                  href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\">\n                Styling with Markdown is supported\n              </a>\n              <button class=\"btn btn-primary\" type=\"submit\">Comment</button>\n            </div>\n          </form>\n        </div>\n      </div>";
         this.setUser(user);
     }
     NewCommentComponent.prototype.setUser = function (user) {
@@ -518,7 +522,13 @@ var NewCommentComponent = (function () {
         submitButton.textContent = user ? 'Comment' : 'Sign in to comment';
         textarea.disabled = !user;
         var isEmpty = function () { return textarea.value.replace(/^\s+|\s+$/g, '').length === 0; };
-        textarea.addEventListener('input', function () { return submitButton.disabled = isEmpty(); });
+        textarea.addEventListener('input', function () {
+            submitButton.disabled = isEmpty();
+            if (textarea.scrollHeight < 450 && textarea.offsetHeight < textarea.scrollHeight) {
+                textarea.style.height = textarea.scrollHeight + "px";
+                publishResize();
+            }
+        });
         var submitting = false;
         form.addEventListener('submit', function (event) {
             event.preventDefault();
@@ -529,7 +539,7 @@ var NewCommentComponent = (function () {
             textarea.disabled = true;
             submitButton.disabled = true;
             _this.submit(textarea.value).catch().then(function () {
-                textarea.disabled = !user;
+                textarea.disabled = !_this.user;
                 submitButton.disabled = false;
             });
         });
@@ -542,31 +552,35 @@ var NewCommentComponent = (function () {
     return NewCommentComponent;
 }());
 
-setRepoContext(options);
-function loadIssue() {
-    if (options.issueNumber !== null) {
-        return loadIssueByNumber(options.issueNumber);
-    }
-    return loadIssueByTerm(options.issueTerm);
-}
 function normalizeConfig(filename, rawConfig) {
     if (!Array.isArray(rawConfig.origins)) {
         throw new Error(filename + ": origins must be an array");
     }
     return rawConfig;
 }
-Promise.all([loadJsonFile(options.configPath), loadIssue(), loadUser()])
-    .then(function (_a) {
-    var config = _a[0], issue = _a[1], user = _a[2];
-    return bootstrap(config, issue, user);
-});
-function bootstrap(rawConfig, issue, user) {
-    var config = normalizeConfig(options.configPath, rawConfig);
-    if (config.origins.indexOf(options.origin) === -1) {
-        throw new Error("The origins specified in " + options.configPath + " do not include " + options.origin);
+function loadRepoConfig(path) {
+    return loadJsonFile(path)
+        .then(function (config) { return normalizeConfig(path, config); });
+}
+
+setRepoContext(pageAttributes);
+function loadIssue() {
+    if (pageAttributes.issueNumber !== null) {
+        return loadIssueByNumber(pageAttributes.issueNumber);
     }
-    setHostOrigin(options.origin);
-    var timeline = new TimelineComponent(user, issue, options.owner);
+    return loadIssueByTerm(pageAttributes.issueTerm);
+}
+Promise.all([loadRepoConfig(pageAttributes.configPath), loadIssue(), loadUser()])
+    .then(function (_a) {
+    var repoConfig = _a[0], issue = _a[1], user = _a[2];
+    return bootstrap(repoConfig, issue, user);
+});
+function bootstrap(config, issue, user) {
+    if (config.origins.indexOf(pageAttributes.origin) === -1) {
+        throw new Error("The origins specified in " + pageAttributes.configPath + " do not include " + pageAttributes.origin);
+    }
+    setHostOrigin(pageAttributes.origin);
+    var timeline = new TimelineComponent(user, issue, pageAttributes.owner);
     document.body.appendChild(timeline.element);
     if (issue && issue.comments > 0) {
         loadCommentsPage(issue.number, 1).then(function (_a) {
@@ -584,7 +598,7 @@ function bootstrap(rawConfig, issue, user) {
                 commentPromise = postComment(issue.number, markdown);
             }
             else {
-                commentPromise = createIssue(options.issueTerm, options.url, options.title, options.description).then(function (newIssue) {
+                commentPromise = createIssue(pageAttributes.issueTerm, pageAttributes.url, pageAttributes.title, pageAttributes.description).then(function (newIssue) {
                     issue = newIssue;
                     timeline.setIssue(issue);
                     return postComment(issue.number, markdown);

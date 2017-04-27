@@ -24,8 +24,9 @@ for (var i = 0; i < attributes.length; i++) {
     var attribute = attributes.item(i);
     options[attribute.name] = attribute.value;
 }
+options.url = location.href;
 options.origin = location.origin;
-options.pathname = location.pathname;
+options.pathname = location.pathname.substr(1).replace(/\.\w+$/, '');
 options.title = document.title;
 var descriptionMeta = document.querySelector("meta[name='description']");
 options.description = descriptionMeta ? descriptionMeta.content : '';
