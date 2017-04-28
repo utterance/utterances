@@ -22,7 +22,7 @@ options.title = document.title;
 const descriptionMeta = document.querySelector(`meta[name='description']`) as HTMLMetaElement;
 options.description = descriptionMeta ? descriptionMeta.content : '';
 
-const page = script.src.replace(/\.js(?:$|\?)/, '.html');
+const page = script.src.replace(/utterances\.js(?:$|\?)/, '/embed/');
 
 const iframe = document.createElement('iframe');
 iframe.classList.add('utterances');

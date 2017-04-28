@@ -65,13 +65,12 @@ export class NewCommentComponent {
     const submitButton = textarea.nextElementSibling!.lastElementChild as HTMLButtonElement;
 
     submitButton.textContent = user ? 'Comment' : 'Sign in to comment';
+    submitButton.disabled = !!user;
 
     textarea.disabled = !user;
 
-    const isEmpty = () => textarea.value.replace(/^\s+|\s+$/g, '').length === 0;
     textarea.addEventListener('input', () => {
-      submitButton.disabled = isEmpty();
-      // const height = textarea.getBoundingClientRect().height;
+      submitButton.disabled = /^\s*$/.test(textarea.value);
       if (textarea.scrollHeight < 450 && textarea.offsetHeight < textarea.scrollHeight) {
         textarea.style.height = `${textarea.scrollHeight}px`;
         publishResize();
@@ -89,7 +88,8 @@ export class NewCommentComponent {
       textarea.disabled = true;
       submitButton.disabled = true;
 
-      this.submit(textarea.value).catch().then(() => {
+      this.submit(textarea.value).catch(() => 0).then(() => {
+        submitting = false;
         textarea.disabled = !this.user;
         submitButton.disabled = false;
       });

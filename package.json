@@ -6,9 +6,9 @@
   "scripts": {
     "clean": "rm -rf output",
     "rollup-utterances": "rollup output/utterances.js --format iife --output dist/utterances.js",
-    "rollup-index": "rollup output/index.js --format iife --output dist/index.js",
-    "rollup": "yarn run rollup-utterances && yarn run rollup-index",
-    "sass": "node-sass src/index.scss dist/index.css --include-path node_modules",
+    "rollup-embed": "rollup output/embed.js --format iife --output dist/embed/index.js",
+    "rollup": "yarn run rollup-utterances && yarn run rollup-embed",
+    "sass": "node-sass src/embed.scss dist/embed/index.css --include-path node_modules",
     "prebuild": "yarn run clean",
     "build": "tsc && yarn run rollup && yarn run sass -- --output-style compressed",
     "watch-output": "chokidar \"output/**/*.js\" --command \"yarn run rollup\"",
@@ -26,6 +26,7 @@
     "gh-pages": "^0.12.0",
     "node-sass": "^4.5.2",
     "primer-base": "^0.4.2",
+    "primer-buttons": "^2.0.0",
     "rollup": "^0.41.6",
     "tslint": "^5.1.0",
     "typescript": "rc"

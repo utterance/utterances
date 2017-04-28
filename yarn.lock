@@ -436,11 +436,11 @@ combined-stream@^1.0.5, combined-stream@~1.0.5:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@2.6.0, commander@^2.2.0:
+commander@2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.6.0.tgz#9df7e52fb2a0cb0fb89058ee80c3104225f37e1d"
 
-commander@2.9.0, commander@^2.9.0:
+commander@2.9.0, commander@^2.2.0, commander@^2.9.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.9.0.tgz#9c99094176e12240cb22d6c5146098400fe0f7d4"
   dependencies:
@@ -929,13 +929,9 @@ globule@^1.0.0:
     lodash "~4.16.4"
     minimatch "~3.0.2"
 
-graceful-fs@4.1.10:
+graceful-fs@4.1.10, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
   version "4.1.10"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.10.tgz#f2d720c22092f743228775c75e3612632501f131"
-
-graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
-  version "4.1.11"
-  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
 
 "graceful-readlink@>= 1.0.0":
   version "1.0.1"
@@ -1710,6 +1706,12 @@ preserve@^0.2.0:
 primer-base@^0.4.2:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/primer-base/-/primer-base-0.4.2.tgz#10bea7bdd454c447b1ed6e801595f3888b30f01f"
+  dependencies:
+    primer-support "*"
+
+primer-buttons@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/primer-buttons/-/primer-buttons-2.0.0.tgz#805e8c07e56b616b2757fef413f4aba98e6e098b"
   dependencies:
     primer-support "*"
 
