@@ -132,8 +132,7 @@ function requestAccessToken(_a) {
     var args = { code: code, state: state };
     var url = tokenUri + "?" + param(args);
     return fetch(url)
-        .then(function (response) { return response.text(); })
-        .then(function (body) { return deparam(body); });
+        .then(function (response) { return response.json(); });
 }
 function login() {
     return requestAuthorizationCode()
