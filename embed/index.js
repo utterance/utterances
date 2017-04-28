@@ -519,10 +519,10 @@ var NewCommentComponent = (function () {
         var textarea = form.firstElementChild;
         var submitButton = textarea.nextElementSibling.lastElementChild;
         submitButton.textContent = user ? 'Comment' : 'Sign in to comment';
+        submitButton.disabled = !!user;
         textarea.disabled = !user;
-        var isEmpty = function () { return textarea.value.replace(/^\s+|\s+$/g, '').length === 0; };
         textarea.addEventListener('input', function () {
-            submitButton.disabled = isEmpty();
+            submitButton.disabled = /^\s*$/.test(textarea.value);
             if (textarea.scrollHeight < 450 && textarea.offsetHeight < textarea.scrollHeight) {
                 textarea.style.height = textarea.scrollHeight + "px";
                 publishResize();
@@ -537,7 +537,8 @@ var NewCommentComponent = (function () {
             submitting = true;
             textarea.disabled = true;
             submitButton.disabled = true;
-            _this.submit(textarea.value).catch().then(function () {
+            _this.submit(textarea.value).catch(function () { return 0; }).then(function () {
+                submitting = false;
                 textarea.disabled = !_this.user;
                 submitButton.disabled = false;
             });
