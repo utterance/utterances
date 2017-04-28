@@ -30,7 +30,7 @@ options.pathname = location.pathname.substr(1).replace(/\.\w+$/, '');
 options.title = document.title;
 var descriptionMeta = document.querySelector("meta[name='description']");
 options.description = descriptionMeta ? descriptionMeta.content : '';
-var page = script.src.replace(/utterances\.js(?:$|\?)/, '/embed/');
+var page = script.src.replace(/utterances(?:\.min)?\.js(?:$|\?)/, '/embed/index.min.html');
 var iframe = document.createElement('iframe');
 iframe.classList.add('utterances');
 iframe.setAttribute('allowtransparency', 'true');

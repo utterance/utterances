@@ -16,6 +16,8 @@
     "predevelop": "yarn run build",
     "develop": "concurrently --kill-others \"yarn run watch-output\" \"tsc --watch\" \"yarn run sass -- --watch --recursive\" \"yarn run serve\"",
     "lint": "tslint --project tsconfig.json",
+    "optimize": "uglifyjs --compress --mangle --output dist/utterances.min.js -- dist/utterances.js",
+    "inline": "inliner dist/embed/index.html > dist/embed/index.min.html",
     "deploy": "gh-pages --dist dist",
     "chrome": "google-chrome --disable-web-security --allow-running-insecure-content --user-data-dir=\"chrome\""
   },
@@ -30,6 +32,7 @@
     "primer-buttons": "^2.0.0",
     "rollup": "^0.41.6",
     "tslint": "^5.1.0",
-    "typescript": "rc"
+    "typescript": "rc",
+    "uglifyjs": "^2.4.10"
   }
 }
