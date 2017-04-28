@@ -64,8 +64,7 @@ function requestAccessToken({ code, state }: AuthorizeResponse) {
   const args = { code, state };
   const url = `${tokenUri}?${param(args)}`;
   return fetch(url)
-    .then(response => response.text())
-    .then(body => deparam(body));
+    .then<{ access_token: string; }>(response => response.json());
 }
 
 export function login() {

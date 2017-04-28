@@ -16,12 +16,14 @@
     "predevelop": "yarn run build",
     "develop": "concurrently --kill-others \"yarn run watch-output\" \"tsc --watch\" \"yarn run sass -- --watch --recursive\" \"yarn run serve\"",
     "lint": "tslint --project tsconfig.json",
-    "gh-pages": "git push origin --delete gh-pages && git subtree push --prefix dist origin gh-pages"
+    "deploy": "gh-pages --dist dist",
+    "chrome": "google-chrome --disable-web-security --allow-running-insecure-content --user-data-dir=\"chrome\""
   },
   "devDependencies": {
     "browser-sync": "^2.18.8",
     "chokidar-cli": "^1.2.0",
     "concurrently": "^3.4.0",
+    "gh-pages": "^0.12.0",
     "node-sass": "^4.5.2",
     "primer-base": "^0.4.2",
     "rollup": "^0.41.6",
