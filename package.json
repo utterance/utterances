@@ -32,7 +32,7 @@
     "primer-buttons": "^2.0.0",
     "rollup": "^0.41.6",
     "tslint": "^5.1.0",
-    "typescript": "rc",
+    "typescript": "^2.3.2",
     "uglifyjs": "^2.4.10"
   }
 }
