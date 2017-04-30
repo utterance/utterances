@@ -361,29 +361,41 @@ var CommentComponent = (function () {
     function CommentComponent(comment, currentUser, repoOwner) {
         this.comment = comment;
         this.currentUser = currentUser;
+        this.repoOwner = repoOwner;
         var user = comment.user, html_url = comment.html_url, created_at = comment.created_at, body_html = comment.body_html;
-        this.element = document.createElement('div');
-        this.element.classList.add('comment-wrapper');
-        this.element.innerHTML = "\n      <div class=\"comment-avatar\">\n        <a href=\"" + user.html_url + "\" target=\"_blank\">\n          <img class=\"avatar\" alt=\"@" + user.login + "\" height=\"44\" width=\"44\"\n               src=\"" + user.avatar_url + avatarArgs + "\">\n        </a>\n      </div>\n      <div class=\"comment " + (user.login === currentUser ? 'current-user' : '') + "\">\n        <div class=\"comment-header\">\n          <div class=\"comment-header-text\">\n            <strong>\n              <a class=\"author\" href=\"" + user.html_url + "\" target=\"_blank\">" + user.login + "</a>\n            </strong>\n            commented\n            <a class=\"timestamp\" href=\"" + html_url + "\" target=\"_blank\">\n              " + timeAgo(Date.now(), new Date(created_at)) + "\n            </a>\n          </div>\n          " + (repoOwner === user.login ? '<span class="comment-label">Owner</span>' : '') + "\n          <!--<div class=\"comment-actions\"></div>-->\n        </div>\n        <div class=\"comment-body\">\n          " + body_html + "\n        </div>\n      </div>";
+        this.element = document.createElement('article');
+        this.element.classList.add('timeline-comment');
+        if (user.login === currentUser) {
+            this.element.classList.add('current-user');
+        }
+        if (user.login === repoOwner) {
+            this.element.classList.add('repo-owner');
+        }
+        this.element.innerHTML = "\n      <a class=\"avatar\" href=\"" + user.html_url + "\" target=\"_blank\">\n        <img alt=\"@" + user.login + "\" height=\"44\" width=\"44\"\n              src=\"" + user.avatar_url + avatarArgs + "\">\n      </a>\n      <div class=\"comment\">\n        <header class=\"comment-header\">\n          <a class=\"comment-header-link\" href=\"" + user.html_url + "\" target=\"_blank\">" + user.login + "</a>\n          commented\n          <a class=\"comment-header-link\" href=\"" + html_url + "\" target=\"_blank\">\n            " + timeAgo(Date.now(), new Date(created_at)) + "\n          </a>\n        </header>\n        <div class=\"comment-body\">\n          " + body_html + "\n        </div>\n      </div>";
         this.retargetLinks();
     }
     CommentComponent.prototype.setComment = function (comment) {
         var commentDiv = this.element.lastElementChild;
         var user = comment.user, html_url = comment.html_url, created_at = comment.created_at, body_html = comment.body_html;
         if (this.comment.user.login !== user.login) {
-            var avatarAnchor = this.element.firstElementChild.firstElementChild;
-            var avatar = avatarAnchor.firstElementChild;
-            avatarAnchor.href = user.html_url;
-            avatar.alt = '@' + user.login;
-            avatar.src = user.avatar_url + avatarArgs;
             if (user.login === this.currentUser) {
-                commentDiv.classList.add('current-user');
+                this.element.classList.add('current-user');
             }
             else {
-                commentDiv.classList.remove('current-user');
+                this.element.classList.remove('current-user');
             }
+            if (user.login === this.repoOwner) {
+                this.element.classList.add('repo-owner');
+            }
+            else {
+                this.element.classList.remove('repo-owner');
+            }
+            var avatarAnchor = this.element.firstElementChild;
+            var avatarImg = avatarAnchor.firstElementChild;
+            avatarAnchor.href = user.html_url;
+            avatarImg.alt = '@' + user.login;
+            avatarImg.src = user.avatar_url + avatarArgs;
             var authorAnchor = commentDiv
-                .firstElementChild.firstElementChild
                 .firstElementChild.firstElementChild;
             authorAnchor.href = user.html_url;
             authorAnchor.textContent = user.login;
@@ -410,6 +422,12 @@ var CommentComponent = (function () {
         }
         else {
             commentDiv.classList.remove('current-user');
+        }
+        if (this.comment.user.login === this.repoOwner) {
+            this.element.classList.add('repo-owner');
+        }
+        else {
+            this.element.classList.remove('repo-owner');
         }
         this.currentUser = currentUser;
     };
@@ -447,10 +465,10 @@ var TimelineComponent = (function () {
         this.issue = issue;
         this.repoOwner = repoOwner;
         this.timeline = [];
-        this.element = document.createElement('div');
+        this.element = document.createElement('section');
         this.element.classList.add('timeline');
-        this.element.innerHTML = "\n      <div class=\"comment-wrapper\">\n        <span class=\"comment-count\"></span>\n        <em class=\"powered-by\">\n          - powered by\n          <a href=\"https://utteranc.es\" target=\"_blank\">utteranc.es</a>\n        </em>\n      </div>";
-        this.countSpan = this.element.firstElementChild.firstElementChild;
+        this.element.innerHTML = "\n      <h1 class=\"timeline-header\">\n        <a target=\"_blank\"></a>\n        <em>\n          - powered by\n          <a href=\"https://utteranc.es\" target=\"_blank\">utteranc.es</a>\n        </em>\n      </h1>";
+        this.countAnchor = this.element.firstElementChild.firstElementChild;
         this.setIssue(issue);
     }
     TimelineComponent.prototype.setUser = function (user) {
@@ -463,7 +481,14 @@ var TimelineComponent = (function () {
     };
     TimelineComponent.prototype.setIssue = function (issue) {
         this.issue = issue;
-        this.countSpan.textContent = (issue ? issue.comments : 0) + " Comments";
+        if (issue) {
+            this.countAnchor.textContent = issue.comments + " Comments";
+            this.countAnchor.href = issue.html_url;
+        }
+        else {
+            this.countAnchor.textContent = "0 Comments";
+            this.countAnchor.removeAttribute('href');
+        }
     };
     TimelineComponent.prototype.appendComment = function (comment) {
         var component = new CommentComponent(comment, this.user ? this.user.login : null, this.repoOwner);
@@ -494,16 +519,16 @@ var NewCommentComponent = (function () {
     function NewCommentComponent(user, submit) {
         this.user = user;
         this.submit = submit;
-        this.element = document.createElement('div');
-        this.element.classList.add('comment-wrapper');
+        this.element = document.createElement('article');
+        this.element.classList.add('timeline-comment');
         this.element.addEventListener('mousemove', publishResize);
-        this.element.innerHTML = "\n      <div class=\"comment-avatar\">\n        <a target=\"_blank\">\n          <img class=\"avatar\" height=\"44\" width=\"44\">\n        </a>\n      </div>\n      <div class=\"comment current-user\">\n        <div class=\"comment-header\">\n          <div class=\"comment-header-text\">\n            <strong>\n              Join the discussion\n            </strong>\n          </div>\n        </div>\n        <div class=\"comment-body editable\">\n          <form class=\"comment-form\" accept-charset=\"UTF-8\">\n            <textarea class=\"comment-area\" placeholder=\"Leave a comment\" aria-label=\"comment\"></textarea>\n            <div class=\"comment-form-actions\">\n              <a class=\"markdown-info\" tabindex=\"-1\" target=\"_blank\"\n                  href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\">\n                Styling with Markdown is supported\n              </a>\n              <button class=\"btn btn-primary\" type=\"submit\">Comment</button>\n            </div>\n          </form>\n        </div>\n      </div>";
+        this.element.innerHTML = "\n      <a class=\"avatar\" target=\"_blank\">\n        <img height=\"44\" width=\"44\">\n      </a>\n      <div class=\"new-comment\">\n        <header class=\"new-comment-header\">\n          Join the discussion\n        </header>\n        <form class=\"new-comment-body\" id=\"comment-form\" accept-charset=\"UTF-8\">\n          <textarea placeholder=\"Leave a comment\" aria-label=\"comment\"></textarea>\n        </form>\n        <footer class=\"new-comment-footer\">\n          <a class=\"markdown-info\" tabindex=\"-1\" target=\"_blank\"\n             href=\"https://guides.github.com/features/mastering-markdown/\">\n            Styling with Markdown is supported\n          </a>\n          <button class=\"btn btn-purple\" form=\"comment-form\" type=\"submit\">Comment</button>\n        </footer>\n      </div>";
         this.setUser(user);
     }
     NewCommentComponent.prototype.setUser = function (user) {
         var _this = this;
         this.user = user;
-        var avatarAnchor = this.element.firstElementChild.firstElementChild;
+        var avatarAnchor = this.element.firstElementChild;
         var avatar = avatarAnchor.firstElementChild;
         if (user) {
             avatarAnchor.href = user.html_url;
@@ -515,9 +540,9 @@ var NewCommentComponent = (function () {
             avatar.alt = '@anonymous';
             avatar.src = anonymousAvatarUrl;
         }
-        var form = this.element.lastElementChild.lastElementChild.firstElementChild;
+        var form = avatarAnchor.nextElementSibling.firstElementChild.nextElementSibling;
         var textarea = form.firstElementChild;
-        var submitButton = textarea.nextElementSibling.lastElementChild;
+        var submitButton = form.nextElementSibling.lastElementChild;
         submitButton.textContent = user ? 'Comment' : 'Sign in to comment';
         submitButton.disabled = !!user;
         textarea.disabled = !user;
@@ -540,6 +565,7 @@ var NewCommentComponent = (function () {
             _this.submit(textarea.value).catch(function () { return 0; }).then(function () {
                 submitting = false;
                 textarea.disabled = !_this.user;
+                textarea.value = '';
                 submitButton.disabled = false;
             });
         });
