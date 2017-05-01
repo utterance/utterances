@@ -953,8 +953,9 @@ pre {
   color: #183691; }
 
 body {
+  width: 100%;
   overflow: hidden;
-  padding: 16px 0; }
+  padding: 16px 8px; }
 
 .text-link {
   color: #586069; }

@@ -954,7 +954,7 @@ pre {
 
 body {
   width: 100%;
-  padding: 16px 0; }
+  padding: 16px 8px; }
 
 .timeline {
   max-width: 760px;
