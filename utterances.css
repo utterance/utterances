@@ -1048,7 +1048,7 @@ body {
   box-shadow: 0 0 0 0.2em rgba(3, 102, 214, 0.3); }
 
 .new-comment-body textarea:disabled {
-  background-color: #fafbfc; }
+  background-color: #f6f8fa; }
 
 .new-comment-footer {
   display: flex;
