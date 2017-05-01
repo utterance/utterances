@@ -371,7 +371,7 @@ var CommentComponent = (function () {
         if (user.login === repoOwner) {
             this.element.classList.add('repo-owner');
         }
-        this.element.innerHTML = "\n      <a class=\"avatar\" href=\"" + user.html_url + "\" target=\"_blank\">\n        <img alt=\"@" + user.login + "\" height=\"44\" width=\"44\"\n              src=\"" + user.avatar_url + avatarArgs + "\">\n      </a>\n      <div class=\"comment\">\n        <header class=\"comment-header\">\n          <a class=\"comment-header-link\" href=\"" + user.html_url + "\" target=\"_blank\">" + user.login + "</a>\n          commented\n          <a class=\"comment-header-link\" href=\"" + html_url + "\" target=\"_blank\">\n            " + timeAgo(Date.now(), new Date(created_at)) + "\n          </a>\n        </header>\n        <div class=\"comment-body\">\n          " + body_html + "\n        </div>\n      </div>";
+        this.element.innerHTML = "\n      <a class=\"avatar\" href=\"" + user.html_url + "\" target=\"_blank\">\n        <img alt=\"@" + user.login + "\" height=\"44\" width=\"44\"\n              src=\"" + user.avatar_url + avatarArgs + "\">\n      </a>\n      <div class=\"comment\">\n        <header class=\"comment-header\">\n          <a class=\"text-link\" href=\"" + user.html_url + "\" target=\"_blank\">" + user.login + "</a>\n          commented\n          <a class=\"text-link\" href=\"" + html_url + "\" target=\"_blank\">\n            " + timeAgo(Date.now(), new Date(created_at)) + "\n          </a>\n        </header>\n        <div class=\"comment-body\">\n          " + body_html + "\n        </div>\n      </div>";
         this.retargetLinks();
     }
     CommentComponent.prototype.setComment = function (comment) {
@@ -467,7 +467,7 @@ var TimelineComponent = (function () {
         this.timeline = [];
         this.element = document.createElement('section');
         this.element.classList.add('timeline');
-        this.element.innerHTML = "\n      <h1 class=\"timeline-header\">\n        <a target=\"_blank\"></a>\n        <em>\n          - powered by\n          <a href=\"https://utteranc.es\" target=\"_blank\">utteranc.es</a>\n        </em>\n      </h1>";
+        this.element.innerHTML = "\n      <h1 class=\"timeline-header\">\n        <a class=\"text-link\" target=\"_blank\"></a>\n        <em>\n          - powered by\n          <a class=\"text-link\" href=\"https://utteranc.es\" target=\"_blank\">utteranc.es</a>\n        </em>\n      </h1>";
         this.countAnchor = this.element.firstElementChild.firstElementChild;
         this.setIssue(issue);
     }
@@ -482,7 +482,7 @@ var TimelineComponent = (function () {
     TimelineComponent.prototype.setIssue = function (issue) {
         this.issue = issue;
         if (issue) {
-            this.countAnchor.textContent = issue.comments + " Comments";
+            this.countAnchor.textContent = issue.comments + " Comment" + (issue.comments === 1 ? '' : 's');
             this.countAnchor.href = issue.html_url;
         }
         else {
@@ -522,7 +522,7 @@ var NewCommentComponent = (function () {
         this.element = document.createElement('article');
         this.element.classList.add('timeline-comment');
         this.element.addEventListener('mousemove', publishResize);
-        this.element.innerHTML = "\n      <a class=\"avatar\" target=\"_blank\">\n        <img height=\"44\" width=\"44\">\n      </a>\n      <div class=\"new-comment\">\n        <header class=\"new-comment-header\">\n          Join the discussion\n        </header>\n        <form class=\"new-comment-body\" id=\"comment-form\" accept-charset=\"UTF-8\">\n          <textarea placeholder=\"Leave a comment\" aria-label=\"comment\"></textarea>\n        </form>\n        <footer class=\"new-comment-footer\">\n          <a class=\"markdown-info\" tabindex=\"-1\" target=\"_blank\"\n             href=\"https://guides.github.com/features/mastering-markdown/\">\n            Styling with Markdown is supported\n          </a>\n          <button class=\"btn btn-purple\" form=\"comment-form\" type=\"submit\">Comment</button>\n        </footer>\n      </div>";
+        this.element.innerHTML = "\n      <a class=\"avatar\" target=\"_blank\">\n        <img height=\"44\" width=\"44\">\n      </a>\n      <div class=\"new-comment\">\n        <header class=\"new-comment-header\">\n          Join the discussion\n        </header>\n        <form class=\"new-comment-body\" id=\"comment-form\" accept-charset=\"UTF-8\">\n          <textarea placeholder=\"Leave a comment\" aria-label=\"comment\"></textarea>\n        </form>\n        <footer class=\"new-comment-footer\">\n          <a class=\"text-link markdown-info\" tabindex=\"-1\" target=\"_blank\"\n             href=\"https://guides.github.com/features/mastering-markdown/\">\n            Styling with Markdown is supported\n          </a>\n          <button class=\"btn btn-primary\" form=\"comment-form\" type=\"submit\">Comment</button>\n        </footer>\n      </div>";
         this.setUser(user);
     }
     NewCommentComponent.prototype.setUser = function (user) {
@@ -560,8 +560,10 @@ var NewCommentComponent = (function () {
                 return;
             }
             submitting = true;
-            textarea.disabled = true;
-            submitButton.disabled = true;
+            if (_this.user) {
+                textarea.disabled = true;
+                submitButton.disabled = true;
+            }
             _this.submit(textarea.value).catch(function () { return 0; }).then(function () {
                 submitting = false;
                 textarea.disabled = !_this.user;
