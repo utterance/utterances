@@ -953,6 +953,7 @@ pre {
   color: #183691; }
 
 body {
+  width: 100%;
   padding: 16px 0; }
 
 .timeline {
@@ -972,7 +973,8 @@ body {
 
 .comment {
   flex-grow: 1;
-  position: relative;
+  flex-basis: 0;
+  min-width: 0px;
   border: 1px #e1e4e8 solid;
   border-radius: 3px; }
 

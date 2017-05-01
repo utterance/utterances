@@ -985,7 +985,8 @@ body {
 
 .comment {
   flex-grow: 1;
-  position: relative;
+  flex-basis: 0;
+  min-width: 0px;
   border: 1px #e1e4e8 solid;
   border-radius: 3px; }
 
