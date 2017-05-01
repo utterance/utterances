@@ -984,8 +984,7 @@ body {
   font-weight: 600; }
 
 .markdown-body {
-  padding: 16px 16px;
-  font-size: 14px; }
+  padding: 16px 16px; }
 
 @media (min-width: 544px) {
   body {
