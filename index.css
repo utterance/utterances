@@ -986,6 +986,14 @@ body {
 .markdown-body {
   padding: 16px 16px; }
 
+.markdown-body h1.anchor,
+.markdown-body h2.anchor,
+.markdown-body h2.anchor,
+.markdown-body h4.anchor,
+.markdown-body h5.anchor,
+.markdown-body h6.anchor {
+  display: none; }
+
 @media (min-width: 544px) {
   body {
     padding: 16px; }
