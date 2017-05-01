@@ -154,6 +154,7 @@ function decodeBase64UTF8(encoded) {
 
 var GITHUB_API = 'https://api.github.com/';
 var GITHUB_ENCODING__HTML_JSON = 'application/vnd.github.VERSION.html+json';
+var GITHUB_ENCODING__HTML = 'application/vnd.github.VERSION.html';
 var GITHUB_ENCODING__REACTIONS_PREVIEW = 'application/vnd.github.squirrel-girl-preview';
 var UTTERANCES_API = 'https://utterances-oauth.herokuapp.com';
 var PAGE_SIZE = 100;
@@ -225,8 +226,12 @@ function githubFetch(request) {
         return response;
     });
 }
-function loadJsonFile(path) {
+function loadJsonFile(path, html) {
+    if (html === void 0) { html = false; }
     var request = githubRequest("repos/" + owner + "/" + repo + "/contents/" + path + "?ref=" + branch);
+    if (html) {
+        request.headers.set('accept', GITHUB_ENCODING__HTML);
+    }
     return githubFetch(request).then(function (response) {
         if (response.status === 404) {
             throw new Error("Repo \"" + owner + "/" + repo + "\" does not have a file named \"" + path + "\" in the \"" + branch + "\" branch.");
@@ -234,12 +239,14 @@ function loadJsonFile(path) {
         if (!response.ok) {
             throw new Error("Error fetching " + path + ".");
         }
-        return response.json();
-    }).then(function (_a) {
-        var content = _a.content;
-        var json = decodeBase64UTF8(content);
-        var config = JSON.parse(json);
-        return config;
+        return html ? response.text() : response.json();
+    }).then(function (file) {
+        if (html) {
+            return file;
+        }
+        var content = file.content;
+        var decoded = decodeBase64UTF8(content);
+        return JSON.parse(decoded);
     });
 }
 function loadIssueByTerm(term) {
@@ -469,6 +476,8 @@ var TimelineComponent = (function () {
         this.element.classList.add('timeline');
         this.element.innerHTML = "\n      <h1 class=\"timeline-header\">\n        <a class=\"text-link\" target=\"_blank\"></a>\n        <em>\n          - powered by\n          <a class=\"text-link\" href=\"https://utteranc.es\" target=\"_blank\">utteranc.es</a>\n        </em>\n      </h1>";
         this.countAnchor = this.element.firstElementChild.firstElementChild;
+        this.marker = document.createComment('marker');
+        this.element.appendChild(this.marker);
         this.setIssue(issue);
     }
     TimelineComponent.prototype.setUser = function (user) {
@@ -493,7 +502,7 @@ var TimelineComponent = (function () {
     TimelineComponent.prototype.appendComment = function (comment) {
         var component = new CommentComponent(comment, this.user ? this.user.login : null, this.repoOwner);
         this.timeline.push(component);
-        this.element.appendChild(component.element);
+        this.element.insertBefore(component.element, this.marker);
         publishResize();
     };
     TimelineComponent.prototype.replaceComments = function (comments) {
@@ -644,7 +653,7 @@ function bootstrap(config, issue, user) {
         });
     };
     var newCommentComponent = new NewCommentComponent(user, submit);
-    document.body.appendChild(newCommentComponent.element);
+    timeline.element.appendChild(newCommentComponent.element);
     publishResize();
 }
 

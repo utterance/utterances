@@ -959,7 +959,7 @@ body {
 .text-link {
   color: #586069; }
 
-.timeline, body > .timeline-comment {
+.timeline {
   max-width: 760px;
   margin: 0 auto; }
 
