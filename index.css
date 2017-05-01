@@ -985,9 +985,6 @@ body {
 
 .markdown-body {
   padding: 16px 16px;
-  max-height: 400px;
-  overflow-x: hidden;
-  overflow-y: auto;
   font-size: 14px; }
 
 @media (min-width: 544px) {
