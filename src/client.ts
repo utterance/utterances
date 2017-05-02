@@ -20,6 +20,7 @@ attrs.description = descriptionMeta ? descriptionMeta.content : '';
 
 // create the standard utterances styles and insert them at the beginning of the
 // <head> for easy overriding.
+// NOTE: the craziness with "width" is for mobile safari :(
 document.head.insertAdjacentHTML(
   'afterbegin',
   `<style>
@@ -31,7 +32,9 @@ document.head.insertAdjacentHTML(
       position: absolute;
       left: 0;
       right: 0;
-      width: 100%;
+      width: 1px;
+      min-width: 100%;
+      max-width: 100%;
       height: 100%;
       border: 0;
     }
