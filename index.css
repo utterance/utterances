@@ -952,13 +952,9 @@ pre {
   text-decoration: underline;
   color: #183691; }
 
-body {
-  width: 100%;
-  padding: 16px 8px; }
-
 .timeline {
   max-width: 760px;
-  margin: 0 auto; }
+  margin: 16px 4px; }
 
 .timeline-comment {
   display: flex;
@@ -993,8 +989,6 @@ body {
   display: none; }
 
 @media (min-width: 544px) {
-  body {
-    padding: 16px; }
   .timeline-header {
     padding-left: 60px; }
   .avatar {
@@ -1020,3 +1014,7 @@ body {
   .comment::before {
     border-width: 8px;
     border-right-color: #d1d5da; } }
+
+@media (min-width: 768px) {
+  .timeline {
+    margin: 0 auto; } }

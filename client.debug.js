@@ -23,14 +23,10 @@ attrs.pathname = location.pathname.substr(1).replace(/\.\w+$/, '');
 attrs.title = document.title;
 var descriptionMeta = document.querySelector("meta[name='description']");
 attrs.description = descriptionMeta ? descriptionMeta.content : '';
-var page = script.src.replace(/\/client(\.debug)?\.js(?:$|\?)/, '/utterances$1.html');
-var iframe = document.createElement('iframe');
-iframe.style.border = '0';
-iframe.style.width = '100%';
-iframe.style.maxWidth = '100%';
-iframe.setAttribute('allowtransparency', 'true');
-iframe.src = page + "?" + param(attrs);
-script.insertAdjacentElement('afterend', iframe);
+document.head.insertAdjacentHTML('afterstart', "<style>\n    .utterances {\n      position: relative;\n      width: 100%;\n    }\n    .utterances > iframe {\n      position: absolute;\n      left: 0;\n      right: 0;\n      width:100%;\n    }\n  </style>");
+var url = script.src.replace(/\/client(\.debug)?\.js(?:$|\?)/, '/utterances$1.html');
+script.insertAdjacentHTML('afterend', "<div class=\"utterances\"><iframe src=\"" + url + "?" + param(attrs) + "\"></iframe></div>");
+var iframe = script.nextElementSibling.firstElementChild;
 script.parentElement.removeChild(script);
 addEventListener('message', function (event) {
     var data = event.data;

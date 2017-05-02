@@ -953,16 +953,14 @@ pre {
   color: #183691; }
 
 body {
-  width: 100%;
-  overflow: hidden;
-  padding: 16px 8px; }
+  overflow: hidden; }
 
 .text-link {
   color: #586069; }
 
 .timeline {
   max-width: 760px;
-  margin: 0 auto; }
+  margin: 16px 4px; }
 
 .timeline-header {
   margin: 0;
@@ -1117,8 +1115,6 @@ body {
     background-color: #fff; }
 
 @media (min-width: 544px) {
-  body {
-    padding: 16px; }
   .timeline-header {
     padding-left: 60px; }
   .avatar {
@@ -1184,3 +1180,7 @@ body {
   .new-comment::before {
     border-width: 8px;
     border-right-color: #d1d5da; } }
+
+@media (min-width: 768px) {
+  .timeline {
+    margin: 0 auto; } }
