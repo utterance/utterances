@@ -27,6 +27,7 @@ var page = script.src.replace(/\/client(\.debug)?\.js(?:$|\?)/, '/utterances$1.h
 var iframe = document.createElement('iframe');
 iframe.style.border = '0';
 iframe.style.width = '100%';
+iframe.style.maxWidth = '100%';
 iframe.setAttribute('allowtransparency', 'true');
 iframe.src = page + "?" + param(attrs);
 script.insertAdjacentElement('afterend', iframe);

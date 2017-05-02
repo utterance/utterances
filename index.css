@@ -972,6 +972,7 @@ body {
   border-radius: 3px; }
 
 .comment {
+  position: relative;
   flex-grow: 1;
   flex-basis: 0;
   min-width: 0px;
