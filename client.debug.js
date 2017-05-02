@@ -23,15 +23,15 @@ attrs.pathname = location.pathname.substr(1).replace(/\.\w+$/, '');
 attrs.title = document.title;
 var descriptionMeta = document.querySelector("meta[name='description']");
 attrs.description = descriptionMeta ? descriptionMeta.content : '';
-document.head.insertAdjacentHTML('afterBegin', "<style>\n    .utterances {\n      position: relative;\n      width: 100%;\n    }\n    .utterances > iframe {\n      position: absolute;\n      left: 0;\n      right: 0;\n      width: 1px;\n      min-width: 100%;\n      max-width: 100%;\n      border: 0;\n    }\n  </style>");
+document.head.insertAdjacentHTML('afterbegin', "<style>\n    .utterances {\n      position: relative;\n      width: 100%;\n    }\n    .utterances-frame {\n      position: absolute;\n      left: 0;\n      right: 0;\n      width: 100%;\n      height: 100%;\n      border: 0;\n    }\n  </style>");
 var url = script.src.replace(/\/client(\.debug)?\.js(?:$|\?)/, '/utterances$1.html');
-script.insertAdjacentHTML('afterEnd', "<div class=\"utterances\"><iframe scrolling=\"no\" src=\"" + url + "?" + param(attrs) + "\"></iframe></div>");
-var iframe = script.nextElementSibling.firstElementChild;
+script.insertAdjacentHTML('afterend', "<div class=\"utterances\">\n    <iframe class=\"utterances-frame\" scrolling=\"no\" src=\"" + url + "?" + param(attrs) + "\"></iframe>\n  </div>");
+var container = script.nextElementSibling;
 script.parentElement.removeChild(script);
 addEventListener('message', function (event) {
     var data = event.data;
     if (data && data.type === 'resize' && data.height) {
-        iframe.style.minHeight = data.height + "px";
+        container.style.height = data.height + "px";
     }
 });
 
