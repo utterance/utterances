@@ -23,7 +23,7 @@ attrs.pathname = location.pathname.substr(1).replace(/\.\w+$/, '');
 attrs.title = document.title;
 var descriptionMeta = document.querySelector("meta[name='description']");
 attrs.description = descriptionMeta ? descriptionMeta.content : '';
-document.head.insertAdjacentHTML('afterBegin', "<style>\n    .utterances {\n      position: relative;\n      width: 100%;\n    }\n    .utterances > iframe {\n      position: absolute;\n      left: 0;\n      right: 0;\n      width: 100%;\n      border: 0;\n    }\n  </style>");
+document.head.insertAdjacentHTML('afterBegin', "<style>\n    .utterances {\n      position: relative;\n      width: 100%;\n    }\n    .utterances > iframe {\n      position: absolute;\n      left: 0;\n      right: 0;\n      width: 1px;\n      min-width: 100%;\n      max-width: 100%;\n      border: 0;\n    }\n  </style>");
 var url = script.src.replace(/\/client(\.debug)?\.js(?:$|\?)/, '/utterances$1.html');
 script.insertAdjacentHTML('afterEnd', "<div class=\"utterances\"><iframe src=\"" + url + "?" + param(attrs) + "\"></iframe></div>");
 var iframe = script.nextElementSibling.firstElementChild;
