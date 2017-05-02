@@ -3,18 +3,18 @@
 A lightweight comments widget using GitHub issues.
 
 * [Open source](https://github.com/utterance) :octocat:
-* No tracking. :satellite::no_entry_sign:
+* No tracking, no ads, always free. :satellite::no_entry_sign:
 * No lock-in. All data stored in GitHub issues. :unlock:
 * Styled with [Primer](http://primercss.io/), the css toolkit that powers GitHub. :art:
-* 9 KB gzipped. Vanilla TypeScript. No fonts. No js dependencies. :shipit:
+* 9 KB gzipped. Vanilla TypeScript. No font downloads or script dependencies. :shipit:
 
 > :construction: *4/30/2017 - utterances is under active development and is not ready for production use.*
 
 ## how it works
 
-Utterances runs in an iframe. Upon load, the GitHub [issue search API](https://developer.github.com/v3/search/#search-issues) is used to find the issue associated with the page based on `url`, `pathname` or `title`. Once loaded, the issue's comments are displayed in the familiar GitHub style.
+Utterances runs in an iframe. Upon load, the GitHub [issue search API](https://developer.github.com/v3/search/#search-issues) is used to find the issue associated with the page based on `url`, `pathname` or `title`. The issue's comments are displayed in the familiar GitHub style.
 
-If a matching issue is not found, [utterances-bot](https://github.com/utterances-bot) will automatically create one when a user adds a comment.
+When a matching issue is not found, [utterances-bot](https://github.com/utterances-bot) will automatically create one when a user adds a comment.
 
 To comment, users must authorize the utterances app to post on their behalf using the GitHub [OAuth flow](https://developer.github.com/v3/oauth/#web-application-flow). Alternatively, users can comment on the GitHub issue directly.
 
@@ -38,9 +38,9 @@ To comment, users must authorize the utterances app to post on their behalf usin
             async>
     </script>
     ```
-1. That's it! Read on for advanced configurations.
+1. That's it! Read on for full configuration documentation.
 
-## advanced setup
+## configuration
 
 TODO:
 
