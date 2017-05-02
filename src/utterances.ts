@@ -1,36 +1,82 @@
-import { param } from './deparam';
-import { ResizeMessage } from './bus';
+import { pageAttributes as page } from './page-attributes';
+import {
+  Issue,
+  IssueComment,
+  User,
+  setRepoContext,
+  loadIssueByTerm,
+  loadIssueByNumber,
+  loadCommentsPage,
+  loadUser,
+  postComment,
+  createIssue
+} from './github';
+import { login } from './oauth';
+import { TimelineComponent } from './timeline-component';
+import { NewCommentComponent } from './new-comment-component';
+import { setHostOrigin, publishResize } from './bus';
+import { RepoConfig, loadRepoConfig } from './repo-config';
 
-const script = document.currentScript as HTMLScriptElement;
+setRepoContext(page);
 
-// gather script element's attributes
-const attrs: { [name: string]: string; } = {};
-for (let i = 0; i < script.attributes.length; i++) {
-  const attribute = script.attributes.item(i);
-  attrs[attribute.name] = attribute.value;
+function loadIssue(): Promise<Issue | null> {
+  if (page.issueNumber !== null) {
+    return loadIssueByNumber(page.issueNumber);
+  }
+  return loadIssueByTerm(page.issueTerm as string);
 }
 
-// gather page attributes
-attrs.url = location.href;
-attrs.origin = location.origin;
-attrs.pathname = location.pathname.substr(1).replace(/\.\w+$/, '');
-attrs.title = document.title;
-const descriptionMeta = document.querySelector(`meta[name='description']`) as HTMLMetaElement;
-attrs.description = descriptionMeta ? descriptionMeta.content : '';
+Promise.all([loadRepoConfig(page.configPath), loadIssue(), loadUser()])
+  .then(([repoConfig, issue, user]) => bootstrap(repoConfig, issue, user));
 
-// create the comments iframe
-const page = script.src.replace(/\/utterances(\.min)?\.js(?:$|\?)/, '/embed/index$1.html');
-const iframe = document.createElement('iframe');
-iframe.classList.add('utterances');
-iframe.setAttribute('allowtransparency', 'true');
-iframe.src = `${page}?${param(attrs)}`;
-script.insertAdjacentElement('afterend', iframe);
-script.parentElement!.removeChild(script);
-
-// adjust the iframe's size when the size of it's content changes
-addEventListener('message', event => {
-  const data = event.data as ResizeMessage;
-  if (data && data.type === 'resize' && data.height) {
-    iframe.style.minHeight = `${data.height}px`;
+function bootstrap(config: RepoConfig, issue: Issue | null, user: User | null) {
+  if (config.origins.indexOf(page.origin) === -1) {
+    throw new Error(`The origins specified in ${page.configPath} do not include ${page.origin}`);
   }
-});
+  setHostOrigin(page.origin);
+
+  const timeline = new TimelineComponent(user, issue, page.owner);
+  document.body.appendChild(timeline.element);
+
+  if (issue && issue.comments > 0) {
+    loadCommentsPage(issue.number, 1).then(({ items }) => timeline.replaceComments(items));
+  }
+
+  if (issue && issue.locked) {
+    return;
+  }
+
+  const submit = (markdown: string) => {
+    if (user) {
+      let commentPromise: Promise<IssueComment>;
+      if (issue) {
+        commentPromise = postComment(issue.number, markdown);
+      } else {
+        commentPromise = createIssue(
+          page.issueTerm as string,
+          page.url,
+          page.title,
+          page.description
+        ).then(newIssue => {
+          issue = newIssue;
+          timeline.setIssue(issue);
+          return postComment(issue.number, markdown);
+        });
+      }
+      return commentPromise.then(comment => {
+        timeline.appendComment(comment);
+        newCommentComponent.clear();
+      });
+    }
+
+    return login().then(() => loadUser()).then(u => {
+      user = u;
+      timeline.setUser(user);
+      newCommentComponent.setUser(user);
+    });
+  };
+
+  const newCommentComponent = new NewCommentComponent(user, submit);
+  timeline.element.appendChild(newCommentComponent.element);
+  publishResize();
+}

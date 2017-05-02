@@ -4,38 +4,36 @@ import { timeAgo } from './time-ago';
 const avatarArgs = '?v=3&s=88';
 
 export class CommentComponent {
-  public readonly element: HTMLDivElement;
+  public readonly element: HTMLElement;
 
   constructor(
     public comment: IssueComment,
     private currentUser: string | null,
-    repoOwner: string
+    private repoOwner: string
   ) {
     const { user, html_url, created_at, body_html } = comment;
-    this.element = document.createElement('div');
-    this.element.classList.add('comment-wrapper');
+    this.element = document.createElement('article');
+    this.element.classList.add('timeline-comment');
+    if (user.login === currentUser) {
+      this.element.classList.add('current-user');
+    }
+    if (user.login === repoOwner) {
+      this.element.classList.add('repo-owner');
+    }
     this.element.innerHTML = `
-      <div class="comment-avatar">
-        <a href="${user.html_url}" target="_blank">
-          <img class="avatar" alt="@${user.login}" height="44" width="44"
-               src="${user.avatar_url}${avatarArgs}">
-        </a>
-      </div>
-      <div class="comment ${user.login === currentUser ? 'current-user' : ''}">
-        <div class="comment-header">
-          <div class="comment-header-text">
-            <strong>
-              <a class="author" href="${user.html_url}" target="_blank">${user.login}</a>
-            </strong>
-            commented
-            <a class="timestamp" href="${html_url}" target="_blank">
-              ${timeAgo(Date.now(), new Date(created_at))}
-            </a>
-          </div>
-          ${repoOwner === user.login ? '<span class="comment-label">Owner</span>' : ''}
-          <!--<div class="comment-actions"></div>-->
-        </div>
-        <div class="comment-body">
+      <a class="avatar" href="${user.html_url}" target="_blank">
+        <img alt="@${user.login}" height="44" width="44"
+              src="${user.avatar_url}${avatarArgs}">
+      </a>
+      <div class="comment">
+        <header class="comment-header">
+          <a class="text-link" href="${user.html_url}" target="_blank">${user.login}</a>
+          commented
+          <a class="text-link" href="${html_url}" target="_blank">
+            ${timeAgo(Date.now(), new Date(created_at))}
+          </a>
+        </header>
+        <div class="markdown-body">
           ${body_html}
         </div>
       </div>`;
@@ -48,19 +46,24 @@ export class CommentComponent {
     const { user, html_url, created_at, body_html } = comment;
 
     if (this.comment.user.login !== user.login) {
-      const avatarAnchor = this.element.firstElementChild!.firstElementChild as HTMLAnchorElement;
-      const avatar = avatarAnchor.firstElementChild as HTMLImageElement;
-      avatarAnchor.href = user.html_url;
-      avatar.alt = '@' + user.login;
-      avatar.src = user.avatar_url + avatarArgs;
       if (user.login === this.currentUser) {
-        commentDiv.classList.add('current-user');
+        this.element.classList.add('current-user');
       } else {
-        commentDiv.classList.remove('current-user');
+        this.element.classList.remove('current-user');
+      }
+      if (user.login === this.repoOwner) {
+        this.element.classList.add('repo-owner');
+      } else {
+        this.element.classList.remove('repo-owner');
       }
 
+      const avatarAnchor = this.element.firstElementChild as HTMLAnchorElement;
+      const avatarImg = avatarAnchor.firstElementChild as HTMLImageElement;
+      avatarAnchor.href = user.html_url;
+      avatarImg.alt = '@' + user.login;
+      avatarImg.src = user.avatar_url + avatarArgs;
+
       const authorAnchor = commentDiv
-        .firstElementChild!.firstElementChild!
         .firstElementChild!.firstElementChild as HTMLAnchorElement;
       authorAnchor.href = user.html_url;
       authorAnchor.textContent = user.login;
@@ -91,6 +94,11 @@ export class CommentComponent {
       commentDiv.classList.add('current-user');
     } else {
       commentDiv.classList.remove('current-user');
+    }
+    if (this.comment.user.login === this.repoOwner) {
+      this.element.classList.add('repo-owner');
+    } else {
+      this.element.classList.remove('repo-owner');
     }
 
     this.currentUser = currentUser;

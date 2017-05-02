@@ -3,26 +3,29 @@ import { CommentComponent } from './comment-component';
 import { publishResize } from './bus';
 
 export class TimelineComponent {
-  public readonly element: HTMLDivElement;
+  public readonly element: HTMLElement;
   private readonly timeline: CommentComponent[] = [];
-  private readonly countSpan: HTMLSpanElement;
+  private readonly countAnchor: HTMLAnchorElement;
+  private readonly marker: Node;
 
   constructor(
     private user: User | null,
     private issue: Issue | null,
     private repoOwner: string
   ) {
-    this.element = document.createElement('div');
+    this.element = document.createElement('section');
     this.element.classList.add('timeline');
     this.element.innerHTML = `
-      <div class="comment-wrapper">
-        <span class="comment-count"></span>
-        <em class="powered-by">
+      <h1 class="timeline-header">
+        <a class="text-link" target="_blank"></a>
+        <em>
           - powered by
-          <a href="https://utteranc.es" target="_blank">utteranc.es</a>
+          <a class="text-link" href="https://utteranc.es" target="_blank">utteranc.es</a>
         </em>
-      </div>`;
-    this.countSpan = this.element.firstElementChild!.firstElementChild as HTMLSpanElement;
+      </h1>`;
+    this.countAnchor = this.element.firstElementChild!.firstElementChild as HTMLAnchorElement;
+    this.marker = document.createComment('marker');
+    this.element.appendChild(this.marker);
     this.setIssue(issue);
   }
 
@@ -37,7 +40,13 @@ export class TimelineComponent {
 
   public setIssue(issue: Issue | null) {
     this.issue = issue;
-    this.countSpan.textContent = `${issue ? issue.comments : 0} Comments`;
+    if (issue) {
+      this.countAnchor.textContent = `${issue.comments} Comment${issue.comments === 1 ? '' : 's'}`;
+      this.countAnchor.href = issue.html_url;
+    } else {
+      this.countAnchor.textContent = `0 Comments`;
+      this.countAnchor.removeAttribute('href');
+    }
   }
 
   public appendComment(comment: IssueComment) {
@@ -46,7 +55,7 @@ export class TimelineComponent {
       this.user ? this.user.login : null,
       this.repoOwner);
     this.timeline.push(component);
-    this.element.appendChild(component.element);
+    this.element.insertBefore(component.element, this.marker);
     publishResize();
   }
 

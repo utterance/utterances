@@ -31,8 +31,8 @@ interface AuthorizeResponse {
 
 function popup(url: string) {
   let resolve: (response: AuthorizeResponse) => void;
-  (window as any).resolveOpenWindow = (query: string) => {
-    (window as any).resolveOpenWindow = null;
+  (window as any).oautherized = (query: string) => {
+    (window as any).oautherized = null;
     resolve(deparam(query) as any);
   };
   const promise = new Promise<AuthorizeResponse>(r => resolve = r);

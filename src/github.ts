@@ -3,6 +3,7 @@ import { decodeBase64UTF8 } from './encoding';
 
 const GITHUB_API = 'https://api.github.com/';
 const GITHUB_ENCODING__HTML_JSON = 'application/vnd.github.VERSION.html+json';
+const GITHUB_ENCODING__HTML = 'application/vnd.github.VERSION.html';
 const GITHUB_ENCODING__REACTIONS_PREVIEW = 'application/vnd.github.squirrel-girl-preview';
 const UTTERANCES_API = 'https://utterances-oauth.herokuapp.com';
 
@@ -86,20 +87,26 @@ function githubFetch(request: Request) {
   });
 }
 
-export function loadJsonFile<T>(path: string) {
+export function loadJsonFile<T>(path: string, html = false) {
   const request = githubRequest(`repos/${owner}/${repo}/contents/${path}?ref=${branch}`);
-  return githubFetch(request).then<FileContentsResponse>(response => {
+  if (html) {
+    request.headers.set('accept', GITHUB_ENCODING__HTML);
+  }
+  return githubFetch(request).then<FileContentsResponse | string>(response => {
     if (response.status === 404) {
       throw new Error(`Repo "${owner}/${repo}" does not have a file named "${path}" in the "${branch}" branch.`);
     }
     if (!response.ok) {
       throw new Error(`Error fetching ${path}.`);
     }
-    return response.json();
-  }).then<T>(({ content }) => {
-    const json = decodeBase64UTF8(content);
-    const config = JSON.parse(json);
-    return config;
+    return html ? response.text() : response.json();
+  }).then<T>(file => {
+    if (html) {
+      return file;
+    }
+    const { content } = file as FileContentsResponse;
+    const decoded = decodeBase64UTF8(content);
+    return JSON.parse(decoded);
   });
 }
 

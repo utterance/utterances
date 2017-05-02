@@ -1,0 +1,208 @@
+@import "primer-base/index";
+@import "primer-markdown/index";
+@import "pygments-vs";
+
+body {
+  overflow: hidden;
+}
+
+.text-link {
+  color: $text-gray;
+}
+
+.timeline {
+  max-width: 760px;
+  margin: $spacer-3 $spacer-1;
+}
+
+.timeline-header {
+  margin: 0;
+  padding-left: $spacer-3;
+  font-size: $body-font-size;
+  color: $text-gray;
+}
+
+.timeline-header em {
+  font-weight: $font-weight-normal;
+}
+
+.timeline-comment {
+  display: flex;
+  align-items: flex-start;
+  margin: $spacer-3 0;
+}
+
+.avatar {
+  display: none;
+}
+
+.avatar > img {
+  border-radius: $border-radius;
+}
+
+.comment {
+  position: relative;
+  flex-grow: 1;
+  flex-basis: 0;
+  min-width: 0px;
+  border: $border;
+  border-radius: $border-radius;
+}
+
+.comment-header {
+  padding: $spacer-2 $spacer-3;
+  color: $text-gray;
+  background-color: $bg-gray;
+  border-bottom: $border;
+}
+
+.comment-header :first-child {
+  font-weight: $font-weight-bold;
+}
+
+.current-user .comment-header {
+  background-color: $bg-blue-light;
+}
+
+.repo-owner .comment-header :last-child::after {
+  float: right;
+  margin-top: -1px;
+  padding: 2px 5px;
+  border: $border;
+  border-radius: $border-radius;
+  font-size: $font-size-small;
+  font-weight: $font-weight-semibold;
+  content: 'Owner';
+}
+
+.markdown-body {
+  padding: $spacer-3 $spacer-3;
+  max-height: 400px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-size: $body-font-size;
+}
+
+.new-comment {
+  flex-grow: 1;
+  position: relative;
+  border: $border;
+  border-radius: $border-radius;
+}
+
+.new-comment-header {
+  padding: $spacer-2 $spacer-3;
+  font-weight: $font-weight-bold;
+  color: $text-gray;
+  background-color: $bg-blue-light;
+  border-bottom: $border;
+}
+
+.new-comment-body {
+  padding: $spacer-2;
+}
+
+.new-comment-body textarea {
+  display: block;
+  padding: $spacer-2;
+  width: 100%;
+  min-height: 90px;
+  max-height: 550px;
+  resize: vertical;
+  border: $border;
+  border-radius: $border-radius;
+}
+
+.new-comment-body textarea:focus {
+  box-shadow: $btn-input-focus-shadow;
+}
+
+.new-comment-body textarea:disabled {
+  background-color: $gray-100;
+}
+
+.new-comment-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 $spacer-2 $spacer-2 $spacer-2;
+}
+
+.markdown-info {
+  font-size: $font-size-small;
+}
+
+.btn {
+  position: relative;
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: $body-font-size;
+  font-weight: $font-weight-bold;
+  line-height: 20px; // Specifically not inherit our `<body>` default
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  background-repeat: repeat-x;
+  background-position: -1px -1px;
+  background-size: 110% 110%;
+  border: 1px solid transparentize($black, 0.8);
+  border-radius: 0.25em;
+  appearance: none; // Corrects inability to style clickable `input` types in iOS.
+
+  &:hover {
+    text-decoration: none;
+    background-repeat: repeat-x;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+
+  &:disabled,
+  &.disabled {
+    cursor: default;
+    // Repeat `background-position` because `:hover`
+    background-position: 0 0;
+  }
+
+  &:active,
+  &.selected {
+    background-image: none;
+  }
+}
+
+// .btn         { @include btn-solid($text-gray-dark, $gray-000, darken($bg-gray, 2%)); }
+.btn-primary { @include btn-solid($text-white, $green-400, $green-500); }
+// .btn-purple  { @include btn-solid($text-white, lighten($purple-500, 5%), darken($purple-500, 5%)); }
+// .btn-blue    { @include btn-solid($text-white, lighten($blue-500, 8%), darken($blue-500, 2%)); }
+// .btn-danger  { @include btn-inverse($red-600, $gray-000, darken($bg-gray, 2%)); }
+
+@media (min-width: map-get($breakpoints, sm)) {
+  .timeline-header {
+    padding-left: 44 + $spacer-3;
+  }
+
+  .avatar {
+    display: block;
+    margin-right: $spacer-3;
+  }
+
+  .comment {
+    @include double-caret($bg-gray, $border-gray-dark);
+  }
+
+  .current-user .comment {
+    @include double-caret($bg-blue-light, $border-gray-dark);
+  }
+
+  .new-comment {
+    @include double-caret($bg-blue-light, $border-gray-dark);
+  }
+}
+
+@media (min-width: map-get($breakpoints, md)) {
+  .timeline {
+    margin: 0 auto;
+  }
+}

@@ -2108,6 +2108,12 @@ primer-buttons@^2.0.0:
   dependencies:
     primer-support "*"
 
+primer-markdown@^3.3.7:
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/primer-markdown/-/primer-markdown-3.3.7.tgz#6a3f5626ce2705266791d565dfc441ac0e9aaa5c"
+  dependencies:
+    primer-support "*"
+
 primer-support@*:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/primer-support/-/primer-support-4.0.0.tgz#3dbbb37e4e0f2ed2ea6035e0b79dd0cb33bae85e"
@@ -2776,7 +2782,7 @@ tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
 
-typescript@^2.3.3:
+typescript@^2.3.2:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.3.2.tgz#f0f045e196f69a72f06b25fd3bd39d01c3ce9984"
 
