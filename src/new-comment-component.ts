@@ -19,14 +19,14 @@ export class NewCommentComponent {
       <a class="avatar" target="_blank">
         <img height="44" width="44">
       </a>
-      <div class="new-comment">
-        <header class="new-comment-header">
+      <div class="comment">
+        <header class="comment-header">
           Join the discussion
         </header>
-        <form class="new-comment-body" id="comment-form" accept-charset="UTF-8" action="javascript:">
+        <form class="comment-body" id="comment-form" accept-charset="UTF-8" action="javascript:">
           <textarea placeholder="Leave a comment" aria-label="comment"></textarea>
         </form>
-        <footer class="new-comment-footer">
+        <footer class="comment-footer">
           <a class="text-link markdown-info" tabindex="-1" target="_blank"
              href="https://guides.github.com/features/mastering-markdown/">
             Styling with Markdown is supported

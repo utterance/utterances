@@ -177,8 +177,7 @@ export function createIssue(issueTerm: string, documentUrl: string, title: strin
     method: 'POST',
     body: JSON.stringify({
       title: issueTerm,
-      // tslint:disable-next-line:max-line-length
-      body: `# ${title}\n\n${description}\n\n${documentUrl}\n\n> :crystal_ball: *Issue created by [utteranc.es](https://utteranc.es) bot*`
+      body: `# ${title}\n\n${description}\n\n[${documentUrl}](${documentUrl})`
     })
   });
   request.headers.set('Accept', GITHUB_ENCODING__REACTIONS_PREVIEW);

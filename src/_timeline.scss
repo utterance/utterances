@@ -1,0 +1,27 @@
+.timeline {
+  max-width: 760px;
+  margin: $spacer-3 $spacer-1;
+}
+
+.timeline-header {
+  margin: 0;
+  padding-left: $spacer-3;
+  font-size: $body-font-size;
+  color: $text-gray;
+}
+
+.timeline-header em {
+  font-weight: $font-weight-normal;
+}
+
+@media (min-width: map-get($breakpoints, sm)) {
+  .timeline-header {
+    padding-left: 44 + $spacer-3;
+  }
+}
+
+@media (min-width: map-get($breakpoints, md)) {
+  .timeline {
+    margin: 0 auto;
+  }
+}

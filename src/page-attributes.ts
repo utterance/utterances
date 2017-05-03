@@ -21,15 +21,15 @@ function readPageAttributes() {
       throw new Error(`issue-number is invalid. "${params['issue-number']}`);
     }
   } else {
-    throw new Error('Invalid query string arguments. Either "issue-term" or "issue-number" must be specified.');
+    throw new Error('"issue-term" or "issue-number" must be specified.');
   }
 
   if (!('repo' in params)) {
-    throw new Error('Invalid query string arguments. "repo" is required.');
+    throw new Error('"repo" is required.');
   }
 
   if (!('origin' in params)) {
-    throw new Error('Invalid query string arguments. "origin" is required.');
+    throw new Error('"origin" is required.');
   }
 
   const matches = /^([a-z][\w-]+)\/([a-z][\w-]+)$/i.exec(params.repo);

@@ -1,0 +1,111 @@
+@import "primer-base/index";
+@import "primer-markdown/index";
+@import "pygments-vs";
+
+.timeline-comment {
+  display: flex;
+  align-items: flex-start;
+  margin: $spacer-3 0;
+
+  .avatar {
+    display: none;
+  }
+
+  .avatar > img {
+    border-radius: $border-radius;
+  }
+
+  .comment {
+    position: relative;
+    flex-grow: 1;
+    flex-basis: 0;
+    min-width: 0px;
+    border: $border;
+    border-radius: $border-radius;
+  }
+
+  .comment-header {
+    padding: $spacer-2 $spacer-3;
+    color: $text-gray;
+    background-color: $bg-gray;
+    border-bottom: $border;
+
+    .user-login {
+      font-weight: $font-weight-bold;
+    }
+  }
+
+  .markdown-body {
+    padding: $spacer-3 $spacer-3;
+    max-height: 400px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    font-size: $body-font-size;
+  }
+
+  .comment-body {
+    padding: $spacer-2;
+
+    textarea {
+      display: block;
+      padding: $spacer-2;
+      width: 100%;
+      min-height: 90px;
+      max-height: 550px;
+      resize: vertical;
+      border: $border;
+      border-radius: $border-radius;
+    }
+
+    textarea:focus {
+      box-shadow: $btn-input-focus-shadow;
+    }
+
+    textarea:disabled {
+      background-color: $gray-100;
+    }
+  }
+
+  .comment-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 $spacer-2 $spacer-2 $spacer-2;
+
+    .markdown-info {
+      font-size: $font-size-small;
+    }
+  }
+}
+
+.timeline-comment.current-user .comment-header {
+  background-color: $bg-blue-light;
+}
+
+.timeline-comment.repo-owner .comment-header :last-child::after {
+  float: right;
+  margin-top: -1px;
+  padding: 2px 5px;
+  border: $border;
+  border-radius: $border-radius;
+  font-size: $font-size-small;
+  font-weight: $font-weight-semibold;
+  content: 'Owner';
+}
+
+@media (min-width: map-get($breakpoints, sm)) {
+  .timeline-comment {
+    .avatar {
+      display: block;
+      margin-right: $spacer-3;
+    }
+
+    .comment {
+      @include double-caret($bg-gray, $border-gray-dark);
+    }
+  }
+
+  .timeline-comment.current-user .comment {
+    @include double-caret($bg-blue-light, $border-gray-dark);
+  }
+}
