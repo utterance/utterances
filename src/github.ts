@@ -5,7 +5,8 @@ const GITHUB_API = 'https://api.github.com/';
 const GITHUB_ENCODING__HTML_JSON = 'application/vnd.github.VERSION.html+json';
 const GITHUB_ENCODING__HTML = 'application/vnd.github.VERSION.html';
 const GITHUB_ENCODING__REACTIONS_PREVIEW = 'application/vnd.github.squirrel-girl-preview';
-const UTTERANCES_API = 'https://utterances-oauth.herokuapp.com';
+// const UTTERANCES_API = 'https://utterances-oauth.herokuapp.com';
+const UTTERANCES_API = 'https://utterances-oauth.azurewebsites.net';
 
 const PAGE_SIZE = 100;
 

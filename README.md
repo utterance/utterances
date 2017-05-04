@@ -8,8 +8,6 @@ A lightweight comments widget using GitHub issues.
 * Styled with [Primer](http://primercss.io/), the css toolkit that powers GitHub. :art:
 * 9 KB gzipped. Vanilla TypeScript. No font downloads or script dependencies. :shipit:
 
-> :construction: *4/30/2017 - utterances is under active development and is not ready for production use.*
-
 ## how it works
 
 Utterances runs in an iframe. Upon load, the GitHub [issue search API](https://developer.github.com/v3/search/#search-issues) is used to find the issue associated with the page based on `url`, `pathname` or `title`. The issue's comments are displayed in the familiar GitHub style.

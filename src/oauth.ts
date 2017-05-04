@@ -1,7 +1,8 @@
 import { param, deparam } from './deparam';
 
 const authorizeUri = 'https://github.com/login/oauth/authorize';
-const tokenUri = 'https://utterances-oauth.herokuapp.com/access-token';
+// const tokenUri = 'https://utterances-oauth.herokuapp.com/access-token';
+const tokenUri = 'https://utterances-oauth.azurewebsites.net/access-token';
 // tslint:disable-next-line:variable-name
 const redirect_uri = 'https://utteranc.es/authorized.html';
 // tslint:disable-next-line:variable-name
