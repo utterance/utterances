@@ -19,7 +19,7 @@ export function publishResize() {
     body.offsetHeight,
     html.clientHeight,
     html.scrollHeight,
-    html.offsetHeight);
+    html.offsetHeight) + 15;
   if (height === lastHeight) {
     return;
   }
