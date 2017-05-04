@@ -21,7 +21,7 @@ export class NewCommentComponent {
       </a>
       <div class="comment">
         <header class="comment-header">
-          Join the discussion
+          <strong>Join the discussion</strong>
         </header>
         <form class="comment-body" id="comment-form" accept-charset="UTF-8" action="javascript:">
           <textarea placeholder="Leave a comment" aria-label="comment"></textarea>
