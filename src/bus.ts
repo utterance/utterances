@@ -13,13 +13,7 @@ export function setHostOrigin(origin: string) {
 let lastHeight = -1;
 
 export function publishResize() {
-  const { body, documentElement: html } = document;
-  const height = Math.max(
-    body.scrollHeight,
-    body.offsetHeight,
-    html.clientHeight,
-    html.scrollHeight,
-    html.offsetHeight) + 15;
+  const height = document.body.scrollHeight + 15;
   if (height === lastHeight) {
     return;
   }
