@@ -72,21 +72,21 @@
       font-size: $font-size-small;
     }
   }
-}
 
-.timeline-comment.current-user .comment-header {
-  background-color: $bg-blue-light;
-}
+  &.current-user .comment-header {
+    background-color: $bg-blue-light;
+  }
 
-.timeline-comment.repo-owner .comment-header > :last-child::after {
-  float: right;
-  margin-top: -1px;
-  padding: 2px 5px;
-  border: $border;
-  border-radius: $border-radius;
-  font-size: $font-size-small;
-  font-weight: $font-weight-semibold;
-  content: 'Owner';
+  &.repo-owner .comment-header > :last-child::after {
+    float: right;
+    margin-top: -1px;
+    padding: 2px 5px;
+    border: $border;
+    border-radius: $border-radius;
+    font-size: $font-size-small;
+    font-weight: $font-weight-semibold;
+    content: 'Owner';
+  }
 }
 
 @media (min-width: map-get($breakpoints, sm)) {
@@ -99,9 +99,9 @@
     .comment {
       @include double-caret($bg-gray, $border-gray-dark);
     }
-  }
 
-  .timeline-comment.current-user .comment {
-    @include double-caret($bg-blue-light, $border-gray-dark);
+    &.current-user .comment {
+      @include double-caret($bg-blue-light, $border-gray-dark);
+    }
   }
 }

@@ -1,4 +1,5 @@
 import { deparam } from './deparam';
+import repoRegex from './repo-regex';
 
 function readPageAttributes() {
   const params = deparam(location.search.substr(1));
@@ -32,7 +33,7 @@ function readPageAttributes() {
     throw new Error('"origin" is required.');
   }
 
-  const matches = /^([a-z][\w-]+)\/([a-z][\w-]+)$/i.exec(params.repo);
+  const matches = repoRegex.exec(params.repo);
   if (matches === null) {
     throw new Error(`Invalid repo: "${params.repo}"`);
   }

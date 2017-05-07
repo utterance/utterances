@@ -1,9 +1,11 @@
-@import "primer-base/index";
+// @import "primer-base/index";
+@import "primer-forms/index";
 @import "primer-markdown/index";
 @import "pygments-vs";
 @import "util";
 @import "timeline";
 @import "timeline-comment";
+@import "buttons";
 
 .timeline-comment .markdown-body {
   max-height: unset;
@@ -14,4 +16,55 @@
       display: none;
     }
   }
+
+  form {
+    font-size: $body-font-size;
+
+    fieldset {
+      border: none;
+      margin: 0 $spacer-3;
+      padding: 0;
+
+      input:not([type=radio]) {
+        margin: $spacer-1 0;
+      }
+    }
+
+    .code-action {
+      float: right;
+      margin-top: -$spacer-2;
+      margin-bottom: $spacer-3;
+    }
+
+    .has-error {
+      label {
+        color: $text-red;
+      }
+
+      input {
+        border-color: $border-red;
+      }
+
+      .note {
+        color: $text-red;
+      }
+    }
+
+    .has-success {
+      label {
+        color: $text-green;
+      }
+
+      input {
+        border-color: $border-green;
+      }
+
+      .note {
+        color: $text-green;
+      }
+    }
+  }
 }
+
+.btn-blue { @include btn-solid($text-white, lighten($blue-500, 8%), darken($blue-500, 2%)); }
+

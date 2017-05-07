@@ -16,6 +16,11 @@
     <meta name="application-name" content="Utterances">
     <meta name="msapplication-config" content="icons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
+    <script>
+      if (!window.Promise || !window.fetch) {
+        document.currentScript.src = 'https://polyfill.io/v2/polyfill.min.js?features=Element.prototype.classList|always,Promise,fetch';
+      }
+    </script>
   </head>
   <body>
     <section class="timeline">

@@ -2108,6 +2108,12 @@ primer-buttons@^2.0.0:
   dependencies:
     primer-support "*"
 
+primer-forms@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/primer-forms/-/primer-forms-1.0.6.tgz#473db3826146ffd8da1698f86a5517a560b63590"
+  dependencies:
+    primer-support "*"
+
 primer-markdown@^3.3.7:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/primer-markdown/-/primer-markdown-3.3.7.tgz#6a3f5626ce2705266791d565dfc441ac0e9aaa5c"
