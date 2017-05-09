@@ -6,7 +6,7 @@ A lightweight comments widget using GitHub issues.
 * No tracking, no ads, always free. :satellite::no_entry_sign:
 * No lock-in. All data stored in GitHub issues. :unlock:
 * Styled with [Primer](http://primercss.io/), the css toolkit that powers GitHub. :art:
-* 9 KB gzipped. Vanilla TypeScript. No font downloads or script dependencies. :shipit:
+* 9 KB gzipped. Vanilla TypeScript. No font downloads, no JavaScript libraries for evergreen browsers (bluebird, fetch and classList for IE 11 users) :shipit:
 
 ## how it works
 

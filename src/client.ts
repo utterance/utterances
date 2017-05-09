@@ -1,7 +1,11 @@
 import { param } from './deparam';
 import { ResizeMessage } from './bus';
 
-const script = document.currentScript as HTMLScriptElement;
+let script = document.currentScript as HTMLScriptElement;
+if (script === undefined) {
+  // Internet Explorer :(
+  script = document.querySelector('script[src^="https://utteranc.es/client.js"]') as HTMLScriptElement;
+}
 
 // gather script element's attributes
 const attrs: { [name: string]: string; } = {};

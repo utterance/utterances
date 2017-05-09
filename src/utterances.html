@@ -8,7 +8,11 @@
     <link rel="stylesheet" href="utterances.css">
     <script>
       if (!window.Promise || !window.fetch) {
-        document.currentScript.src = 'https://polyfill.io/v2/polyfill.min.js?features=Element.prototype.classList|always,Promise,fetch';
+        document.write(
+          '<script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.5.0/bluebird.min.js" integrity="sha256-/l7dZnd9iW5Iw9P2Qn/0ghByeFDKnIcPd4DTptDaK20=" crossorigin="anonymous"><\/script>',
+          '<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js" integrity="sha256-aB35laj7IZhLTx58xw/Gm1EKOoJJKZt6RY+bH1ReHxs=" crossorigin="anonymous"><\/script>',
+          '<script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"><\/script>'
+        );
       }
     </script>
   </head>
