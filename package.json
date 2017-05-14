@@ -1,7 +1,6 @@
 {
   "name": "utterances",
   "version": "0.1.2",
-  "main": "dist/client.js",
   "license": "MIT",
   "scripts": {
     "lint": "tslint --project tsconfig.json",
