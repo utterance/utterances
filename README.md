@@ -24,4 +24,4 @@ Using utterances? [Add your site](https://github.com/utterance/utterances/edit/m
 
 * [danyow.net](https://danyow.net)
 
-## try it out :point_down::point_down::point_down:
+# try it out :point_down::point_down::point_down:

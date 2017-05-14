@@ -9,6 +9,14 @@ const anonymousAvatarUrl = `data:image/svg+xml;base64,${btoa(anonymousAvatar)}`;
 export class NewCommentComponent {
   public readonly element: HTMLElement;
 
+  private avatarAnchor: HTMLAnchorElement;
+  private avatar: HTMLImageElement;
+  private form: HTMLFormElement;
+  private textarea: HTMLTextAreaElement;
+  private submitButton: HTMLButtonElement;
+
+  private submitting = false;
+
   constructor(
     private user: User | null,
     private readonly submit: (markdown: string) => Promise<void>
@@ -37,57 +45,32 @@ export class NewCommentComponent {
         </footer>
       </form>`;
 
+    this.avatarAnchor = this.element.firstElementChild as HTMLAnchorElement;
+    this.avatar = this.avatarAnchor.firstElementChild as HTMLImageElement;
+    this.form = this.avatarAnchor.nextElementSibling as HTMLFormElement;
+    this.textarea = this.form!.firstElementChild!.nextElementSibling!.firstElementChild as HTMLTextAreaElement;
+    this.submitButton = this.form!.lastElementChild!.lastElementChild as HTMLButtonElement;
+
     this.setUser(user);
 
-    const form = this.element.firstElementChild!.nextElementSibling as HTMLFormElement;
-    const textarea = form!.firstElementChild!.nextElementSibling!.firstElementChild as HTMLTextAreaElement;
-    const submitButton = form!.lastElementChild!.lastElementChild as HTMLButtonElement;
-
-    submitButton.textContent = user ? 'Comment' : 'Sign in to comment';
-    submitButton.disabled = !!user;
-
-    textarea.disabled = !user;
-
-    textarea.addEventListener('input', () => {
-      submitButton.disabled = /^\s*$/.test(textarea.value);
-      if (textarea.scrollHeight < 450 && textarea.offsetHeight < textarea.scrollHeight) {
-        textarea.style.height = `${textarea.scrollHeight}px`;
-        publishResize();
-      }
-    });
-
-    let submitting = false;
-    form.addEventListener('submit', event => {
-      event.preventDefault();
-      if (submitting) {
-        return;
-      }
-      submitting = true;
-      if (this.user) {
-        textarea.disabled = true;
-        submitButton.disabled = true;
-      }
-      this.submit(textarea.value).catch(() => 0).then(() => {
-        submitting = false;
-        textarea.disabled = !this.user;
-        textarea.value = '';
-        submitButton.disabled = false;
-      });
-    });
+    this.textarea.addEventListener('input', this.handleInput);
+    this.form.addEventListener('submit', this.handleSubmit);
   }
 
   public setUser(user: User | null) {
     this.user = user;
-    const avatarAnchor = this.element.firstElementChild as HTMLAnchorElement;
-    const avatar = avatarAnchor.firstElementChild as HTMLImageElement;
+    this.submitButton.textContent = user ? 'Comment' : 'Sign in to comment';
+    this.submitButton.disabled = !!user;
+
     if (user) {
-      avatarAnchor.href = user.html_url;
-      avatar.alt = '@' + user.login;
-      avatar.src = user.avatar_url + '?v=3&s=88';
+      this.avatarAnchor.href = user.html_url;
+      this.avatar.alt = '@' + user.login;
+      this.avatar.src = user.avatar_url + '?v=3&s=88';
     } else {
-      avatarAnchor.removeAttribute('href');
-      avatar.alt = '@anonymous';
-      avatar.src = anonymousAvatarUrl;
+      this.avatarAnchor.removeAttribute('href');
+      this.avatar.alt = '@anonymous';
+      this.avatar.src = anonymousAvatarUrl;
+      this.textarea.disabled = true;
     }
   }
 
@@ -95,5 +78,31 @@ export class NewCommentComponent {
     const textarea = this.element.lastElementChild!.lastElementChild!
       .firstElementChild!.firstElementChild as HTMLTextAreaElement;
     textarea.value = '';
+  }
+
+  private handleInput = () => {
+    this.submitButton.disabled = /^\s*$/.test(this.textarea.value);
+    if (this.textarea.scrollHeight < 450 && this.textarea.offsetHeight < this.textarea.scrollHeight) {
+      this.textarea.style.height = `${this.textarea.scrollHeight}px`;
+      publishResize();
+    }
+  }
+
+  private handleSubmit = (event: Event) => {
+    event.preventDefault();
+    if (this.submitting) {
+      return;
+    }
+    this.submitting = true;
+    if (this.user) {
+      this.textarea.disabled = true;
+      this.submitButton.disabled = true;
+    }
+    this.submit(this.textarea.value).catch(() => 0).then(() => {
+      this.submitting = false;
+      this.textarea.disabled = !this.user;
+      this.textarea.value = '';
+      this.submitButton.disabled = false;
+    });
   }
 }
