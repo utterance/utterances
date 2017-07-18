@@ -8,35 +8,36 @@ export class CommentComponent {
 
   constructor(
     public comment: IssueComment,
+    private issueUrl: string,
     private currentUser: string | null,
     private repoOwner: string
   ) {
-    const { user, html_url, created_at, body_html } = comment;
+    const { author, createdAt, databaseId, bodyHTML } = comment;
     this.element = document.createElement('article');
     this.element.classList.add('timeline-comment');
-    if (user.login === currentUser) {
+    if (author.login === currentUser) {
       this.element.classList.add('current-user');
     }
-    if (user.login === repoOwner) {
+    if (author.login === repoOwner) {
       this.element.classList.add('repo-owner');
     }
     this.element.innerHTML = `
-      <a class="avatar" href="${user.html_url}" target="_blank">
-        <img alt="@${user.login}" height="44" width="44"
-              src="${user.avatar_url}${avatarArgs}">
+      <a class="avatar" href="${author.url}" target="_blank">
+        <img alt="@${author.login}" height="44" width="44"
+              src="${author.avatarUrl}${avatarArgs}">
       </a>
       <div class="comment">
         <header class="comment-header">
-          <a class="text-link" href="${user.html_url}" target="_blank">
-            <strong>${user.login}</strong>
+          <a class="text-link" href="${author.url}" target="_blank">
+            <strong>${author.login}</strong>
           </a>
           commented
-          <a class="text-link" href="${html_url}" target="_blank">
-            ${timeAgo(Date.now(), new Date(created_at))}
+          <a class="text-link" href="${this.issueUrl}#issuecomment-${databaseId}" target="_blank">
+            ${timeAgo(Date.now(), new Date(createdAt))}
           </a>
         </header>
         <div class="markdown-body">
-          ${body_html}
+          ${bodyHTML}
         </div>
       </div>`;
 
@@ -45,15 +46,15 @@ export class CommentComponent {
 
   public setComment(comment: IssueComment) {
     const commentDiv = this.element.lastElementChild as HTMLDivElement;
-    const { user, html_url, created_at, body_html } = comment;
+    const { author, createdAt, databaseId, bodyHTML } = comment;
 
-    if (this.comment.user.login !== user.login) {
-      if (user.login === this.currentUser) {
+    if (this.comment.author.login !== author.login) {
+      if (author.login === this.currentUser) {
         this.element.classList.add('current-user');
       } else {
         this.element.classList.remove('current-user');
       }
-      if (user.login === this.repoOwner) {
+      if (author.login === this.repoOwner) {
         this.element.classList.add('repo-owner');
       } else {
         this.element.classList.remove('repo-owner');
@@ -61,25 +62,25 @@ export class CommentComponent {
 
       const avatarAnchor = this.element.firstElementChild as HTMLAnchorElement;
       const avatarImg = avatarAnchor.firstElementChild as HTMLImageElement;
-      avatarAnchor.href = user.html_url;
-      avatarImg.alt = '@' + user.login;
-      avatarImg.src = user.avatar_url + avatarArgs;
+      avatarAnchor.href = author.url;
+      avatarImg.alt = '@' + author.login;
+      avatarImg.src = author.avatarUrl + avatarArgs;
 
       const authorAnchor = commentDiv
         .firstElementChild!.firstElementChild as HTMLAnchorElement;
-      authorAnchor.href = user.html_url;
-      authorAnchor.textContent = user.login;
+      authorAnchor.href = author.url;
+      authorAnchor.textContent = author.login;
     }
 
-    if (this.comment.created_at !== created_at || this.comment.html_url !== html_url) {
+    if (this.comment.createdAt !== createdAt || this.comment.databaseId !== databaseId) {
       const timestamp = commentDiv.firstElementChild!.firstElementChild!.lastElementChild as HTMLAnchorElement;
-      timestamp.href = html_url;
-      timestamp.textContent = timeAgo(Date.now(), new Date(created_at));
+      timestamp.href = `${this.issueUrl}#issuecomment-${databaseId}`;
+      timestamp.textContent = timeAgo(Date.now(), createdAt);
     }
 
-    if (this.comment.body_html !== body_html) {
+    if (this.comment.bodyHTML !== bodyHTML) {
       const body = commentDiv.lastElementChild as HTMLDivElement;
-      body.innerHTML = body_html;
+      body.innerHTML = bodyHTML;
       this.retargetLinks();
     }
 
@@ -92,12 +93,12 @@ export class CommentComponent {
     }
 
     const commentDiv = this.element.firstElementChild as HTMLDivElement;
-    if (this.comment.user.login === this.currentUser) {
+    if (this.comment.author.login === this.currentUser) {
       commentDiv.classList.add('current-user');
     } else {
       commentDiv.classList.remove('current-user');
     }
-    if (this.comment.user.login === this.repoOwner) {
+    if (this.comment.author.login === this.repoOwner) {
       this.element.classList.add('repo-owner');
     } else {
       this.element.classList.remove('repo-owner');

@@ -1,46 +1,40 @@
 import { pageAttributes as page } from './page-attributes';
 import {
-  Issue,
+  LoadResult,
   IssueComment,
-  User,
   setRepoContext,
-  loadIssueByTerm,
-  loadIssueByNumber,
-  loadCommentsPage,
-  loadUser,
   postComment,
-  createIssue
+  createIssue,
+  loadByNumber,
+  loadByTerm
 } from './github';
 import { login } from './oauth';
 import { TimelineComponent } from './timeline-component';
 import { NewCommentComponent } from './new-comment-component';
 import { setHostOrigin, publishResize } from './bus';
-import { RepoConfig, loadRepoConfig } from './repo-config';
 
 setRepoContext(page);
 
-function loadIssue(): Promise<Issue | null> {
+function load() {
   if (page.issueNumber !== null) {
-    return loadIssueByNumber(page.issueNumber);
+    return loadByNumber(page.issueNumber);
   }
-  return loadIssueByTerm(page.issueTerm as string);
+  return loadByTerm(page.issueTerm as string);
 }
 
-Promise.all([loadRepoConfig(page.configPath), loadIssue(), loadUser()])
-  .then(([repoConfig, issue, user]) => bootstrap(repoConfig, issue, user));
+load().then(bootstrap);
 
-function bootstrap(config: RepoConfig, issue: Issue | null, user: User | null) {
-  if (config.origins.indexOf(page.origin) === -1) {
+function bootstrap({ config, user, issue }: LoadResult) {
+  if (config === null) {
+    throw new Error(`${page.configPath} was not found in ${page.owner}/${page.repo}.`);
+  }
+  if (!Array.isArray(config.origins) || config.origins.indexOf(page.origin) === -1) {
     throw new Error(`The origins specified in ${page.configPath} do not include ${page.origin}`);
   }
   setHostOrigin(page.origin);
 
   const timeline = new TimelineComponent(user, issue, page.owner);
   document.body.appendChild(timeline.element);
-
-  if (issue && issue.comments > 0) {
-    loadCommentsPage(issue.number, 1).then(({ items }) => timeline.replaceComments(items));
-  }
 
   if (issue && issue.locked) {
     return;
@@ -69,8 +63,8 @@ function bootstrap(config: RepoConfig, issue: Issue | null, user: User | null) {
       });
     }
 
-    return login().then(() => loadUser()).then(u => {
-      user = u;
+    return login().then(() => load()).then(result => {
+      user = result.user;
       timeline.setUser(user);
       newCommentComponent.setUser(user);
     });

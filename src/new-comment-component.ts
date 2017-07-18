@@ -63,9 +63,9 @@ export class NewCommentComponent {
     this.submitButton.disabled = !!user;
 
     if (user) {
-      this.avatarAnchor.href = user.html_url;
+      this.avatarAnchor.href = user.url;
       this.avatar.alt = '@' + user.login;
-      this.avatar.src = user.avatar_url + '?v=3&s=88';
+      this.avatar.src = user.avatarUrl + '?v=3&s=88';
     } else {
       this.avatarAnchor.removeAttribute('href');
       this.avatar.alt = '@anonymous';

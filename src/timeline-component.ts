@@ -43,15 +43,17 @@ export class TimelineComponent {
   public setIssue(issue: Issue | null) {
     this.issue = issue;
     if (issue) {
-      this.countAnchor.href = issue.html_url;
+      this.countAnchor.href = issue.url;
     } else {
       this.countAnchor.removeAttribute('href');
     }
+    this.replaceComments(issue ? issue.comments : []);
   }
 
   public appendComment(comment: IssueComment) {
     const component = new CommentComponent(
       comment,
+      this.issue!.url,
       this.user ? this.user.login : null,
       this.repoOwner);
     this.timeline.push(component);
@@ -61,7 +63,7 @@ export class TimelineComponent {
     publishResize();
   }
 
-  public replaceComments(comments: IssueComment[]) {
+  private replaceComments(comments: IssueComment[]) {
     let i;
     for (i = 0; i < comments.length; i++) {
       const comment = comments[i];

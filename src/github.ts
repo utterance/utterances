@@ -1,14 +1,10 @@
 import { token } from './oauth';
-import { decodeBase64UTF8 } from './encoding';
 
 const GITHUB_API = 'https://api.github.com/';
 const GITHUB_ENCODING__HTML_JSON = 'application/vnd.github.VERSION.html+json';
-const GITHUB_ENCODING__HTML = 'application/vnd.github.VERSION.html';
 const GITHUB_ENCODING__REACTIONS_PREVIEW = 'application/vnd.github.squirrel-girl-preview';
 // const UTTERANCES_API = 'https://utterances-oauth.herokuapp.com';
 const UTTERANCES_API = 'https://utterances-oauth.azurewebsites.net';
-
-const PAGE_SIZE = 100;
 
 let owner: string;
 let repo: string;
@@ -32,147 +28,13 @@ function githubRequest(relativeUrl: string, init?: RequestInit) {
   return request;
 }
 
-const rateLimit = {
-  standard: {
-    limit: Number.MAX_VALUE,
-    remaining: Number.MAX_VALUE,
-    reset: 0
-  },
-  search: {
-    limit: Number.MAX_VALUE,
-    remaining: Number.MAX_VALUE,
-    reset: 0
-  }
-};
-
-function processRateLimit(response: Response) {
-  const limit = response.headers.get('X-RateLimit-Limit') as string;
-  const remaining = response.headers.get('X-RateLimit-Remaining') as string;
-  const reset = response.headers.get('X-RateLimit-Reset') as string;
-
-  const isSearch = /\/search\//.test(response.url);
-  const rate = isSearch ? rateLimit.search : rateLimit.standard;
-
-  rate.limit = +limit;
-  rate.remaining = +remaining;
-  rate.reset = +reset;
-
-  if (response.status === 403 && rate.remaining === 0) {
-    const resetDate = new Date(0);
-    resetDate.setUTCSeconds(rate.reset);
-    const mins = Math.round((resetDate.getTime() - new Date().getTime()) / 1000 / 60);
-    const apiType = isSearch ? 'search API' : 'non-search APIs';
-    // tslint:disable-next-line:no-console
-    console.warn(`Rate limit exceeded for ${apiType}. Resets in ${mins} minute${mins === 1 ? '' : 's'}.`);
-  }
-}
-
-function readRelNext(response: Response) {
-  const link = response.headers.get('link');
-  if (link === null) {
-    return 0;
-  }
-  const match = /\?page=([2-9][0-9]*)>; rel="next"/.exec(link);
-  if (match === null) {
-    return 0;
-  }
-  return +match[1];
-}
-
 function githubFetch(request: Request) {
   return fetch(request).then(response => {
     if (response.status === 401) {
       token.value = null;
     }
-    processRateLimit(response);
     return response;
   });
-}
-
-export function loadJsonFile<T>(path: string, html = false) {
-  const request = githubRequest(`repos/${owner}/${repo}/contents/${path}?ref=${branch}`);
-  if (html) {
-    request.headers.set('accept', GITHUB_ENCODING__HTML);
-  }
-  return githubFetch(request).then<FileContentsResponse | string>(response => {
-    if (response.status === 404) {
-      throw new Error(`Repo "${owner}/${repo}" does not have a file named "${path}" in the "${branch}" branch.`);
-    }
-    if (!response.ok) {
-      throw new Error(`Error fetching ${path}.`);
-    }
-    return html ? response.text() : response.json();
-  }).then<T>(file => {
-    if (html) {
-      return file;
-    }
-    const { content } = file as FileContentsResponse;
-    const decoded = decodeBase64UTF8(content);
-    return JSON.parse(decoded);
-  });
-}
-
-export function loadIssueByTerm(term: string) {
-  const q = `"${term}" type:issue in:title repo:${owner}/${repo}`;
-  const request = githubRequest(`search/issues?q=${encodeURIComponent(q)}&sort=created&order=asc`);
-  return githubFetch(request).then<IssueSearchResponse>(response => {
-    if (!response.ok) {
-      throw new Error('Error fetching issue via search.');
-    }
-    return response.json();
-  }).then(results => {
-    if (results.total_count === 0) {
-      return null;
-    }
-    if (results.total_count > 1) {
-      // tslint:disable-next-line:no-console
-      console.warn(`Multiple issues match "${q}". Using earliest created.`);
-    }
-    return results.items[0];
-  });
-}
-
-export function loadIssueByNumber(issueNumber: number) {
-  const request = githubRequest(`repos/${owner}/${repo}/issues/${issueNumber}`);
-  return githubFetch(request).then<Issue>(response => {
-    if (!response.ok) {
-      throw new Error('Error fetching issue via issue number.');
-    }
-    return response.json();
-  });
-}
-
-function commentsRequest(issueNumber: number, page: number) {
-  const url = `repos/${owner}/${repo}/issues/${issueNumber}/comments?page=${page}&per_page=${PAGE_SIZE}`;
-  const request = githubRequest(url);
-  const accept = `${GITHUB_ENCODING__HTML_JSON},${GITHUB_ENCODING__REACTIONS_PREVIEW}`;
-  request.headers.set('Accept', accept);
-  return request;
-}
-
-export function loadCommentsPage(issueNumber: number, page: number) {
-  const request = commentsRequest(issueNumber, page);
-  return githubFetch(request).then(response => {
-    if (!response.ok) {
-      throw new Error('Error fetching comments.');
-    }
-    const nextPage = readRelNext(response);
-    return response.json()
-      .then<CommentsPage>((items: IssueComment[]) => ({ items, nextPage }));
-  });
-}
-
-export function loadUser(): Promise<User | null> {
-  if (token.value === null) {
-    return Promise.resolve(null);
-  }
-  return githubFetch(githubRequest('user'))
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      return null;
-    });
 }
 
 export function createIssue(issueTerm: string, documentUrl: string, title: string, description: string) {
@@ -206,101 +68,177 @@ export function postComment(issueNumber: number, markdown: string) {
   });
 }
 
-interface IssueSearchResponse {
-  total_count: number;
-  incomplete_results: boolean;
-  items: Issue[];
+export function loadByTerm(term: string) {
+  return load(`"${term}" in:title repo:${owner}/${repo}`);
+}
+
+export function loadByNumber(issueNumber: number) {
+  return load(`repo:${owner}/${repo} number:${issueNumber}`);
+}
+
+function load(issueQuery: string): Promise<LoadResult> {
+  const body = JSON.stringify({
+    query: `
+      query ($owner: String!, $repo: String!, $issueQuery: String!) {
+        search(query: $issueQuery, type: ISSUE, first: 1) {
+          issueCount
+          edges {
+            node {
+              ... on Issue {
+                number
+                title
+                url
+                locked
+                comments(first: 100) {
+                  totalCount
+                  edges { node { databaseId, createdAt, bodyHTML, author { login , url, avatarUrl} } }
+                }
+              }
+            }
+          }
+        }
+
+        rateLimit { cost, limit, remaining, resetAt }
+
+        repository(owner: $owner, name: $repo) {
+          object(expression: "${branch}:utterances.json") {
+            ... on Blob {
+              text
+            }
+          }
+        }
+
+        viewer { login, url, avatarUrl }
+      }`,
+    variables: {
+      issueQuery,
+      owner,
+      repo
+    }
+  });
+
+  return githubFetch(githubRequest('graphql', { method: 'POST', body }))
+    .then<Graph>(response => response.json())
+    .then(({ data: { viewer, repository, search } }) => {
+      const config: UtterancesConfig | null = repository.object ? JSON.parse(repository.object.text) : null;
+      let issue: Issue | null = null;
+      if (search.issueCount === 1) {
+        const raw = search.edges[0].node;
+        issue = {
+          number: raw.number,
+          title: raw.title,
+          url: raw.url,
+          locked: raw.locked,
+          comments: raw.comments.edges.map(({ node: { author, bodyHTML, createdAt, databaseId } }) => ({
+            databaseId,
+            createdAt: new Date(createdAt),
+            bodyHTML,
+            author
+          }))
+        };
+      }
+      return { config, user: viewer, issue };
+    });
+}
+
+export interface LoadResult {
+  config: UtterancesConfig | null;
+  user: User;
+  issue: Issue | null;
 }
 
 export interface User {
   login: string;
-  id: number;
-  avatar_url: string;
-  gravatar_id: string;
   url: string;
-  html_url: string;
-  followers_url: string;
-  following_url: string;
-  gists_url: string;
-  starred_url: string;
-  subscriptions_url: string;
-  organizations_url: string;
-  repos_url: string;
-  events_url: string;
-  received_events_url: string;
-  type: string;
+  avatarUrl: string;
+}
+
+export interface UtterancesConfig {
+  origins: string[];
 }
 
 export interface Issue {
-  url: string;
-  repository_url: string;
-  labels_url: string;
-  comments_url: string;
-  events_url: string;
-  html_url: string;
-  id: number;
   number: number;
   title: string;
-  user: User;
-  locked: boolean;
-  labels: {
-    url: string;
-    name: string;
-    color: string;
-  }[];
-  state: string;
-  assignee: null; // todo,
-  milestone: null; // todo,
-  comments: number;
-  created_at: string;
-  updated_at: string;
-  closed_at: null; // todo,
-  pull_request: {
-    html_url: null; // todo,
-    diff_url: null; // todo,
-    patch_url: null; // todo
-  };
-  body: string;
-  score: number;
-  reactions: {
-    total_count: number;
-    '+1': number;
-    '-1': number;
-    laugh: number;
-    confused: number;
-    heart: number;
-    hooray: number;
-    url: string;
-  };
-}
-
-interface FileContentsResponse {
-  type: string;
-  encoding: string;
-  size: number;
-  name: string;
-  path: string;
-  content: string;
-  sha: string;
   url: string;
-  git_url: string;
-  html_url: string;
-  download_url: string;
+  locked: boolean;
+  comments: IssueComment[];
 }
 
 export interface IssueComment {
-  id: number;
-  url: string;
-  html_url: string;
-  body_html: string;
-  user: User;
-  created_at: string;
-  updated_at: string;
+  databaseId: number;
+  createdAt: Date;
+  bodyHTML: string;
+  author: User;
 }
 
-export interface CommentsPage {
-  items: IssueComment[];
-  nextPage: number;
+interface Graph {
+  data: {
+    search: {
+      issueCount: number;
+      edges:
+      {
+        node: {
+          number: number;
+          title: string;
+          url: string;
+          locked: boolean;
+          comments: {
+            totalCount: number;
+            edges:
+            {
+              node: {
+                databaseId: number;
+                createdAt: string;
+                bodyHTML: string;
+                author: {
+                  login: string;
+                  url: string;
+                  avatarUrl: string;
+                }
+              }
+            }[];
+          }
+        }
+      }[]
+    };
+    rateLimit: {
+      cost: number;
+      limit: number;
+      remaining: number;
+      resetAt: string;
+    };
+    repository: {
+      object: {
+        text: string;
+      };
+    };
+    viewer: {
+      login: string;
+      url: string;
+      avatarUrl: string;
+    }
+  };
+}
+
+export function loadFile(branch: string, filename: string) {
+  const request = githubRequest('graphql', {
+    method: 'POST',
+    body: JSON.stringify({
+      query: `query {
+          repository(owner: "${owner}", name: "${repo}") {
+            object(expression: "${branch}:${filename}") {
+              ... on Blob {
+                text
+              }
+            }
+          }
+        }`
+    })
+  });
+  return githubFetch(request)
+    .then(response => response.json())
+    .then(result => result.data.repository.object.text as string);
 }
 
 /*
