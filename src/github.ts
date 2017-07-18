@@ -300,3 +300,56 @@ export interface CommentsPage {
   items: IssueComment[];
   nextPage: number;
 }
+
+/*
+query IssueComments($owner: String!, $repo: String!, $issueQuery: String!) {
+  search(query: $issueQuery, type: ISSUE, first: 1) {
+    issueCount
+    edges {
+      node {
+        ... on Issue {
+          id
+          title,
+          comments(first: 100) {
+          	totalCount
+            edges {
+              node {
+                id,
+                createdAt,
+                bodyHTML,
+                author {
+                  avatarUrl,
+                  login
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  rateLimit {
+    cost
+    limit
+    remaining
+    resetAt
+  }
+
+  repository(owner: $owner, name: $repo) {
+    object(expression: "master:utterances.json") {
+      ... on Blob {
+        text
+      }
+    }
+  }
+}
+
+
+
+{
+  "issueQuery": "user:jdanyow repo:utterances-demo debug",
+  "owner": "jdanyow",
+  "repo": "utterances-demo"
+}
+*/
