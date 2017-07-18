@@ -2050,31 +2050,31 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-primer-base@^0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/primer-base/-/primer-base-0.4.2.tgz#10bea7bdd454c447b1ed6e801595f3888b30f01f"
+primer-base@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/primer-base/-/primer-base-1.1.5.tgz#1d67e8eb54370b850629d483097d19306cc75ecc"
   dependencies:
-    primer-support "*"
+    primer-support "^4.0.7"
 
-primer-buttons@^2.0.0:
+primer-buttons@^2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/primer-buttons/-/primer-buttons-2.0.6.tgz#1bc62b651de1013bb9d3bc085db7f8868fad31a9"
   dependencies:
     primer-support "^4.0.7"
 
-primer-forms@^1.0.6:
+primer-forms@^1.0.13:
   version "1.0.13"
   resolved "https://registry.yarnpkg.com/primer-forms/-/primer-forms-1.0.13.tgz#5ddc008cb083b625871dcb4b0e394cdb3dc44991"
   dependencies:
     primer-support "^4.0.7"
 
-primer-markdown@^3.3.7:
+primer-markdown@^3.3.13:
   version "3.3.13"
   resolved "https://registry.yarnpkg.com/primer-markdown/-/primer-markdown-3.3.13.tgz#45f0e11b4c7924214ffd47839409cf890d6c2727"
   dependencies:
     primer-support "^4.0.7"
 
-primer-support@*, primer-support@^4.0.7:
+primer-support@^4.0.7:
   version "4.0.7"
   resolved "https://registry.yarnpkg.com/primer-support/-/primer-support-4.0.7.tgz#c9c433c5a597a78226870ea3d18c4bf0e96eeab4"
 
