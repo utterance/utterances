@@ -31,19 +31,19 @@
     "chrome": "google-chrome --disable-web-security --allow-running-insecure-content --user-data-dir=\"chrome\""
   },
   "devDependencies": {
-    "browser-sync": "^2.18.8",
+    "browser-sync": "^2.18.12",
     "chokidar-cli": "^1.2.0",
-    "concurrently": "^3.4.0",
-    "gh-pages": "^0.12.0",
-    "inliner": "^1.12.1",
-    "node-sass": "^4.5.2",
+    "concurrently": "^3.5.0",
+    "gh-pages": "^1.0.0",
+    "inliner": "^1.12.3",
+    "node-sass": "^4.5.3",
     "primer-base": "^0.4.2",
     "primer-buttons": "^2.0.0",
     "primer-forms": "^1.0.6",
     "primer-markdown": "^3.3.7",
-    "rollup": "^0.41.6",
-    "tslint": "^5.1.0",
-    "typescript": "^2.3.2",
-    "uglifyjs": "^2.4.10"
+    "rollup": "^0.45.2",
+    "tslint": "^5.5.0",
+    "typescript": "^2.4.1",
+    "uglify-js": "^3.0.25"
   }
 }
