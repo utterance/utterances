@@ -7,6 +7,7 @@ export class TimelineComponent {
   private readonly timeline: CommentComponent[] = [];
   private readonly countAnchor: HTMLAnchorElement;
   private readonly marker: Node;
+  private count: number = 0;
 
   constructor(
     private user: User | null,
@@ -27,6 +28,7 @@ export class TimelineComponent {
     this.marker = document.createComment('marker');
     this.element.appendChild(this.marker);
     this.setIssue(issue);
+    this.renderCount();
   }
 
   public setUser(user: User | null) {
@@ -41,10 +43,8 @@ export class TimelineComponent {
   public setIssue(issue: Issue | null) {
     this.issue = issue;
     if (issue) {
-      this.countAnchor.textContent = `${issue.comments} Comment${issue.comments === 1 ? '' : 's'}`;
       this.countAnchor.href = issue.html_url;
     } else {
-      this.countAnchor.textContent = `0 Comments`;
       this.countAnchor.removeAttribute('href');
     }
   }
@@ -56,6 +56,8 @@ export class TimelineComponent {
       this.repoOwner);
     this.timeline.push(component);
     this.element.insertBefore(component.element, this.marker);
+    this.count++;
+    this.renderCount();
     publishResize();
   }
 
@@ -72,6 +74,12 @@ export class TimelineComponent {
     for (; i < this.timeline.length; i++) {
       this.element.removeChild(this.element.lastElementChild!);
     }
+    this.count = comments.length;
+    this.renderCount();
     publishResize();
+  }
+
+  private renderCount() {
+    this.countAnchor.textContent = `${this.count} Comment${this.count === 1 ? '' : 's'}`;
   }
 }
