@@ -157,6 +157,7 @@ export class ConfigurationComponent {
   private outputConfig() {
     const mapping = this.element.querySelector('input[name="mapping"]:checked') as HTMLInputElement;
     let mappingAttr: string;
+    // tslint:disable-next-line:prefer-conditional-expression
     if (mapping.value === 'issue-number') {
       mappingAttr = this.makeConfigScriptAttribute('issue-number', '123');
     } else if (mapping.value === 'specific-term') {

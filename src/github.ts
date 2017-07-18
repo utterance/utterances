@@ -62,6 +62,7 @@ function processRateLimit(response: Response) {
     resetDate.setUTCSeconds(rate.reset);
     const mins = Math.round((resetDate.getTime() - new Date().getTime()) / 1000 / 60);
     const apiType = isSearch ? 'search API' : 'non-search APIs';
+    // tslint:disable-next-line:no-console
     console.warn(`Rate limit exceeded for ${apiType}. Resets in ${mins} minute${mins === 1 ? '' : 's'}.`);
   }
 }
@@ -124,6 +125,7 @@ export function loadIssueByTerm(term: string) {
       return null;
     }
     if (results.total_count > 1) {
+      // tslint:disable-next-line:no-console
       console.warn(`Multiple issues match "${q}". Using earliest created.`);
     }
     return results.items[0];
@@ -344,8 +346,6 @@ query IssueComments($owner: String!, $repo: String!, $issueQuery: String!) {
     }
   }
 }
-
-
 
 {
   "issueQuery": "user:jdanyow repo:utterances-demo debug",
