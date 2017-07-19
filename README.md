@@ -23,5 +23,6 @@ To comment, users must authorize the utterances app to post on their behalf usin
 Using utterances? [Add your site](https://github.com/utterance/utterances/edit/master/README.md) to the list:
 
 * [danyow.net](https://danyow.net)
+* [Den by Default](https://dennisdel.com)
 
 # try it out :point_down::point_down::point_down:
