@@ -11,8 +11,7 @@ export class TimelineComponent {
 
   constructor(
     private user: User | null,
-    private issue: Issue | null,
-    private repoOwner: string
+    private issue: Issue | null
   ) {
     this.element = document.createElement('section');
     this.element.classList.add('timeline');
@@ -52,8 +51,7 @@ export class TimelineComponent {
   public appendComment(comment: IssueComment) {
     const component = new CommentComponent(
       comment,
-      this.user ? this.user.login : null,
-      this.repoOwner);
+      this.user ? this.user.login : null);
     this.timeline.push(component);
     this.element.insertBefore(component.element, this.marker);
     this.count++;

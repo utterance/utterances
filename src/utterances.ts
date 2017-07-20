@@ -35,7 +35,7 @@ function bootstrap(config: RepoConfig, issue: Issue | null, user: User | null) {
   }
   setHostOrigin(page.origin);
 
-  const timeline = new TimelineComponent(user, issue, page.owner);
+  const timeline = new TimelineComponent(user, issue);
   document.body.appendChild(timeline.element);
 
   if (issue && issue.comments > 0) {

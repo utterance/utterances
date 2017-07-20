@@ -40,6 +40,7 @@ function readPageAttributes() {
 
   return {
     owner: matches[1],
+    otherOwners: params.owners === undefined ? [] : params.owners.split(','),
     repo: matches[2],
     branch: 'branch' in params ? params.branch : 'master',
     configPath: 'config-path' in params ? params['config-path'] : 'utterances.json',
@@ -53,3 +54,10 @@ function readPageAttributes() {
 }
 
 export const pageAttributes = readPageAttributes();
+
+export function isOwner(login: string) {
+  const { owner, otherOwners } = pageAttributes;
+  const ignoreCase = { sensitivity: 'base' };
+  return login.localeCompare(owner, undefined, ignoreCase) === 0
+    || otherOwners.find && otherOwners.find(o => login.localeCompare(o, undefined, ignoreCase) === 0);
+}

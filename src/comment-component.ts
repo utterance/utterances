@@ -1,5 +1,6 @@
 import { IssueComment } from './github';
 import { timeAgo } from './time-ago';
+import { isOwner } from './page-attributes';
 
 const avatarArgs = '?v=3&s=88';
 
@@ -8,8 +9,7 @@ export class CommentComponent {
 
   constructor(
     public comment: IssueComment,
-    private currentUser: string | null,
-    private repoOwner: string
+    private currentUser: string | null
   ) {
     const { user, html_url, created_at, body_html } = comment;
     this.element = document.createElement('article');
@@ -17,7 +17,7 @@ export class CommentComponent {
     if (user.login === currentUser) {
       this.element.classList.add('current-user');
     }
-    if (user.login === repoOwner) {
+    if (isOwner(user.login)) {
       this.element.classList.add('repo-owner');
     }
     this.element.innerHTML = `
@@ -53,7 +53,7 @@ export class CommentComponent {
       } else {
         this.element.classList.remove('current-user');
       }
-      if (user.login === this.repoOwner) {
+      if (isOwner(user.login)) {
         this.element.classList.add('repo-owner');
       } else {
         this.element.classList.remove('repo-owner');
@@ -97,7 +97,7 @@ export class CommentComponent {
     } else {
       commentDiv.classList.remove('current-user');
     }
-    if (this.comment.user.login === this.repoOwner) {
+    if (isOwner(this.comment.user.login)) {
       this.element.classList.add('repo-owner');
     } else {
       this.element.classList.remove('repo-owner');
