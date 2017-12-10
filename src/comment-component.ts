@@ -27,13 +27,9 @@ export class CommentComponent {
       </a>
       <div class="comment">
         <header class="comment-header">
-          <a class="text-link" href="${user.html_url}" target="_blank">
-            <strong>${user.login}</strong>
-          </a>
+          <a class="text-link" href="${user.html_url}" target="_blank"><strong>${user.login}</strong></a>
           commented
-          <a class="text-link" href="${html_url}" target="_blank">
-            ${timeAgo(Date.now(), new Date(created_at))}
-          </a>
+          <a class="text-link" href="${html_url}" target="_blank">${timeAgo(Date.now(), new Date(created_at))}</a>
         </header>
         <div class="markdown-body">
           ${body_html}
