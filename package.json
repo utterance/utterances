@@ -5,9 +5,9 @@
   "scripts": {
     "lint": "tslint --project tsconfig.json",
     "clean": "rm -rf output && rm -rf debug && rm -rf dist && mkdir debug && mkdir dist",
-    "rollup-client": "rollup output/client.js --format iife --output debug/client.js",
-    "rollup-utterances": "rollup output/utterances.js --format iife --output debug/utterances.js",
-    "rollup-index": "rollup output/index.js --format iife --output debug/index.js",
+    "rollup-client": "rollup output/client.js --output.format iife --output.file debug/client.js",
+    "rollup-utterances": "rollup output/utterances.js --output.format iife --output.file debug/utterances.js",
+    "rollup-index": "rollup output/index.js --output.format iife --output.file debug/index.js",
     "rollup": "yarn run rollup-client && yarn run rollup-utterances && yarn run rollup-index",
     "html": "cp src/*.html debug/ && cp src/authorized.html dist/",
     "sass": "node-sass src --output debug --include-path node_modules",
@@ -31,19 +31,19 @@
     "chrome": "google-chrome --disable-web-security --allow-running-insecure-content --user-data-dir=\"chrome\""
   },
   "devDependencies": {
-    "browser-sync": "^2.18.12",
+    "browser-sync": "^2.18.13",
     "chokidar-cli": "^1.2.0",
-    "concurrently": "^3.5.0",
-    "gh-pages": "^1.0.0",
-    "inliner": "^1.12.3",
-    "node-sass": "^4.5.3",
-    "primer-base": "^1.1.5",
-    "primer-buttons": "^2.0.6",
-    "primer-forms": "^1.0.13",
-    "primer-markdown": "^3.3.13",
-    "rollup": "^0.45.2",
-    "tslint": "^5.5.0",
-    "typescript": "^2.4.1",
-    "uglify-js": "^3.0.25"
+    "concurrently": "^3.5.1",
+    "gh-pages": "^1.1.0",
+    "inliner": "^1.13.1",
+    "node-sass": "^4.7.2",
+    "primer-base": "^1.6.1",
+    "primer-buttons": "^2.5.1",
+    "primer-forms": "^2.0.1",
+    "primer-markdown": "^3.7.3",
+    "rollup": "^0.52.1",
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.2",
+    "uglify-js": "^3.2.1"
   }
 }
