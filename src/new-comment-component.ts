@@ -75,9 +75,7 @@ export class NewCommentComponent {
   }
 
   public clear() {
-    const textarea = this.element.lastElementChild!.lastElementChild!
-      .firstElementChild!.firstElementChild as HTMLTextAreaElement;
-    textarea.value = '';
+    this.textarea.value = '';
   }
 
   private handleInput = () => {
