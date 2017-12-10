@@ -26,7 +26,7 @@ export class TimelineComponent {
     this.countAnchor = this.element.firstElementChild!.firstElementChild as HTMLAnchorElement;
     this.marker = document.createComment('marker');
     this.element.appendChild(this.marker);
-    this.setIssue(issue);
+    this.setIssue(this.issue);
     this.renderCount();
   }
 
