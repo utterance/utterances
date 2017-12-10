@@ -11,15 +11,28 @@ const scopes = 'public_repo';
 
 class Token {
   private readonly storageKey = 'OAUTH_TOKEN';
+  private token: string | null = null;
+
+  constructor() {
+    try {
+      this.token = localStorage.getItem(this.storageKey);
+      // tslint:disable-next-line:no-empty
+    } catch (e) { }
+  }
+
   get value() {
-    return localStorage.getItem(this.storageKey);
+    return this.token;
   }
   set value(newValue) {
-    if (newValue === null) {
-      localStorage.removeItem(this.storageKey);
-    } else {
-      localStorage.setItem(this.storageKey, newValue);
-    }
+    this.token = newValue;
+    try {
+      if (newValue === null) {
+        localStorage.removeItem(this.storageKey);
+      } else {
+        localStorage.setItem(this.storageKey, newValue);
+      }
+      // tslint:disable-next-line:no-empty
+    } catch (e) { }
   }
 }
 
