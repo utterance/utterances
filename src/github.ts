@@ -1,13 +1,11 @@
 import { token } from './oauth';
 import { decodeBase64UTF8 } from './encoding';
+import { UTTERANCES_API } from './utterances-api';
 
 const GITHUB_API = 'https://api.github.com/';
 const GITHUB_ENCODING__HTML_JSON = 'application/vnd.github.VERSION.html+json';
 const GITHUB_ENCODING__HTML = 'application/vnd.github.VERSION.html';
 const GITHUB_ENCODING__REACTIONS_PREVIEW = 'application/vnd.github.squirrel-girl-preview';
-// const UTTERANCES_API = 'https://utterances-oauth.herokuapp.com';
-const UTTERANCES_API = 'https://utterances-oauth.azurewebsites.net';
-
 const PAGE_SIZE = 100;
 
 let owner: string;
@@ -184,6 +182,7 @@ export function createIssue(issueTerm: string, documentUrl: string, title: strin
     })
   });
   request.headers.set('Accept', GITHUB_ENCODING__REACTIONS_PREVIEW);
+  request.headers.set('Authorization', `token ${token.value}`);
   return fetch(request).then<Issue>(response => {
     if (!response.ok) {
       throw new Error('Error creating comments container issue');
@@ -231,6 +230,15 @@ export interface User {
   type: string;
 }
 
+export type CommentAuthorAssociation =
+  'COLLABORATOR'
+  | 'CONTRIBUTOR'
+  | 'FIRST_TIMER'
+  | 'FIRST_TIME_CONTRIBUTOR'
+  | 'MEMBER'
+  | 'NONE'
+  | 'OWNER';
+
 export interface Issue {
   url: string;
   repository_url: string;
@@ -272,6 +280,7 @@ export interface Issue {
     hooray: number;
     url: string;
   };
+  author_association: CommentAuthorAssociation;
 }
 
 interface FileContentsResponse {
@@ -296,6 +305,7 @@ export interface IssueComment {
   user: User;
   created_at: string;
   updated_at: string;
+  author_association: CommentAuthorAssociation;
 }
 
 export interface CommentsPage {

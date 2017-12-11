@@ -1,8 +1,13 @@
 import { IssueComment } from './github';
 import { timeAgo } from './time-ago';
-import { isOwner } from './page-attributes';
 
 const avatarArgs = '?v=3&s=88';
+const displayAssociations: { [association: string]: string; } = {
+  COLLABORATOR: 'Collaborator',
+  CONTRIBUTOR: 'Contributor',
+  MEMBER: 'Member',
+  OWNER: 'Owner'
+};
 
 export class CommentComponent {
   public readonly element: HTMLElement;
@@ -11,15 +16,13 @@ export class CommentComponent {
     public comment: IssueComment,
     private currentUser: string | null
   ) {
-    const { user, html_url, created_at, body_html } = comment;
+    const { user, html_url, created_at, body_html, author_association } = comment;
     this.element = document.createElement('article');
     this.element.classList.add('timeline-comment');
     if (user.login === currentUser) {
       this.element.classList.add('current-user');
     }
-    if (isOwner(user.login)) {
-      this.element.classList.add('repo-owner');
-    }
+    const association = displayAssociations[author_association];
     this.element.innerHTML = `
       <a class="avatar" href="${user.html_url}" target="_blank">
         <img alt="@${user.login}" height="44" width="44"
@@ -30,6 +33,7 @@ export class CommentComponent {
           <a class="text-link" href="${user.html_url}" target="_blank"><strong>${user.login}</strong></a>
           commented
           <a class="text-link" href="${html_url}" target="_blank">${timeAgo(Date.now(), new Date(created_at))}</a>
+          ${association ? `<span class="author-association-badge">${association}</span>` : ''}
         </header>
         <div class="markdown-body">
           ${body_html}
@@ -48,11 +52,6 @@ export class CommentComponent {
         this.element.classList.add('current-user');
       } else {
         this.element.classList.remove('current-user');
-      }
-      if (isOwner(user.login)) {
-        this.element.classList.add('repo-owner');
-      } else {
-        this.element.classList.remove('repo-owner');
       }
 
       const avatarAnchor = this.element.firstElementChild as HTMLAnchorElement;
@@ -86,20 +85,13 @@ export class CommentComponent {
     if (this.currentUser === currentUser) {
       return;
     }
-
-    const commentDiv = this.element.firstElementChild as HTMLDivElement;
-    if (this.comment.user.login === this.currentUser) {
-      commentDiv.classList.add('current-user');
-    } else {
-      commentDiv.classList.remove('current-user');
-    }
-    if (isOwner(this.comment.user.login)) {
-      this.element.classList.add('repo-owner');
-    } else {
-      this.element.classList.remove('repo-owner');
-    }
-
     this.currentUser = currentUser;
+
+    if (this.comment.user.login === this.currentUser) {
+      this.element.classList.add('current-user');
+    } else {
+      this.element.classList.remove('current-user');
+    }
   }
 
   private retargetLinks() {
