@@ -1,6 +1,6 @@
 # utterances :crystal_ball:
 
-A lightweight comments widget using GitHub issues.
+A lightweight comments widget built on GitHub issues.
 
 * [Open source](https://github.com/utterance) :octocat:
 * No tracking, no ads, always free. :satellite::no_entry_sign:
