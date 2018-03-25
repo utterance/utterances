@@ -25,8 +25,12 @@ Using utterances? [Add your site](https://github.com/utterance/utterances/edit/m
 * [danyow.net](https://danyow.net)
 * [Den by Default](https://dennisdel.com)
 * [winterland.me](http://winterland.me/)
-* [blog.davvidbaker.com](https://blog.davvidbaker.com)
+* [davidbaker.is/scribbling](https://davidbaker.is/scribbling)
 * [lonr.github.io](https://lonr.github.io)
 * [Mapping thoughts to language](http://blog.ville.oikarinen.org)
+* [os.phil-opp.com](https://os.phil-opp.com/second-edition)
+* [fdp.io](https://fdp.io)
+* [blog.leop0ld.org](http://blog.leop0ld.org/)
+* [Anton Medvedev](https://medv.io)
 
 # try it out :point_down::point_down::point_down:
