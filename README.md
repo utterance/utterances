@@ -27,6 +27,7 @@ Using utterances? [Add your site](https://github.com/utterance/utterances/edit/m
 * [winterland.me](http://winterland.me/)
 * [davidbaker.is/scribbling](https://davidbaker.is/scribbling)
 * [lonr.github.io](https://lonr.github.io)
+* [Mapping thoughts to language](http://blog.ville.oikarinen.org)
 * [os.phil-opp.com](https://os.phil-opp.com/second-edition)
 * [fdp.io](https://fdp.io)
 * [blog.leop0ld.org](http://blog.leop0ld.org/)
