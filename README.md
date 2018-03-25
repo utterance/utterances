@@ -28,5 +28,6 @@ Using utterances? [Add your site](https://github.com/utterance/utterances/edit/m
 * [blog.davvidbaker.com](https://blog.davvidbaker.com)
 * [lonr.github.io](https://lonr.github.io)
 * [blog.leop0ld.org](http://blog.leop0ld.org/)
+* [Anton Medvedev](https://medv.io)
 
 # try it out :point_down::point_down::point_down:
