@@ -85,6 +85,6 @@ addEventListener('not-installed', function handleNotInstalled() {
     If you own this repo,
     <a href="https://github.com/apps/utterances" target="_blank"><strong>install the app</strong></a>.
     Read more about this change in
-    <a href="https://github.com/utterance/utterances/issues#3" target="_blank">the PR</a>.
+    <a href="https://github.com/utterance/utterances/pull/25" target="_blank">the PR</a>.
   </div>`);
 });
