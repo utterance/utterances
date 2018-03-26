@@ -1,6 +1,6 @@
 {
   "name": "utterances",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "description": "A lightweight comments widget built on GitHub issues.",
   "private": true,
   "license": "MIT",
