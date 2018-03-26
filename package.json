@@ -15,7 +15,7 @@
     "prebuild": "yarn run clean",
     "build": "parcel build src/utterances.html && parcel build src/client.ts && parcel build src/index.html && parcel build src/authorized.html",
     "predeploy": "yarn run build && cp .nojekyll dist/ && cp CNAME dist/",
-    "deploy": "echo \"gh-pages --dist dist\"",
+    "deploy": "gh-pages --dist dist",
     "(postinstall is temporary: using unreased version of parcel)": "",
     "postinstall": "cd node_modules/parcel-bundler && yarn install && yarn build && cd ../.."
   },

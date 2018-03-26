@@ -9,29 +9,33 @@
 @import "timeline-comment";
 @import "buttons";
 
-.timeline-comment .markdown-body {
-  max-height: unset;
+.markdown-body {
+  max-height: unset!important;
   font-size: 16px;
+}
 
-  form {
-    font-size: $body-font-size;
+form {
+  font-size: $body-font-size;
+}
 
-    fieldset {
-      border: none;
-      margin: 0 $spacer-3;
-      padding: 0;
+fieldset {
+  border: none;
+  margin: 0 $spacer-3;
+  padding: 0;
+}
 
-      input:not([type=radio]) {
-        margin: $spacer-1 0;
-      }
-    }
+input:not([type=radio]) {
+  margin: $spacer-1 0;
+}
 
-    .code-action {
-      float: right;
-      margin-top: -$spacer-2;
-      margin-bottom: $spacer-3;
-    }
-  }
+.form-checkbox label {
+  display: block;
+}
+
+.code-action {
+  float: right;
+  margin-top: -$spacer-2;
+  margin-bottom: $spacer-3;
 }
 
 .btn-blue { @include btn-solid($text-white, lighten($blue-500, 8%), darken($blue-500, 2%)); }
