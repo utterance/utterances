@@ -1,35 +1,28 @@
-import repoRegex from './repo-regex';
-
 export class ConfigurationComponent {
   public element: HTMLFormElement;
   private script: HTMLDivElement;
-  private utterancesJson: HTMLDivElement;
-  private createJsonButton: HTMLButtonElement;
   private repo: HTMLInputElement;
-  private branch: HTMLInputElement;
-  private blog: HTMLInputElement;
-  private repoIsValid: boolean;
-  private branchIsValid: boolean;
 
   constructor() {
     this.element = document.createElement('form');
     this.element.innerHTML = `
-      <h3>Repository & Branch</h3>
-      <p>Enter the GitHub repository and branch Utterances will connect to.</p>
+      <h3>Repository</h3>
+      <p>
+        Choose the repository utterances will connect to.
+      </p>
+      <ol>
+        <li>Make sure the repo is public, otherwise your readers will not be able to view the issues/comments.</li>
+        <li>Make sure the <a href="https://github.com/apps/utterances">utterances app</a>
+          is installed on the repo, otherwise users will not be able to post comments.
+        </li>
+      </ol>
       <fieldset>
         <div>
-          <label for="repo">Repo:</label><br/>
+          <label for="repo">repo:</label><br/>
           <input id="repo" class="form-control" type="text" placeholder="owner/repo">
           <p class="note">
             A <strong>public</strong> GitHub repository. This is where the blog
             post issues and issue-comments will be posted.
-          </p>
-        </div>
-        <div>
-          <label for="branch">Branch:</label><br/>
-          <input id="branch" class="form-control" type="text" placeholder="master" value="master">
-          <p class="note">
-            The branch where the utterances.json file will be stored.
           </p>
         </div>
       </fieldset>
@@ -85,35 +78,15 @@ export class ConfigurationComponent {
             <input type="radio" value="specific-term" name="mapping">
             Issue title contains specific term
             <p class="note">
-              You configure Utterances to search for an issue whose title contains a specific term.
+              You configure Utterances to search for an issue whose title contains a specific term of your choosing.
               If a matching issue is not found, Utterances will automatically create one the first
-              time someone comments on your post.
+              time someone comments on your post. The issue's title will be the term you chose.
             </p>
           </label>
         </div>
       </fieldset>
 
-      <h3>Blog</h3>
-      <p>Choose the blog(s) that will be permitted to post issues and issue comments to
-      your GitHub repository via Utterances.</p>
-      <fieldset>
-        <div>
-          <label for="blog">Blog URL:</label><br/>
-          <input id="blog" class="form-control" type="text" placeholder="https://interesting.net/blog/">
-          <p class="note">
-            The base url of the blog that will post issues and comments to
-            the repo. Separate multiple urls with a comma.
-          </p>
-        </div>
-      </fieldset>
-
       <h3>Enable Utterances</h3>
-
-      <p>Add the utterances.json file to your GitHub repo</p>
-      <div class="config-field" id="utterances-json" class="highlight highlight-text-html-basic"></div>
-      <button id="create-utterances-json" type="button" class="btn btn-blue code-action" disabled>Create...</button>
-      <br/>
-      <br/>
 
       <p>Add the following script tag to your blog's template. Position it where you want the
       comments to appear. Customize the layout using the <code>.utterances</code> and
@@ -128,21 +101,8 @@ export class ConfigurationComponent {
     this.element.action = 'javascript:';
 
     this.script = this.element.querySelector('#script') as HTMLDivElement;
-    this.utterancesJson = this.element.querySelector('#utterances-json') as HTMLDivElement;
 
     this.repo = this.element.querySelector('#repo') as HTMLInputElement;
-    this.repoValidation();
-    this.branch = this.element.querySelector('#branch') as HTMLInputElement;
-    this.branchValidation();
-    this.blog = this.element.querySelector('#blog') as HTMLInputElement;
-
-    this.createJsonButton = this.element.querySelector('#create-utterances-json') as HTMLButtonElement;
-    this.createJsonButton.addEventListener('click', () => {
-      const encodedJson = encodeURIComponent(this.utterancesJson.textContent as string);
-      // tslint:disable-next-line:max-line-length
-      const url = `https://github.com/${this.repo.value}/new/${encodeURIComponent(this.branch.value)}?filename=utterances.json&value=${encodedJson}`;
-      window.open(url, '_blank');
-    });
 
     const copyButton = this.element.querySelector('#copy-button') as HTMLButtonElement;
     copyButton.addEventListener(
@@ -159,20 +119,15 @@ export class ConfigurationComponent {
     let mappingAttr: string;
     // tslint:disable-next-line:prefer-conditional-expression
     if (mapping.value === 'issue-number') {
-      mappingAttr = this.makeConfigScriptAttribute('issue-number', '123');
+      mappingAttr = this.makeConfigScriptAttribute('issue-number', '[ENTER ISSUE NUMBER HERE]');
     } else if (mapping.value === 'specific-term') {
-      mappingAttr = this.makeConfigScriptAttribute('issue-term', '????');
+      mappingAttr = this.makeConfigScriptAttribute('issue-term', '[ENTER TERM HERE]');
     } else {
       mappingAttr = this.makeConfigScriptAttribute('issue-term', mapping.value);
     }
     this.script.innerHTML = this.makeConfigScript(
-      this.makeConfigScriptAttribute('repo', this.repo.value) + '\n' +
-      this.makeConfigScriptAttribute('branch', this.branch.value) + '\n' +
+      this.makeConfigScriptAttribute('repo', this.repo.value === '' ? '[ENTER REPO HERE]' : this.repo.value) + '\n' +
       mappingAttr);
-
-    const origins = this.stringToOriginsArray(this.blog.value);
-
-    this.utterancesJson.innerHTML = this.makeUtterancesJson(origins);
   }
 
   private makeConfigScriptAttribute(name: string, value: string) {
@@ -183,76 +138,6 @@ export class ConfigurationComponent {
   private makeConfigScript(attrs: string) {
     // tslint:disable-next-line:max-line-length
     return `<pre><span class="pl-s1">&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>https://utteranc.es/client.js<span class="pl-pds">"</span></span></span>\n${attrs}\n<span class="pl-s1">        <span class="pl-e">async</span>&gt;</span>\n<span class="pl-s1">&lt;/<span class="pl-ent">script</span>&gt;</span></pre>`;
-  }
-
-  private makeUtterancesJson(origins: string[]) {
-    // tslint:disable-next-line:max-line-length
-    const makeOriginHtml = (origin: string) => `<span class="pl-s"><span class="pl-pds">"</span>${origin}<span class="pl-pds">"</span></span>`;
-    const originsHtml = origins.map(makeOriginHtml).join(', ');
-    // tslint:disable-next-line:max-line-length
-    return `<pre>{\n  <span class="pl-s"><span class="pl-pds">"</span>origins<span class="pl-pds">"</span></span>: [${originsHtml}]\n}</pre>`;
-  }
-
-  private stringToOriginsArray(value: string) {
-    const a = document.createElement('a');
-    return value.split(',')
-      .map(x => x.trim())
-      .filter(x => x.length)
-      .map(x => {
-        a.href = x;
-        return a.protocol + '//' + a.host;
-      });
-  }
-
-  private repoValidation() {
-    const control = this.repo.parentElement as HTMLDivElement;
-    this.repo.addEventListener('input', () => {
-      this.createJsonButton.disabled = true;
-      control.classList.remove('has-error', 'has-success');
-    });
-    this.repo.addEventListener('blur', () => {
-      if (!repoRegex.test(this.repo.value)) {
-        control.classList.add('has-error');
-        return;
-      }
-      fetch('https://api.github.com/repos/' + this.repo.value, { method: 'HEAD' })
-        .then(response => {
-          if (response.ok) {
-            this.repoIsValid = true;
-            this.createJsonButton.disabled = !this.branchIsValid;
-            control.classList.add('has-success');
-          } else if (response.status === 404) {
-            control.classList.add('has-error');
-          }
-        });
-    });
-  }
-
-  private branchValidation() {
-    const control = this.branch.parentElement as HTMLDivElement;
-    this.branch.addEventListener('input', () => {
-      this.createJsonButton.disabled = true;
-      control.classList.remove('has-error', 'has-success');
-    });
-    this.branch.addEventListener('blur', () => {
-      if (!this.repoIsValid) {
-        return;
-      }
-      if (!/^[\w\n-]+$/.test(this.branch.value)) {
-        control.classList.add('has-error');
-        return;
-      }
-      fetch(`https://api.github.com/repos/${this.repo.value}/branches/${this.branch.value}`, { method: 'HEAD' })
-        .then(response => {
-          if (response.ok) {
-            this.branchIsValid = true;
-            this.createJsonButton.disabled = !this.repoIsValid;
-            control.classList.add('has-success');
-          } else if (response.status === 404) {
-            control.classList.add('has-error');
-          }
-        });
-    });
   }
 
   private copyTextToClipboard(text: string) {

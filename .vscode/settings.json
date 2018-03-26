@@ -1,6 +1,7 @@
 {
-  "typescript.tsdk": "node_modules/typescript/lib",
   "editor.formatOnSave": true,
   "html.format.enable": false,
-  "json.format.enable": false
+  "json.format.enable": false,
+  "editor.detectIndentation": false,
+  "editor.tabSize": 2
 }

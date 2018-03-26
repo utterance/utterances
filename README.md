@@ -12,7 +12,9 @@ A lightweight comments widget built on GitHub issues.
 
 When Utterances loads, the GitHub [issue search API](https://developer.github.com/v3/search/#search-issues) is used to find the issue associated with the page based on `url`, `pathname` or `title`. The issue's comments are displayed in the familiar GitHub style.
 
-When a matching issue is not found, [utterances-bot](https://github.com/utterances-bot) will automatically create one the first time someone comments.
+*What if we can find an issue that matches the page?*
+
+No problem- [utterances-bot](https://github.com/utterances-bot) will automatically create one the first time someone comments.
 
 To comment, users must authorize the utterances app to post on their behalf using the GitHub [OAuth flow](https://developer.github.com/v3/oauth/#web-application-flow). Alternatively, users can comment on the GitHub issue directly.
 
