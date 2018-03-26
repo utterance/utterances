@@ -82,7 +82,7 @@ addEventListener('not-installed', function handleNotInstalled() {
   document.querySelector('.timeline')!.insertAdjacentHTML('afterbegin', `
   <div class="flash flash-error flash-not-installed">
     Error: utterances is not installed on <code>${page.owner}/${page.repo}</code>.
-    If you are the owner of this repo,
+    If you own this repo,
     <a href="https://github.com/apps/utterances" target="_blank"><strong>install the app</strong></a>.
     Read more about this change in
     <a href="https://github.com/utterance/utterances/issues#3" target="_blank">the PR</a>.
