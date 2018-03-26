@@ -28,6 +28,7 @@ To comment, users must authorize the utterances app to post on their behalf usin
 * [fdp.io](https://fdp.io)
 * [blog.leop0ld.org](http://blog.leop0ld.org/)
 * [Anton Medvedev](https://medv.io)
+* Haxe [documentation](https://haxe.org/manual) and [cookbook](https://code.haxe.org/)
 
 Are you using utterances? [Add your site](https://github.com/utterance/utterances/edit/master/README.md) to the list!
 
