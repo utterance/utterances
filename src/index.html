@@ -5,7 +5,7 @@
     <meta name="description" content="A lightweight commenting system using GitHub issues.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="index.scss">
     <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
@@ -21,7 +21,8 @@
         document.write(
           '<script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.5.0/bluebird.min.js" integrity="sha256-/l7dZnd9iW5Iw9P2Qn/0ghByeFDKnIcPd4DTptDaK20=" crossorigin="anonymous"><\/script>',
           '<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js" integrity="sha256-aB35laj7IZhLTx58xw/Gm1EKOoJJKZt6RY+bH1ReHxs=" crossorigin="anonymous"><\/script>',
-          '<script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"><\/script>'
+          '<script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"><\/script>',
+          '<script src="https://cdn.jsdelivr.net/npm/custom-event-polyfill@0.3.0/custom-event-polyfill.min.js"><\/script>'
         );
       }
     </script>
@@ -43,12 +44,19 @@
       </article>
     </section>
 
-    <script src="index.js"></script>
+    <script src="index.ts"></script>
 
-    <script src="https://utteranc.es/client.js"
+    <!-- <script src="https://utteranc.es/client.js"
             repo="utterance/utterances"
             branch="gh-pages"
             issue-term="homepage"
+            async>
+    </script> -->
+
+    <script src="http://localhost:4000/client.js"
+            repo="jdanyow/utterances-demo"
+            branch="master"
+            issue-term="pathname"
             async>
     </script>
 

@@ -15,7 +15,6 @@ import { login } from './oauth';
 import { TimelineComponent } from './timeline-component';
 import { NewCommentComponent } from './new-comment-component';
 import { setHostOrigin, publishResize } from './bus';
-import { RepoConfig, loadRepoConfig } from './repo-config';
 
 setRepoContext(page);
 
@@ -26,13 +25,10 @@ function loadIssue(): Promise<Issue | null> {
   return loadIssueByTerm(page.issueTerm as string);
 }
 
-Promise.all([loadRepoConfig(page.configPath), loadIssue(), loadUser()])
-  .then(([repoConfig, issue, user]) => bootstrap(repoConfig, issue, user));
+Promise.all([loadIssue(), loadUser()])
+  .then(([issue, user]) => bootstrap(issue, user));
 
-function bootstrap(config: RepoConfig, issue: Issue | null, user: User | null) {
-  if (config.origins.indexOf(page.origin) === -1) {
-    throw new Error(`The origins specified in ${page.configPath} do not include ${page.origin}`);
-  }
+function bootstrap(issue: Issue | null, user: User | null) {
   setHostOrigin(page.origin);
 
   const timeline = new TimelineComponent(user, issue);
@@ -80,3 +76,15 @@ function bootstrap(config: RepoConfig, issue: Issue | null, user: User | null) {
   timeline.element.appendChild(newCommentComponent.element);
   publishResize();
 }
+
+addEventListener('not-installed', function handleNotInstalled() {
+  removeEventListener('not-installed', handleNotInstalled);
+  document.querySelector('.timeline')!.insertAdjacentHTML('afterbegin', `
+  <div class="flash flash-error flash-not-installed">
+    Error: utterances is not installed on <code>${page.owner}/${page.repo}</code>.
+    If you are the owner of this repo,
+    <a href="https://github.com/apps/utterances" target="_blank"><strong>install the app</strong></a>.
+    Read more about this change in
+    <a href="https://github.com/utterance/utterances/issues#3" target="_blank">the PR</a>.
+  </div>`);
+});

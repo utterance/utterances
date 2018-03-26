@@ -1,5 +1,7 @@
-// @import "primer-base/index";
-@import "primer-forms/index";
+@import "primer-base/index";
+@import "primer-forms/lib/form-control.scss";
+@import "primer-forms/lib/form-group.scss";
+@import "primer-forms/lib/input-group.scss";
 @import "primer-markdown/index";
 @import "pygments-vs";
 @import "util";
@@ -34,34 +36,6 @@
       float: right;
       margin-top: -$spacer-2;
       margin-bottom: $spacer-3;
-    }
-
-    .has-error {
-      label {
-        color: $text-red;
-      }
-
-      input {
-        border-color: $border-red;
-      }
-
-      .note {
-        color: $text-red;
-      }
-    }
-
-    .has-success {
-      label {
-        color: $text-green;
-      }
-
-      input {
-        border-color: $border-green;
-      }
-
-      .note {
-        color: $text-green;
-      }
     }
   }
 }

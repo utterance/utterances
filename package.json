@@ -3,47 +3,32 @@
   "version": "0.1.4",
   "license": "MIT",
   "scripts": {
-    "lint": "tslint --project tsconfig.json",
-    "clean": "rm -rf output && rm -rf debug && rm -rf dist && mkdir debug && mkdir dist",
-    "rollup-client": "rollup output/client.js --output.format iife --output.file debug/client.js",
-    "rollup-utterances": "rollup output/utterances.js --output.format iife --output.file debug/utterances.js",
-    "rollup-index": "rollup output/index.js --output.format iife --output.file debug/index.js",
-    "rollup": "yarn run rollup-client && yarn run rollup-utterances && yarn run rollup-index",
-    "html": "cp src/*.html debug/ && cp src/authorized.html dist/",
-    "sass": "node-sass src --output debug --include-path node_modules",
-    "optimize-client": "uglifyjs --compress --mangle --output dist/client.js -- debug/client.js",
-    "optimize-utterances": "inliner --skip-absolute-urls debug/utterances.html > dist/utterances.html",
-    "optimize-index": "inliner --skip-absolute-urls debug/index.html > dist/index.html",
-    "optimize": "yarn run optimize-client && yarn run optimize-utterances && yarn run optimize-index",
-    "watch-output": "chokidar \"output/**/*.js\" --command \"yarn run rollup\"",
-    "watch-html": "chokidar \"src/*.html\" --command \"yarn run html\"",
-    "watch-debug": "chokidar \"debug/*/**\" --command \"yarn run optimize\"",
-    "watch": "concurrently --kill-others \"tsc --watch\" \"yarn run sass -- --watch --recursive\" \"yarn run watch-output\" \"yarn run watch-html\" \"yarn run watch-debug\"",
-    "serve-debug": "browser-sync start --server debug --files=\"debug/**/*\" --port 9000 --no-open --no-ui --no-online --no-ghost-mode",
-    "serve-dist": "browser-sync start --server dist --files=\"dist/**/*\" --port 8000 --no-open --no-ui --no-online --no-ghost-mode",
-    "serve": "concurrently --kill-others \"yarn run serve-debug\" \"yarn run serve-dist\"",
-    "predevelop": "yarn run clean && yarn run html && tsc && yarn run rollup && yarn run sass && yarn run optimize",
-    "develop": "concurrently --kill-others \"yarn run watch\" \"yarn run serve\"",
+    "clean": "rm -rf dist",
+    "prestart": "yarn run clean",
+    "start": "parcel src/utterances.html --no-hmr --public-url / --port 4000 & parcel watch src/client.ts & parcel watch src/index.html & parcel watch src/authorized.html",
     "prebuild": "yarn run clean",
-    "build": "yarn run html && tsc && yarn run rollup && yarn run sass && yarn run optimize",
-    "predeploy": "yarn run build && cp -R icons dist/ && cp .nojekyll dist/ && cp CNAME dist/ && cp utterances.json dist/",
-    "deploy": "gh-pages --dist dist",
-    "chrome": "google-chrome --disable-web-security --allow-running-insecure-content --user-data-dir=\"chrome\""
+    "build": "parcel build src/utterances.html && parcel build src/client.ts && parcel build src/index.html && parcel build src/authorized.html",
+    "predeploy": "yarn run build && cp .nojekyll dist/ && cp CNAME dist/",
+    "deploy": "echo \"gh-pages --dist dist\"",
+
+    "(postinstall is temporary: using unreased version of parcel)": "",
+    "postinstall": "cd node_modules/parcel-bundler && yarn install && yarn build && cd ../.."
   },
   "devDependencies": {
-    "browser-sync": "^2.18.13",
-    "chokidar-cli": "^1.2.0",
-    "concurrently": "^3.5.1",
     "gh-pages": "^1.1.0",
-    "inliner": "^1.13.1",
-    "node-sass": "^4.7.2",
-    "primer-base": "^1.6.1",
-    "primer-buttons": "^2.5.1",
-    "primer-forms": "^2.0.1",
-    "primer-markdown": "^3.7.3",
-    "rollup": "^0.52.1",
-    "tslint": "^5.8.0",
-    "typescript": "^2.6.2",
-    "uglify-js": "^3.2.1"
+    "node-sass": "^4.8.3",
+    "parcel-bundler": "parcel-bundler/parcel#master",
+    "primer-alerts": "^1.5.5",
+    "primer-base": "^1.7.0",
+    "primer-buttons": "^2.5.3",
+    "primer-forms": "^2.1.0",
+    "primer-markdown": "^3.7.5",
+    "tslint": "^5.9.1",
+    "typescript": "^2.7.2"
+  },
+  "sass": {
+    "includePaths": [
+      "node_modules"
+    ]
   }
 }

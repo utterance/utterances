@@ -5,8 +5,13 @@ body {
 
 @import "primer-base/index";
 @import "primer-markdown/index";
+@import "primer-alerts/index";
 @import "pygments-vs";
 @import "util";
 @import "buttons";
 @import "timeline";
 @import "timeline-comment";
+
+.flash-not-installed {
+  margin-bottom: $spacer-3;
+}

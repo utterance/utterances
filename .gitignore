@@ -1,5 +1,4 @@
-node_modules
-debug
-dist
-output
+.cache
 chrome
+dist
+node_modules
