@@ -30,9 +30,11 @@ export class CommentComponent {
       </a>
       <div class="comment">
         <header class="comment-header">
-          <a class="text-link" href="${user.html_url}" target="_blank"><strong>${user.login}</strong></a>
-          commented
-          <a class="text-link" href="${html_url}" target="_blank">${timeAgo(Date.now(), new Date(created_at))}</a>
+          <span class="comment-meta">
+            <a class="text-link" href="${user.html_url}" target="_blank"><strong>${user.login}</strong></a>
+            commented
+            <a class="text-link" href="${html_url}" target="_blank">${timeAgo(Date.now(), new Date(created_at))}</a>
+          </span>
           ${association ? `<span class="author-association-badge">${association}</span>` : ''}
         </header>
         <div class="markdown-body">
