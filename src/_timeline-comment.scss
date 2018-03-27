@@ -25,6 +25,9 @@
   }
 
   .comment-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: $spacer-2 $spacer-3;
     color: $text-gray;
     background-color: $bg-gray;
@@ -78,7 +81,6 @@
   }
 
   .author-association-badge {
-    float: right;
     margin-top: -1px;
     padding: 2px 5px;
     border: $border;
@@ -86,10 +88,8 @@
     font-size: $font-size-small;
     font-weight: $font-weight-semibold;
   }
-}
 
-@media (min-width: map-get($breakpoints, sm)) {
-  .timeline-comment {
+  @media (min-width: map-get($breakpoints, sm)) {
     .avatar {
       display: block;
       margin-right: $spacer-3;

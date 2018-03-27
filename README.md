@@ -18,6 +18,7 @@ To comment, users must authorize the utterances app to post on their behalf usin
 
 ## sites using utterances
 
+* Haxe [documentation](https://haxe.org/manual) and [cookbook](https://code.haxe.org/)
 * [danyow.net](https://danyow.net)
 * [Den by Default](https://dennisdel.com)
 * [winterland.me](http://winterland.me/)
