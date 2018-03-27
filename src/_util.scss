@@ -1,3 +1,9 @@
 .text-link {
   color: $text-gray;
 }
+
+.markdown-body-scrollable {
+  max-height: 400px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
