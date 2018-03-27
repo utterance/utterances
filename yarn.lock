@@ -3476,6 +3476,12 @@ primer-markdown@^3.7.5:
   dependencies:
     primer-support "4.5.2"
 
+primer-navigation@^1.5.3:
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/primer-navigation/-/primer-navigation-1.5.3.tgz#4d32734faed52b34013fd710353400c7914e0c56"
+  dependencies:
+    primer-support "4.5.2"
+
 primer-support@4.5.2:
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/primer-support/-/primer-support-4.5.2.tgz#daab9a48881b6953e8e6ca01865a2f415bf777c5"

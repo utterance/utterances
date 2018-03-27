@@ -35,7 +35,8 @@ function bootstrap(issue: Issue | null, user: User | null) {
   document.body.appendChild(timeline.element);
 
   if (issue && issue.comments > 0) {
-    loadCommentsPage(issue.number, 1).then(({ items }) => timeline.replaceComments(items));
+    loadCommentsPage(issue.number, 1)
+      .then(({ items }) => items.forEach(comment => timeline.appendComment(comment)));
   }
 
   if (issue && issue.locked) {

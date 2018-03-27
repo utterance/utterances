@@ -218,6 +218,12 @@ export function postComment(issueNumber: number, markdown: string) {
   });
 }
 
+export function renderMarkdown(text: string) {
+  const body = JSON.stringify({ text, mode: 'gfm', context: `${owner}/${repo}` });
+  return githubFetch(githubRequest('markdown', { method: 'POST', body }))
+    .then(response => response.text());
+}
+
 interface IssueSearchResponse {
   total_count: number;
   incomplete_results: boolean;

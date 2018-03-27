@@ -59,24 +59,6 @@ export class TimelineComponent {
     publishResize();
   }
 
-  public replaceComments(comments: IssueComment[]) {
-    let i;
-    for (i = 0; i < comments.length; i++) {
-      const comment = comments[i];
-      if (i <= this.timeline.length) {
-        this.appendComment(comment);
-        continue;
-      }
-      this.timeline[i].setComment(comment);
-    }
-    for (; i < this.timeline.length; i++) {
-      this.element.removeChild(this.element.lastElementChild!);
-    }
-    this.count = comments.length;
-    this.renderCount();
-    publishResize();
-  }
-
   private renderCount() {
     this.countAnchor.textContent = `${this.count} Comment${this.count === 1 ? '' : 's'}`;
   }
