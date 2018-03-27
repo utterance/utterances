@@ -92,7 +92,10 @@ function githubFetch(request: Request): Promise<Response> {
 
     processRateLimit(response);
 
-    if (request.method === 'GET' && [401, 403].indexOf(response.status) !== -1) {
+    if (request.method === 'GET'
+      && [401, 403].indexOf(response.status) !== -1
+      && request.headers.has('Authorization')
+    ) {
       request.headers.delete('Authorization');
       return githubFetch(request);
     }
