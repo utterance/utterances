@@ -38,7 +38,7 @@ export const token = new Token();
 export function login() {
   window.open(`${authorizeUrl}?${param({ redirect_uri })}`);
   return new Promise(resolve => (window as any).notifyAuthorized = resolve)
-    .then(() => fetch(tokenUrl, { mode: 'cors', credentials: 'include' }))
+    .then(search => fetch(tokenUrl + search, { mode: 'cors' }))
     .then(response => {
       if (response.ok) {
         return response.json();
