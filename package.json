@@ -11,18 +11,17 @@
   "scripts": {
     "clean": "rm -rf .cache & rm -rf dist",
     "prestart": "yarn run clean",
-    "start": "parcel src/utterances.html --no-hmr --public-url / --port 4000 & parcel watch src/client.ts & parcel watch src/index.html & parcel watch src/authorized.html",
+    "start": "parcel src/index.html --no-hmr --public-url / --port 4000",
     "prebuild": "yarn run clean",
-    "build": "parcel build src/utterances.html && parcel build src/client.ts && parcel build src/index.html && parcel build src/authorized.html",
-    "predeploy": "yarn run build && cp .nojekyll dist/ && cp CNAME dist/",
-    "deploy": "gh-pages --dist dist",
-    "(postinstall is temporary: using unreased version of parcel)": "",
-    "postinstall": "cd node_modules/parcel-bundler && yarn install && yarn build && cd ../.."
+    "build": "parcel build src/index.html",
+    "lint": "tslint --project tsconfig.json",
+    "predeploy": "yarn run build && touch dist/.nojekyll && echo 'utteranc.es' > dist/CNAME",
+    "deploy": "gh-pages --dist dist"
   },
   "devDependencies": {
     "gh-pages": "^1.1.0",
     "node-sass": "^4.8.3",
-    "parcel-bundler": "parcel-bundler/parcel#master",
+    "parcel-bundler": "^1.7.0",
     "posthtml-expressions": "^1.1.0",
     "posthtml-include": "^1.1.0",
     "posthtml-md": "^1.1.0",
@@ -33,6 +32,6 @@
     "primer-markdown": "^3.7.5",
     "primer-navigation": "^1.5.3",
     "tslint": "^5.9.1",
-    "typescript": "^2.7.2"
+    "typescript": "^2.8.1"
   }
 }
