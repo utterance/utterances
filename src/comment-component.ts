@@ -24,7 +24,7 @@ export class CommentComponent {
     }
     const association = displayAssociations[author_association];
     this.element.innerHTML = `
-      <a class="avatar" href="${user.html_url}" target="_blank">
+      <a class="avatar" href="${user.html_url}" target="_blank" tabindex="-1">
         <img alt="@${user.login}" height="44" width="44"
               src="${user.avatar_url}${avatarArgs}">
       </a>

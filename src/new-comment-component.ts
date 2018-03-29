@@ -30,7 +30,7 @@ export class NewCommentComponent {
     this.element.addEventListener('mousemove', publishResize); // todo: measure, throttle
 
     this.element.innerHTML = `
-      <a class="avatar" target="_blank">
+      <a class="avatar" target="_blank" tabindex="-1">
         <img height="44" width="44">
       </a>
       <form class="comment" accept-charset="UTF-8" action="javascript:">
