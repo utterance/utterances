@@ -30,6 +30,9 @@ To comment, users must authorize the utterances app to post on their behalf usin
 * [blog.leop0ld.org](http://blog.leop0ld.org/)
 * [Anton Medvedev](https://medv.io)
 * [rain-1's scheme coding blog](https://rain-1.github.io/)
+* [appydroid](https://appydroid.eu)
+* [jlelse Writes](https://writings.jlelse.de)
+* [Dev All The Things](https://dev.jlelse.de)
 
 Are you using utterances? [Add your site](https://github.com/utterance/utterances/edit/master/README.md) to the list!
 
