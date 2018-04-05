@@ -8,7 +8,7 @@ let hostOrigin: string;
 export function startMeasuring(origin: string) {
   hostOrigin = origin;
   addEventListener('resize', scheduleMeasure);
-  addEventListener('load', scheduleMeasure);
+  addEventListener('load', scheduleMeasure, true);
 }
 
 let lastHeight = -1;
@@ -27,5 +27,5 @@ let publishTimeout = 0;
 
 export function scheduleMeasure() {
   clearTimeout(publishTimeout);
-  publishTimeout = setTimeout(measure);
+  publishTimeout = setTimeout(measure, 50);
 }
