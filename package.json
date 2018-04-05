@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "gh-pages": "^1.1.0",
+    "github-syntax-light": "^0.5.0",
     "node-sass": "^4.8.3",
     "parcel-bundler": "^1.7.0",
     "posthtml-expressions": "^1.1.0",

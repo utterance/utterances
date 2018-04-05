@@ -1849,6 +1849,10 @@ gh-pages@^1.1.0:
     graceful-fs "4.1.11"
     rimraf "^2.6.2"
 
+github-syntax-light@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/github-syntax-light/-/github-syntax-light-0.5.0.tgz#17466fdd3c08d756ce3f016ed18a2a1343ce0729"
+
 glob-parent@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-3.1.0.tgz#9e6af6299d8d3bd2bd40430832bd113df906c5ae"
