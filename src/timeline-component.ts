@@ -1,6 +1,6 @@
 import { User, Issue, IssueComment } from './github';
 import { CommentComponent } from './comment-component';
-import { publishResize } from './bus';
+import { scheduleMeasure } from './measure';
 
 export class TimelineComponent {
   public readonly element: HTMLElement;
@@ -36,7 +36,7 @@ export class TimelineComponent {
     for (let i = 0; i < this.timeline.length; i++) {
       this.timeline[i].setCurrentUser(login);
     }
-    publishResize();
+    scheduleMeasure();
   }
 
   public setIssue(issue: Issue | null) {
@@ -56,7 +56,7 @@ export class TimelineComponent {
     this.element.insertBefore(component.element, this.marker);
     this.count++;
     this.renderCount();
-    publishResize();
+    scheduleMeasure();
   }
 
   private renderCount() {

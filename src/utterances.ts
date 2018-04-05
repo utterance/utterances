@@ -14,7 +14,7 @@ import {
 import { login } from './oauth';
 import { TimelineComponent } from './timeline-component';
 import { NewCommentComponent } from './new-comment-component';
-import { setHostOrigin, publishResize } from './bus';
+import { startMeasuring, scheduleMeasure } from './measure';
 
 setRepoContext(page);
 
@@ -29,7 +29,7 @@ Promise.all([loadIssue(), loadUser()])
   .then(([issue, user]) => bootstrap(issue, user));
 
 function bootstrap(issue: Issue | null, user: User | null) {
-  setHostOrigin(page.origin);
+  startMeasuring(page.origin);
 
   const timeline = new TimelineComponent(user, issue);
   document.body.appendChild(timeline.element);
@@ -75,7 +75,7 @@ function bootstrap(issue: Issue | null, user: User | null) {
 
   const newCommentComponent = new NewCommentComponent(user, submit);
   timeline.element.appendChild(newCommentComponent.element);
-  publishResize();
+  scheduleMeasure();
 }
 
 addEventListener('not-installed', function handleNotInstalled() {

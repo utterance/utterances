@@ -5,14 +5,15 @@ export interface ResizeMessage {
 
 let hostOrigin: string;
 
-export function setHostOrigin(origin: string) {
+export function startMeasuring(origin: string) {
   hostOrigin = origin;
-  addEventListener('resize', publishResize);
+  addEventListener('resize', scheduleMeasure);
+  addEventListener('load', scheduleMeasure);
 }
 
 let lastHeight = -1;
 
-export function publishResize() {
+function measure() {
   const height = document.body.scrollHeight;
   if (height === lastHeight) {
     return;
@@ -20,4 +21,11 @@ export function publishResize() {
   lastHeight = height;
   const message: ResizeMessage = { type: 'resize', height };
   parent.postMessage(message, hostOrigin);
+}
+
+let publishTimeout = 0;
+
+export function scheduleMeasure() {
+  clearTimeout(publishTimeout);
+  publishTimeout = setTimeout(measure);
 }
