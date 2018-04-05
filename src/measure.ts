@@ -8,7 +8,7 @@ let hostOrigin: string;
 export function startMeasuring(origin: string) {
   hostOrigin = origin;
   addEventListener('resize', scheduleMeasure);
-  addEventListener('load', scheduleMeasure, true);
+  addEventListener('load', scheduleMeasure);
 }
 
 let lastHeight = -1;
@@ -23,9 +23,12 @@ function measure() {
   parent.postMessage(message, hostOrigin);
 }
 
-let publishTimeout = 0;
+let lastMeasure = 0;
 
 export function scheduleMeasure() {
-  clearTimeout(publishTimeout);
-  publishTimeout = setTimeout(measure, 50);
+  const now = Date.now();
+  if (now - lastMeasure > 50) {
+    lastMeasure = now;
+    setTimeout(measure, 50);
+  }
 }

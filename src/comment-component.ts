@@ -1,5 +1,6 @@
 import { IssueComment } from './github';
 import { timeAgo } from './time-ago';
+import { scheduleMeasure } from './measure';
 
 const avatarArgs = '?v=3&s=88';
 const displayAssociations: { [association: string]: string; } = {
@@ -42,7 +43,7 @@ export class CommentComponent {
         </div>
       </div>`;
 
-    this.retargetLinks();
+    processRenderedMarkdown(this.element.lastElementChild!.lastElementChild!);
   }
 
   public setCurrentUser(currentUser: string | null) {
@@ -57,13 +58,11 @@ export class CommentComponent {
       this.element.classList.remove('current-user');
     }
   }
+}
 
-  private retargetLinks() {
-    const links = this.element.lastElementChild!.lastElementChild!.querySelectorAll('a');
-    let j = links.length;
-    while (j--) {
-      const link = links.item(j);
-      link.target = '_blank';
-    }
-  }
+export function processRenderedMarkdown(markdownBody: Element) {
+  Array.from(markdownBody.querySelectorAll<HTMLAnchorElement>('a'))
+    .forEach(a => a.target = '_blank');
+  Array.from(markdownBody.querySelectorAll<HTMLImageElement>('img'))
+    .forEach(img => img.onload = scheduleMeasure);
 }
