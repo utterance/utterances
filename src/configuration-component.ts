@@ -15,6 +15,8 @@ export class ConfigurationComponent {
         <li>Make sure the <a href="https://github.com/apps/utterances">utterances app</a>
           is installed on the repo, otherwise users will not be able to post comments.
         </li>
+        <li>If your repo is a fork, navigate to it's <em>settings</em> tab and confirm
+          the <em>issues</em> feature is turned on. </li>
       </ol>
       <fieldset>
         <div>
