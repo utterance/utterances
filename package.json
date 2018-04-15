@@ -4,6 +4,9 @@
   "description": "A lightweight comments widget built on GitHub issues.",
   "private": true,
   "license": "MIT",
+  "keywords": ["github", "comments-widget", "comments", "blog"],
+  "homepage": "https://utteranc.es",
+  "bugs": "https://github.com/utterance/utterances/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/utterance/utterances.git"
