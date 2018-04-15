@@ -14,7 +14,7 @@
   "scripts": {
     "clean": "rm -rf .cache & rm -rf dist",
     "prestart": "yarn run clean",
-    "start": "parcel src/index.html --no-hmr --public-url / --port 4000",
+    "start": "parcel serve src/index.html --no-hmr --port 4000",
     "prebuild": "yarn run clean",
     "build": "parcel build src/index.html",
     "lint": "tslint --project tsconfig.json",
@@ -25,7 +25,7 @@
     "gh-pages": "^1.1.0",
     "github-syntax-light": "^0.5.0",
     "node-sass": "^4.8.3",
-    "parcel-bundler": "^1.7.0",
+    "parcel-bundler": "^1.7.1",
     "posthtml-expressions": "^1.1.0",
     "posthtml-include": "^1.1.0",
     "posthtml-md": "^1.1.0",
