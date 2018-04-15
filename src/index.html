@@ -17,6 +17,7 @@
     <meta name="msapplication-config" content="icons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
     <script>
+      if (Array.from === undefined) { Array.from = function(x) { return Array.prototype.slice.call(x); } }
       if (!window.Promise || !window.fetch) {
         document.write(
           '<script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.5.0/bluebird.min.js" integrity="sha256-/l7dZnd9iW5Iw9P2Qn/0ghByeFDKnIcPd4DTptDaK20=" crossorigin="anonymous"><\/script>',
