@@ -4,7 +4,12 @@
   "description": "A lightweight comments widget built on GitHub issues.",
   "private": true,
   "license": "MIT",
-  "keywords": ["github", "comments-widget", "comments", "blog"],
+  "keywords": [
+    "github",
+    "comments-widget",
+    "comments",
+    "blog"
+  ],
   "homepage": "https://utteranc.es",
   "bugs": "https://github.com/utterance/utterances/issues",
   "repository": {
@@ -36,6 +41,6 @@
     "primer-markdown": "^3.7.5",
     "primer-navigation": "^1.5.3",
     "tslint": "^5.9.1",
-    "typescript": "^2.8.1"
+    "typescript": "^2.8.3"
   }
 }
