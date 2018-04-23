@@ -62,7 +62,7 @@ export class CommentComponent {
 
 export function processRenderedMarkdown(markdownBody: Element) {
   Array.from(markdownBody.querySelectorAll<HTMLAnchorElement>('a'))
-    .forEach(a => a.target = '_blank');
+    .forEach(a => { a.target = '_blank'; a.rel = 'noopener'; });
   Array.from(markdownBody.querySelectorAll<HTMLImageElement>('img'))
     .forEach(img => img.onload = scheduleMeasure);
 }
