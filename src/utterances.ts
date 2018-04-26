@@ -32,7 +32,7 @@ function bootstrap(issue: Issue | null, user: User | null) {
   startMeasuring(page.origin);
 
   const timeline = new TimelineComponent(user, issue);
-  document.body.appendChild(timeline.element);
+  document.body.firstElementChild!.appendChild(timeline.element);
 
   if (issue && issue.comments > 0) {
     loadCommentsPage(issue.number, 1)
