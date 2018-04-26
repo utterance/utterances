@@ -13,7 +13,7 @@ export class TimelineComponent {
     private user: User | null,
     private issue: Issue | null
   ) {
-    this.element = document.createElement('section');
+    this.element = document.createElement('main');
     this.element.classList.add('timeline');
     this.element.innerHTML = `
       <h1 class="timeline-header">
