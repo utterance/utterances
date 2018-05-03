@@ -1,6 +1,6 @@
 # utterances 🔮
 
-A lightweight comments widget built on GitHub issues.
+A lightweight comments widget built on GitHub issues. Use GitHub issues for blog comments, wiki pages and more!
 
 * [Open source](https://github.com/utterance). 🙌
 * No tracking, no ads, always free. 📡🚫
