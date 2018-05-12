@@ -65,4 +65,6 @@ export function processRenderedMarkdown(markdownBody: Element) {
     .forEach(a => { a.target = '_blank'; a.rel = 'noopener'; });
   Array.from(markdownBody.querySelectorAll<HTMLImageElement>('img'))
     .forEach(img => img.onload = scheduleMeasure);
+  Array.from(markdownBody.querySelectorAll<HTMLAnchorElement>('a.commit-tease-sha'))
+    .forEach(a => a.href = 'https://github.com' + a.pathname);
 }
