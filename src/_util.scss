@@ -6,4 +6,9 @@
   max-height: 450px;
   overflow-x: hidden;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.markdown-body .highlight-source-js > pre {
+  -webkit-overflow-scrolling: touch;
 }
