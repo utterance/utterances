@@ -19,28 +19,29 @@
   "scripts": {
     "clean": "rm -rf .cache & rm -rf dist",
     "prestart": "yarn run clean",
-    "start": "parcel serve src/index.html --no-hmr --port 4000",
+    "start": "parcel serve src/*.html src/client.ts --no-hmr --port 4000",
     "prebuild": "yarn run clean",
-    "build": "parcel build src/index.html",
+    "build": "parcel build src/*.html src/client.ts",
     "lint": "tslint --project tsconfig.json",
     "predeploy": "yarn run build && touch dist/.nojekyll && echo 'utteranc.es' > dist/CNAME",
-    "deploy": "gh-pages --dist dist"
+    "deploy": "gh-pages --dist dist",
+    "postinstall": "mv node_modules/github-syntax-light/lib/github-light.css node_modules/github-syntax-light/lib/github-light.scss"
   },
   "devDependencies": {
     "gh-pages": "^1.1.0",
     "github-syntax-light": "^0.5.0",
     "node-sass": "^4.9.0",
-    "parcel-bundler": "^1.7.1",
+    "parcel-bundler": "^1.8.1",
     "posthtml-expressions": "^1.1.0",
     "posthtml-include": "^1.1.0",
     "posthtml-md": "^1.1.0",
-    "primer-alerts": "^1.5.5",
-    "primer-base": "^1.7.0",
+    "primer-alerts": "^1.5.6",
+    "primer-base": "^1.7.1",
     "primer-buttons": "^2.5.3",
     "primer-forms": "^2.1.0",
-    "primer-markdown": "^3.7.5",
-    "primer-navigation": "^1.5.3",
-    "tslint": "^5.9.1",
+    "primer-markdown": "^3.7.6",
+    "primer-navigation": "^1.5.4",
+    "tslint": "^5.10.0",
     "typescript": "^2.8.3"
   }
 }

@@ -6,13 +6,129 @@ body {
 @import "primer-base/index";
 @import "primer-markdown/index";
 @import "primer-alerts/index";
-@import "primer-navigation/lib/tabnav.scss";
+@import "primer-navigation/lib/tabnav";
 @import "github-syntax-light/lib/github-light";
-@import "util";
-@import "buttons";
-@import "timeline";
-@import "timeline-comment";
+@import "./util";
+@import "./buttons";
+@import "./timeline";
+@import "./timeline-comment";
 
 .flash-not-installed {
   margin-bottom: $spacer-3;
 }
+
+/**
+ * BEGIN Permalink code block styles
+ */
+.border {
+  border: 1px #e1e4e8 solid !important;
+}
+
+.border-0 {
+  border: 0 !important;
+}
+
+.border-bottom {
+  border-bottom: 1px #e1e4e8 solid !important;
+}
+
+.rounded-1 {
+  border-radius: 3px !important;
+}
+
+.lh-condensed {
+  line-height: 1.25 !important;
+}
+
+.f6 {
+  font-size: 12px !important;
+}
+
+.my-2 {
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.px-3 {
+  padding-right: 16px !important;
+  padding-left: 16px !important;
+}
+
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.py-2 {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.blob-wrapper-embedded {
+  max-height: 240px;
+}
+
+.blob-wrapper {
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  overflow: auto;
+
+  > table {
+    overflow: visible;
+  }
+}
+
+.blob-num {
+  width: 1%;
+  min-width: 50px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace;
+  font-size: 12px;
+  line-height: 20px;
+  color: rgba(27,31,35,0.3);
+  text-align: right;
+  white-space: nowrap;
+  vertical-align: top;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  &::before {
+    content: attr(data-line-number);
+  }
+}
+
+.blob-code-inner {
+  overflow: visible;
+  font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace;
+  font-size: 12px;
+  color: #24292e;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+.blob-code {
+  position: relative;
+  padding-right: 10px;
+  padding-left: 10px;
+  line-height: 20px;
+  vertical-align: top;
+}
+
+.bg-white {
+  background-color: #fff !important;
+}
+
+.bg-gray-light {
+  background-color: #fafbfc !important;
+}
+/**
+ * END Permalink code block styles
+ */

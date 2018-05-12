@@ -5,13 +5,13 @@
     <meta name="description" content="A lightweight commenting system using GitHub issues.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="index.scss">
-    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
-    <link rel="manifest" href="icons/manifest.json">
-    <link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#4c2889">
-    <link rel="shortcut icon" href="icons/favicon.ico">
+    <link rel="stylesheet" href="./index.scss">
+    <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./icons/favicon-16x16.png">
+    <link rel="manifest" href="./icons/manifest.json">
+    <link rel="mask-icon" href="./icons/safari-pinned-tab.svg" color="#4c2889">
+    <link rel="shortcut icon" href="./icons/favicon.ico">
     <meta name="apple-mobile-web-app-title" content="Utterances">
     <meta name="application-name" content="Utterances">
     <meta name="msapplication-config" content="icons/browserconfig.xml">
@@ -42,13 +42,13 @@
             </a>
           </header>
           <article class="markdown-body" md>
-            <include src="README.md"></include>
+            <include src="./README.md"></include>
           </article>
         </div>
       </article>
     </main>
 
-    <script src="index.ts"></script>
+    <script src="./index.ts"></script>
 
     <if condition="NODE_ENV === 'production'">
       <script src="https://utteranc.es/client.js"
@@ -76,10 +76,5 @@
       ga('create', 'UA-59973368-11', 'auto');
       ga('send', 'pageview');
     </script>
-
-    <!-- Workaround parcel's lack of support for multiple entry points. -->
-    <a href="./utterances.html" style="display:none"></a>
-    <a href="./authorized.html" style="display:none"></a>
-    <a href="./client.ts" style="display:none"></a>
   </body>
 </html>

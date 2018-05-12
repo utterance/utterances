@@ -1,13 +1,13 @@
 @import "primer-base/index";
-@import "primer-forms/lib/form-control.scss";
-@import "primer-forms/lib/form-group.scss";
-@import "primer-forms/lib/input-group.scss";
+@import "primer-forms/lib/form-control";
+@import "primer-forms/lib/form-group";
+@import "primer-forms/lib/input-group";
 @import "primer-markdown/index";
 @import "github-syntax-light/lib/github-light";
-@import "util";
-@import "timeline";
-@import "timeline-comment";
-@import "buttons";
+@import "./util";
+@import "./timeline";
+@import "./timeline-comment";
+@import "./buttons";
 
 .markdown-body {
   font-size: 16px;
