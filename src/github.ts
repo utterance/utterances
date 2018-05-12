@@ -44,9 +44,9 @@ const rateLimit = {
 };
 
 function processRateLimit(response: Response) {
-  const limit = response.headers.get('X-RateLimit-Limit') as string;
-  const remaining = response.headers.get('X-RateLimit-Remaining') as string;
-  const reset = response.headers.get('X-RateLimit-Reset') as string;
+  const limit = response.headers.get('X-RateLimit-Limit')!;
+  const remaining = response.headers.get('X-RateLimit-Remaining')!;
+  const reset = response.headers.get('X-RateLimit-Reset')!;
 
   const isSearch = /\/search\//.test(response.url);
   const rate = isSearch ? rateLimit.search : rateLimit.standard;
