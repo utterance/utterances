@@ -28,7 +28,7 @@
     "postinstall": "mv node_modules/github-syntax-light/lib/github-light.css node_modules/github-syntax-light/lib/github-light.scss"
   },
   "devDependencies": {
-    "autoprefixer": "^8.4.1",
+    "autoprefixer": "^8.5.0",
     "gh-pages": "^1.1.0",
     "github-syntax-light": "^0.5.0",
     "node-sass": "^4.9.0",
