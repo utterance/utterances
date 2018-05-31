@@ -34,6 +34,7 @@ To comment, users must authorize the utterances app to post on their behalf usin
 * [jlelse Writes](https://writings.jlelse.de)
 * [Dev All The Things](https://dev.jlelse.de)
 * [Melvin Vivas tech blog](https://www.melvinvivas.com)
+* [Introduction to Theoretical Computer Science](http://introtcs.org)
 
 Are you using utterances? [Add your site](https://github.com/utterance/utterances/edit/master/README.md) to the list!
 
