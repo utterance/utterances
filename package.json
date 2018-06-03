@@ -28,8 +28,8 @@
     "postinstall": "mv node_modules/github-syntax-light/lib/github-light.css node_modules/github-syntax-light/lib/github-light.scss"
   },
   "devDependencies": {
-    "autoprefixer": "^8.5.0",
-    "gh-pages": "^1.1.0",
+    "autoprefixer": "^8.6.0",
+    "gh-pages": "^1.2.0",
     "github-syntax-light": "^0.5.0",
     "node-sass": "^4.9.0",
     "parcel-bundler": "^1.8.1",
@@ -43,6 +43,6 @@
     "primer-markdown": "^3.7.6",
     "primer-navigation": "^1.5.4",
     "tslint": "^5.10.0",
-    "typescript": "^2.8.3"
+    "typescript": "^2.9.1"
   }
 }
