@@ -21,7 +21,7 @@
     "prestart": "yarn run clean",
     "start": "parcel serve src/*.html src/client.ts --no-hmr --port 4000",
     "prebuild": "yarn run clean",
-    "build": "parcel build src/*.html src/client.ts",
+    "build": "parcel build src/*.html src/client.ts --experimental-scope-hoisting",
     "lint": "tslint --project tsconfig.json",
     "predeploy": "yarn run build && touch dist/.nojekyll && echo 'utteranc.es' > dist/CNAME",
     "deploy": "gh-pages --dist dist",
