@@ -1,5 +1,5 @@
 import { param } from './deparam';
-import { ResizeMessage } from './bus';
+import { ResizeMessage } from './measure';
 
 let script = document.currentScript as HTMLScriptElement;
 if (script === undefined) {
@@ -11,7 +11,7 @@ if (script === undefined) {
 // gather script element's attributes
 const attrs: { [name: string]: string; } = {};
 for (let i = 0; i < script.attributes.length; i++) {
-  const attribute = script.attributes.item(i);
+  const attribute = script.attributes.item(i)!;
   attrs[attribute.name] = attribute.value;
 }
 
