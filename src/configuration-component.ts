@@ -129,7 +129,8 @@ export class ConfigurationComponent {
     }
     this.script.innerHTML = this.makeConfigScript(
       this.makeConfigScriptAttribute('repo', this.repo.value === '' ? '[ENTER REPO HERE]' : this.repo.value) + '\n' +
-      mappingAttr);
+      mappingAttr + '\n' +
+      this.makeConfigScriptAttribute('crossorigin', 'anonymous'));
   }
 
   private makeConfigScriptAttribute(name: string, value: string) {
