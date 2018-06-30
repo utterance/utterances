@@ -5,6 +5,7 @@
 
   .avatar {
     display: none;
+    background-color: transparent;
   }
 
   .avatar > img {
@@ -16,6 +17,7 @@
     flex-grow: 1;
     flex-basis: 0;
     min-width: 0px;
+    background-color: $bg-white;
     border: $border;
     border-radius: $border-radius;
   }

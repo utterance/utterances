@@ -1,8 +1,3 @@
-body {
-  overflow: hidden;
-  padding-bottom: 20px;
-}
-
 @import "primer-base/index";
 @import "primer-markdown/index";
 @import "primer-alerts/index";
@@ -12,6 +7,16 @@ body {
 @import "./buttons";
 @import "./timeline";
 @import "./timeline-comment";
+
+html,
+body {
+  background-color: transparent;
+}
+
+body {
+  overflow: hidden;
+  padding-bottom: 20px;
+}
 
 .flash-not-installed {
   margin-bottom: $spacer-3;

@@ -39,4 +39,3 @@ input:not([type=radio]) {
 }
 
 .btn-blue { @include btn-solid($text-white, lighten($blue-500, 8%), darken($blue-500, 2%)); }
-
