@@ -67,6 +67,18 @@ export class ConfigurationComponent {
         </div>
         <div class="form-checkbox">
           <label>
+            <input type="radio" value="og:title" name="mapping">
+            Issue title contains page og:title
+            <p class="note">
+              Utterances will search for an issue whose title contains the page's
+              <a href="http://ogp.me/">Open Graph</a> title meta.
+              If a matching issue is not found, Utterances will automatically create one the first
+              time someone comments on your post.
+            </p>
+          </label>
+        </div>
+        <div class="form-checkbox">
+          <label>
             <input type="radio" value="issue-number" name="mapping">
             Specific issue number
             <p class="note">

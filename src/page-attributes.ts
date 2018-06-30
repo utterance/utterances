@@ -12,7 +12,10 @@ function readPageAttributes() {
       if (issueTerm === '') {
         throw new Error('When issue-term is specified, it cannot be blank.');
       }
-      if (['title', 'url', 'pathname'].indexOf(issueTerm) !== -1) {
+      if (['title', 'url', 'pathname', 'og:title'].indexOf(issueTerm) !== -1) {
+        if (!params[issueTerm]) {
+          throw new Error(`Unable to find "${issueTerm}" metadata.`);
+        }
         issueTerm = params[issueTerm];
       }
     }

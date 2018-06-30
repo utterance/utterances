@@ -22,6 +22,8 @@ attrs.pathname = location.pathname.substr(1).replace(/\.\w+$/, '');
 attrs.title = document.title;
 const descriptionMeta = document.querySelector(`meta[name='description']`) as HTMLMetaElement;
 attrs.description = descriptionMeta ? descriptionMeta.content : '';
+const ogtitleMeta = document.querySelector(`meta[property='og:title'],meta[name='og:title']`) as HTMLMetaElement;
+attrs['og:title'] = ogtitleMeta ? ogtitleMeta.content : '';
 
 // create the standard utterances styles and insert them at the beginning of the
 // <head> for easy overriding.
