@@ -36,6 +36,7 @@ To comment, users must authorize the utterances app to post on their behalf usin
 * [Melvin Vivas tech blog](https://www.melvinvivas.com)
 * [Introduction to Theoretical Computer Science](http://introtcs.org)
 * [Tiuxo](https://tiuxo.com)
+* [贤民的比特记忆](http://www.xianmin.org)
 
 Are you using utterances? [Add your site](https://github.com/utterance/utterances/edit/master/README.md) to the list!
 
