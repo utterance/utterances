@@ -37,6 +37,7 @@ To comment, users must authorize the utterances app to post on their behalf usin
 * [Introduction to Theoretical Computer Science](http://introtcs.org)
 * [Tiuxo](https://tiuxo.com)
 * [贤民的比特记忆](http://www.xianmin.org)
+* [philip-trauner.me](https://philip-trauner.me)
 
 Are you using utterances? [Add your site](https://github.com/utterance/utterances/edit/master/README.md) to the list!
 
