@@ -38,7 +38,7 @@ To comment, users must authorize the utterances app to post on their behalf usin
 * [Tiuxo](https://tiuxo.com)
 * [贤民的比特记忆](http://www.xianmin.org)
 * [philip-trauner.me](https://philip-trauner.me)
-
+* [gleaned](https://gleaned.github.io/)
 Are you using utterances? [Add your site](https://github.com/utterance/utterances/edit/master/README.md) to the list!
 
 # try it out 👇👇👇
