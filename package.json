@@ -28,21 +28,21 @@
     "postinstall": "mv node_modules/github-syntax-light/lib/github-light.css node_modules/github-syntax-light/lib/github-light.scss"
   },
   "devDependencies": {
-    "autoprefixer": "^8.6.0",
+    "autoprefixer": "^9.1.1",
     "gh-pages": "^1.2.0",
     "github-syntax-light": "^0.5.0",
-    "node-sass": "^4.9.0",
-    "parcel-bundler": "^1.8.1",
+    "node-sass": "^4.9.3",
+    "parcel-bundler": "^1.9.7",
     "posthtml-expressions": "^1.1.0",
-    "posthtml-include": "^1.1.0",
+    "posthtml-include": "^1.2.0",
     "posthtml-md": "^1.1.0",
-    "primer-alerts": "^1.5.6",
-    "primer-base": "^1.7.1",
-    "primer-buttons": "^2.5.3",
-    "primer-forms": "^2.1.0",
-    "primer-markdown": "^3.7.6",
-    "primer-navigation": "^1.5.4",
-    "tslint": "^5.10.0",
-    "typescript": "^2.9.1"
+    "primer-alerts": "^1.5.9",
+    "primer-base": "^1.7.4",
+    "primer-buttons": "^2.6.0",
+    "primer-forms": "^2.1.4",
+    "primer-markdown": "^3.7.9",
+    "primer-navigation": "^1.5.7",
+    "tslint": "^5.11.0",
+    "typescript": "^3.0.1"
   }
 }
