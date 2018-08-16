@@ -44,8 +44,6 @@ function readPageAttributes() {
   return {
     owner: matches[1],
     repo: matches[2],
-    branch: 'branch' in params ? params.branch : 'master',
-    configPath: 'config-path' in params ? params['config-path'] : 'utterances.json',
     issueTerm,
     issueNumber,
     origin: params.origin,

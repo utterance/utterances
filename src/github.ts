@@ -10,12 +10,11 @@ const PAGE_SIZE = 100;
 
 let owner: string;
 let repo: string;
-let branch: string;
+let branch = 'master';
 
-export function setRepoContext(context: { owner: string; repo: string; branch: string; }) {
+export function setRepoContext(context: { owner: string; repo: string; }) {
   owner = context.owner;
   repo = context.repo;
-  branch = context.branch;
 }
 
 function githubRequest(relativeUrl: string, init?: RequestInit) {
