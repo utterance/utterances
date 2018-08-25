@@ -39,6 +39,7 @@ To comment, users must authorize the utterances app to post on their behalf usin
 * [贤民的比特记忆](http://www.xianmin.org)
 * [philip-trauner.me](https://philip-trauner.me)
 * [gleaned](https://gleaned.github.io/)
+* [Verummeum](https://verummeum.com/)
 
 Are you using utterances? [Add your site](https://github.com/utterance/utterances/edit/master/README.md) to the list!
 
