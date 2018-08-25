@@ -41,6 +41,11 @@ function readPageAttributes() {
     throw new Error(`Invalid repo: "${params.repo}"`);
   }
 
+  let customCss: string | null = null;
+  if ('custom-css' in params) {
+    customCss = params['custom-css'];
+  }
+
   return {
     owner: matches[1],
     repo: matches[2],
@@ -49,7 +54,8 @@ function readPageAttributes() {
     origin: params.origin,
     url: params.url,
     title: params.title,
-    description: params.description
+    description: params.description,
+    customCss
   };
 }
 
