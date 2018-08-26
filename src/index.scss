@@ -44,5 +44,3 @@ input:not([type=radio]) {
   margin-top: -$spacer-2;
   margin-bottom: $spacer-3;
 }
-
-.btn-blue { @include btn-solid($text-white, lighten($blue-500, 8%), darken($blue-500, 2%)); }
