@@ -27,13 +27,15 @@ function loadIssue(): Promise<Issue | null> {
 
 function loadCustomStylesheet() {
   if (page.stylesheet) {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = page.stylesheet;
-    link.setAttribute('crossorigin', 'anonymous');
-    document.head.appendChild(link);
-    return new Promise(resolve => { link.onolad = resolve; });
-    }
+    return new Promise(resolve => {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.setAttribute('crossorigin', 'anonymous');
+      link.onload = resolve;
+      link.href = page.stylesheet;
+      document.head.appendChild(link);
+    });
+  }
   return Promise.resolve();
 }
 
