@@ -73,6 +73,7 @@ export class NewCommentComponent {
     this.textarea.addEventListener('input', this.handleInput);
     this.form.addEventListener('submit', this.handleSubmit);
     this.form.addEventListener('click', this.handleClick);
+    this.form.addEventListener('keydown', this.handleKeyDown);
     handleTextAreaResize(this.textarea);
   }
 
@@ -152,6 +153,12 @@ export class NewCommentComponent {
     this.textarea.style.display = isPreview ? 'none' : '';
     this.preview.style.display = isPreview ? '' : 'none';
     scheduleMeasure();
+  }
+
+  private handleKeyDown = ({ which, ctrlKey }: KeyboardEvent) => {
+    if (which === 13 && ctrlKey && !this.submitButton.disabled) {
+      this.form.dispatchEvent(new CustomEvent('submit'));
+    }
   }
 }
 
