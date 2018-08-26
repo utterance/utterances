@@ -16,7 +16,8 @@ for (let i = 0; i < script.attributes.length; i++) {
 }
 
 // gather page attributes
-attrs.url = location.href;
+const canonicalLink = document.querySelector(`link[rel='canonical']`) as HTMLLinkElement;
+attrs.url = canonicalLink ? canonicalLink.href : location.origin + location.pathname + location.search;
 attrs.origin = location.origin;
 attrs.pathname = location.pathname.substr(1).replace(/\.\w+$/, '');
 attrs.title = document.title;
