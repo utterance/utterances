@@ -25,16 +25,19 @@ function loadIssue(): Promise<Issue | null> {
   return loadIssueByTerm(page.issueTerm as string);
 }
 
-function injectCustomCss() {
-  if (page.customCss !== null) {
-    let link = document.createElement('link');
+function loadCustomStylesheet() {
+  if (page.stylesheet) {
+    const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = page.customCss;
+    link.href = page.stylesheet;
+    link.setAttribute('crossorigin', 'anonymous');
     document.head.appendChild(link);
-  }
+    return new Promise(resolve => { link.onolad = resolve; });
+    }
+  return Promise.resolve();
 }
 
-Promise.all([loadIssue(), loadUser()])
+Promise.all([loadIssue(), loadUser(), loadCustomStylesheet()])
   .then(([issue, user]) => bootstrap(issue, user));
 
 function bootstrap(issue: Issue | null, user: User | null) {
@@ -84,7 +87,6 @@ function bootstrap(issue: Issue | null, user: User | null) {
 
   const newCommentComponent = new NewCommentComponent(user, submit);
   timeline.element.appendChild(newCommentComponent.element);
-  injectCustomCss();
   scheduleMeasure();
 }
 
