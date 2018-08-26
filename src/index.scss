@@ -9,6 +9,13 @@
 @import "./timeline-comment";
 @import "./buttons";
 
+.timeline {
+  width: 100%;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .markdown-body {
   font-size: 16px;
 }

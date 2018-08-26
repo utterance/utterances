@@ -95,7 +95,7 @@
     font-weight: $font-weight-semibold;
   }
 
-  @media (min-width: map-get($breakpoints, sm)) {
+  @media screen and (min-width: map-get($breakpoints, sm)) {
     .avatar {
       display: block;
       margin-right: $spacer-3;
