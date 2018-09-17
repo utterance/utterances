@@ -14,6 +14,38 @@ When Utterances loads, the GitHub [issue search API](https://developer.github.co
 
 To comment, users must authorize the utterances app to post on their behalf using the GitHub [OAuth flow](https://developer.github.com/v3/oauth/#web-application-flow). Alternatively, users can comment on the GitHub issue directly.
 
+## components
+
+### React
+[react-utterances](https://github.com/b6pzeusbc54tvhw5jgpyw8pwz2x6gs/react-utterances) is a [React](https://reactjs.org/) component for utterances.
+
+```js
+import React, { Component } from 'react'
+import ReactUtterences from 'react-utterances'
+
+const repo = '<github-namespace>/<project-name>' // replace your github `namespace/projectName`
+
+class MyBlogPost extends Component {
+  render() {
+    return (
+      <div>
+        <h1>What is Lorem Ipsum?</h1>
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+        <ReactUtterences repo={repo} type={'pathname'} />
+      </div>
+    )
+  }
+}
+
+export default MyBlogPost
+```
+
+### Vue
+// I look forward to your PR.
+
+### Angular
+// I look forward to your PR.
+
 ## configuration
 
 ## sites using utterances
