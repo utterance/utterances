@@ -41,6 +41,7 @@ To comment, users must authorize the utterances app to post on their behalf usin
 * [gleaned](https://gleaned.github.io/)
 * [Verummeum](https://verummeum.com/)
 * [aluc.io](https://aluc.io/)
+* [theta.eu.org](https://theta.eu.org)
 
 Are you using utterances? [Add your site](https://github.com/utterance/utterances/edit/master/README.md) to the list!
 
