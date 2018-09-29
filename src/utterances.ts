@@ -25,7 +25,21 @@ function loadIssue(): Promise<Issue | null> {
   return loadIssueByTerm(page.issueTerm as string);
 }
 
-Promise.all([loadIssue(), loadUser()])
+function loadCustomStylesheet() {
+  if (page.stylesheet) {
+    return new Promise(resolve => {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.setAttribute('crossorigin', 'anonymous');
+      link.onload = resolve;
+      link.href = page.stylesheet;
+      document.head.appendChild(link);
+    });
+  }
+  return Promise.resolve();
+}
+
+Promise.all([loadIssue(), loadUser(), loadCustomStylesheet()])
   .then(([issue, user]) => bootstrap(issue, user));
 
 function bootstrap(issue: Issue | null, user: User | null) {
