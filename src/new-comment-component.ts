@@ -47,7 +47,7 @@ export class NewCommentComponent {
           </nav>
         </header>
         <div class="comment-body">
-          <textarea placeholder="Leave a comment" aria-label="comment"></textarea>
+          <textarea class="form-control" placeholder="Leave a comment" aria-label="comment"></textarea>
           <div class="markdown-body" style="display: none">
             ${nothingToPreview}
           </div>
