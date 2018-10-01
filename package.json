@@ -19,9 +19,9 @@
   "scripts": {
     "clean": "rm -rf .cache & rm -rf dist",
     "prestart": "yarn run clean",
-    "start": "parcel serve src/*.html src/client.ts --no-hmr --port 4000",
+    "start": "parcel serve src/*.html src/client.ts src/stylesheets/themes/*/{index,utterances}.scss --no-hmr --port 4000",
     "prebuild": "yarn run clean",
-    "build": "parcel build src/*.html src/client.ts --experimental-scope-hoisting",
+    "build": "parcel build src/*.html src/client.ts src/stylesheets/themes/*/{index,utterances}.scss --experimental-scope-hoisting",
     "lint": "tslint --project tsconfig.json",
     "predeploy": "yarn run build && touch dist/.nojekyll && echo 'utteranc.es' > dist/CNAME",
     "deploy": "gh-pages --dist dist"
@@ -31,7 +31,6 @@
     "gh-pages": "^2.0.0",
     "github-syntax-dark": "^0.5.0",
     "github-syntax-light": "^0.5.0",
-    "node-sass": "^4.9.3",
     "parcel-bundler": "^1.10.1",
     "posthtml-expressions": "^1.1.0",
     "posthtml-include": "^1.2.0",
@@ -42,6 +41,7 @@
     "primer-forms": "^2.1.4",
     "primer-markdown": "^3.7.9",
     "primer-navigation": "^1.5.7",
+    "sass": "^1.14.1",
     "tslint": "^5.11.0",
     "typescript": "^3.1.1"
   }
