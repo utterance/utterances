@@ -49,7 +49,8 @@ function readPageAttributes() {
     origin: params.origin,
     url: params.url,
     title: params.title,
-    description: params.description
+    description: params.description,
+    theme: params.theme || 'github-light'
   };
 }
 

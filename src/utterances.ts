@@ -15,6 +15,7 @@ import { login } from './oauth';
 import { TimelineComponent } from './timeline-component';
 import { NewCommentComponent } from './new-comment-component';
 import { startMeasuring, scheduleMeasure } from './measure';
+import { loadTheme } from './theme';
 
 setRepoContext(page);
 
@@ -25,21 +26,7 @@ function loadIssue(): Promise<Issue | null> {
   return loadIssueByTerm(page.issueTerm as string);
 }
 
-// function loadTheme() {
-//   if (page.stylesheet) {
-//     return new Promise(resolve => {
-//       const link = document.createElement('link');
-//       link.rel = 'stylesheet';
-//       link.setAttribute('crossorigin', 'anonymous');
-//       link.onload = resolve;
-//       link.href = page.stylesheet;
-//       document.head.appendChild(link);
-//     });
-//   }
-//   return Promise.resolve();
-// }
-
-Promise.all([loadIssue(), loadUser()])
+Promise.all([loadIssue(), loadUser(), loadTheme(page.theme, page.origin)])
   .then(([issue, user]) => bootstrap(issue, user));
 
 function bootstrap(issue: Issue | null, user: User | null) {

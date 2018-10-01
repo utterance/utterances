@@ -1,7 +1,8 @@
 export class ConfigurationComponent {
-  public element: HTMLFormElement;
-  private script: HTMLDivElement;
-  private repo: HTMLInputElement;
+  public readonly element: HTMLFormElement;
+  private readonly script: HTMLDivElement;
+  private readonly repo: HTMLInputElement;
+  private readonly theme: HTMLSelectElement;
 
   constructor() {
     this.element = document.createElement('form');
@@ -100,6 +101,18 @@ export class ConfigurationComponent {
         </div>
       </fieldset>
 
+      <h3>Theme</h3>
+      <p>
+        Choose an Utterances theme that matches your blog.
+        Can't find a theme you like?
+        <a href="https://github.com/utterance/utterances/blob/master/CONTRIBUTING.md">Contribute</a> a custom theme.
+      </p>
+
+      <select id="theme" class="form-select" value="github-light">
+        <option value="github-light">GitHub Light</option>
+        <option value="github-dark">GitHub Dark</option>
+      </select>
+
       <h3>Enable Utterances</h3>
 
       <p>Add the following script tag to your blog's template. Position it where you want the
@@ -117,6 +130,19 @@ export class ConfigurationComponent {
     this.script = this.element.querySelector('#script') as HTMLDivElement;
 
     this.repo = this.element.querySelector('#repo') as HTMLInputElement;
+
+    this.theme = this.element.querySelector('#theme') as HTMLSelectElement;
+
+    const themeStylesheet = document.getElementById('theme-stylesheet') as HTMLLinkElement;
+    this.theme.addEventListener('change', () => {
+      themeStylesheet.href = `/stylesheets/themes/${this.theme.value}/index.css`;
+      const message = {
+        type: 'set-theme',
+        theme: this.theme.value
+      };
+      const utterances = document.querySelector('iframe')!;
+      utterances.contentWindow!.postMessage(message, location.origin);
+    });
 
     const copyButton = this.element.querySelector('#copy-button') as HTMLButtonElement;
     copyButton.addEventListener(
@@ -142,6 +168,7 @@ export class ConfigurationComponent {
     this.script.innerHTML = this.makeConfigScript(
       this.makeConfigScriptAttribute('repo', this.repo.value === '' ? '[ENTER REPO HERE]' : this.repo.value) + '\n' +
       mappingAttr + '\n' +
+      this.makeConfigScriptAttribute('theme', this.theme.value) + '\n' +
       this.makeConfigScriptAttribute('crossorigin', 'anonymous'));
   }
 
