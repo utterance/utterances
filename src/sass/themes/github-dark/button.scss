@@ -1,0 +1,14 @@
+.btn-primary {
+  background: linear-gradient(#407045, #305530);
+  border-color: #083;
+  color: #e2e2e2;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(#508055, #407045);
+}
+
+.btn-primary:disabled {
+  background: linear-gradient(#203522, #152715);
+  border-color: #041;
+}

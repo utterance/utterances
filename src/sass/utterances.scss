@@ -3,7 +3,7 @@
 @import "primer-markdown/index";
 @import "primer-alerts/index";
 @import "primer-navigation/lib/tabnav";
-@import "github-syntax-light/lib/github-light";
+@import "primer-forms/lib/form-control";
 @import "./util";
 @import "./timeline";
 @import "./timeline-comment";
@@ -17,6 +17,10 @@ body {
 body {
   overflow: hidden;
   padding-bottom: 20px;
+}
+
+.form-control {
+  font-size: $body-font-size;
 }
 
 .flash-not-installed {
