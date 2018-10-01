@@ -1,4 +1,4 @@
-## Contributing
+# Contributing
 
 1. Install yarn: https://yarnpkg.com
 2. Clone the repo:
