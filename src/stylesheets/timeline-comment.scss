@@ -47,6 +47,7 @@
     padding: $spacer-2;
 
     textarea {
+      appearance: none;
       display: block;
       max-height: 550px;
       resize: vertical;
