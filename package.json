@@ -28,10 +28,10 @@
   },
   "devDependencies": {
     "autoprefixer": "^9.1.5",
-    "gh-pages": "^2.0.0",
+    "gh-pages": "^2.0.1",
     "github-syntax-dark": "^0.5.0",
     "github-syntax-light": "^0.5.0",
-    "parcel-bundler": "^1.10.1",
+    "parcel-bundler": "^1.10.2",
     "posthtml-expressions": "^1.1.0",
     "posthtml-include": "^1.2.0",
     "posthtml-md": "^1.1.0",
