@@ -1,1 +1,1 @@
-export default /^([\w-]+)\/([\w-.]+)$/i;
+export default /^([\w-_]+)\/([\w-_.]+)$/i;
