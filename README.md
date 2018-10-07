@@ -22,7 +22,7 @@ To comment, users must authorize the utterances app to post on their behalf usin
 * [danyow.net](https://danyow.net)
 * [Den by Default](https://dennisdel.com)
 * [os.phil-opp.com](https://os.phil-opp.com/second-edition)
-* **[and many more...](https://github.com/utterance/utterances/edit/master/SITES.md)**
+* **[and many more...](https://github.com/utterance/utterances/blob/master/SITES.md#sites-using-utterances)**
 
 Are you using utterances? [Add your site](https://github.com/utterance/utterances/edit/master/SITES.md) to the list!
 
