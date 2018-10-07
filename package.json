@@ -17,10 +17,7 @@
     "url": "https://github.com/utterance/utterances.git"
   },
   "scripts": {
-    "clean": "rm -rf .cache & rm -rf dist",
-    "prestart": "yarn run clean",
     "start": "parcel serve src/*.html src/client.ts src/stylesheets/themes/*/{index,utterances}.scss --no-hmr --port 4000",
-    "prebuild": "yarn run clean",
     "build": "parcel build src/*.html src/client.ts src/stylesheets/themes/*/{index,utterances}.scss --experimental-scope-hoisting",
     "lint": "tslint --project tsconfig.json",
     "predeploy": "yarn run build && touch dist/.nojekyll && echo 'utteranc.es' > dist/CNAME",
@@ -32,6 +29,7 @@
     "github-syntax-dark": "^0.5.0",
     "github-syntax-light": "^0.5.0",
     "parcel-bundler": "^1.10.2",
+    "parcel-plugin-clean-dist": "^0.0.6",
     "posthtml-expressions": "^1.1.0",
     "posthtml-include": "^1.2.0",
     "posthtml-md": "^1.1.0",
