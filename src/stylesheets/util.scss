@@ -2,6 +2,15 @@
   color: $text-gray;
 }
 
+.octicon {
+  display: inline-block;
+  fill: currentColor;
+}
+
+.v-align-bottom {
+  vertical-align: bottom !important;
+}
+
 .markdown-body-scrollable {
   max-height: 450px;
   overflow-x: hidden;
