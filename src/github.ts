@@ -10,7 +10,7 @@ const PAGE_SIZE = 100;
 
 let owner: string;
 let repo: string;
-let branch = 'master';
+const branch = 'master';
 
 export function setRepoContext(context: { owner: string; repo: string; }) {
   owner = context.owner;
