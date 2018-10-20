@@ -24,11 +24,11 @@
     "deploy": "gh-pages --dist dist"
   },
   "devDependencies": {
-    "autoprefixer": "^9.1.5",
+    "autoprefixer": "^9.2.1",
     "gh-pages": "^2.0.1",
     "github-syntax-dark": "^0.5.0",
     "github-syntax-light": "^0.5.0",
-    "parcel-bundler": "^1.10.2",
+    "parcel-bundler": "^1.10.3",
     "parcel-plugin-clean-dist": "^0.0.6",
     "posthtml-expressions": "^1.1.0",
     "posthtml-include": "^1.2.0",
@@ -39,8 +39,8 @@
     "primer-forms": "^2.1.4",
     "primer-markdown": "^3.7.9",
     "primer-navigation": "^1.5.7",
-    "sass": "^1.14.1",
+    "sass": "^1.14.3",
     "tslint": "^5.11.0",
-    "typescript": "^3.1.1"
+    "typescript": "^3.1.3"
   }
 }
