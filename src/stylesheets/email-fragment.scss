@@ -1,0 +1,42 @@
+.email-fragment {
+  white-space: pre-wrap;
+}
+
+.email-hidden-toggle a {
+  display: inline-block;
+  height: 12px;
+  padding: 0 9px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 6px;
+  color: $border-gray-darker;
+  text-decoration: none;
+  vertical-align: middle;
+  background: $gray-200;
+  border-radius: 1px;
+
+  &:hover {
+    background-color: $gray-300;
+  }
+
+  &:active {
+    color: #fff;
+    background-color: $border-blue;
+  }
+}
+
+.email-hidden-reply {
+  display: none;
+
+  &.expanded {
+    display: block;
+  }
+}
+
+.email-quoted-reply,
+.email-signature-reply {
+  padding: 0 15px;
+  margin: 15px 0;
+  color: $text-gray;
+  border-left: 4px solid $gray-200;
+}
