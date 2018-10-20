@@ -150,7 +150,7 @@ exports.param = param;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = /^([\w-]+)\/([\w-.]+)$/i;
+exports.default = /^([\w-_]+)\/([\w-_.]+)$/i;
 },{}],"page-attributes.ts":[function(require,module,exports) {
 "use strict";
 
@@ -729,7 +729,19 @@ var CommentComponent = function () {
 
     var association = displayAssociations[author_association];
     this.element.innerHTML = "\n      <a class=\"avatar\" href=\"" + user.html_url + "\" target=\"_blank\" tabindex=\"-1\">\n        <img alt=\"@" + user.login + "\" height=\"44\" width=\"44\"\n              src=\"" + user.avatar_url + avatarArgs + "\">\n      </a>\n      <div class=\"comment\">\n        <header class=\"comment-header\">\n          <span class=\"comment-meta\">\n            <a class=\"text-link\" href=\"" + user.html_url + "\" target=\"_blank\"><strong>" + user.login + "</strong></a>\n            commented\n            <a class=\"text-link\" href=\"" + html_url + "\" target=\"_blank\">" + time_ago_1.timeAgo(Date.now(), new Date(created_at)) + "</a>\n          </span>\n          " + (association ? "<span class=\"author-association-badge\">" + association + "</span>" : '') + "\n        </header>\n        <div class=\"markdown-body markdown-body-scrollable\">\n          " + body_html + "\n        </div>\n      </div>";
-    processRenderedMarkdown(this.element.lastElementChild.lastElementChild);
+    var markdownBody = this.element.lastElementChild.lastElementChild;
+    var emailToggle = markdownBody.querySelector('.email-hidden-toggle a');
+
+    if (emailToggle) {
+      var emailReply_1 = markdownBody.querySelector('.email-hidden-reply');
+
+      emailToggle.onclick = function (event) {
+        event.preventDefault();
+        emailReply_1.classList.toggle('expanded');
+      };
+    }
+
+    processRenderedMarkdown(markdownBody);
   }
 
   CommentComponent.prototype.setCurrentUser = function (currentUser) {
@@ -752,7 +764,7 @@ var CommentComponent = function () {
 exports.CommentComponent = CommentComponent;
 
 function processRenderedMarkdown(markdownBody) {
-  Array.from(markdownBody.querySelectorAll('a')).forEach(function (a) {
+  Array.from(markdownBody.querySelectorAll(':not(.email-hidden-toggle) > a')).forEach(function (a) {
     a.target = '_top';
     a.rel = 'noopener noreferrer';
   });
