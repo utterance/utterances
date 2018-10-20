@@ -43,7 +43,17 @@ export class CommentComponent {
         </div>
       </div>`;
 
-    processRenderedMarkdown(this.element.lastElementChild!.lastElementChild!);
+    const markdownBody = this.element.lastElementChild!.lastElementChild!;
+    const emailToggle = markdownBody.querySelector('.email-hidden-toggle a') as HTMLAnchorElement;
+    if (emailToggle) {
+      const emailReply = markdownBody.querySelector('.email-hidden-reply') as HTMLDivElement;
+      emailToggle.onclick = event => {
+        event.preventDefault();
+        emailReply.classList.toggle('expanded');
+      };
+    }
+
+    processRenderedMarkdown(markdownBody);
   }
 
   public setCurrentUser(currentUser: string | null) {
@@ -61,7 +71,7 @@ export class CommentComponent {
 }
 
 export function processRenderedMarkdown(markdownBody: Element) {
-  Array.from(markdownBody.querySelectorAll<HTMLAnchorElement>('a'))
+  Array.from(markdownBody.querySelectorAll<HTMLAnchorElement>(':not(.email-hidden-toggle) > a'))
     .forEach(a => { a.target = '_top'; a.rel = 'noopener noreferrer'; });
   Array.from(markdownBody.querySelectorAll<HTMLImageElement>('img'))
     .forEach(img => img.onload = scheduleMeasure);
