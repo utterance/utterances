@@ -20,7 +20,7 @@ To comment, users must authorize the utterances app to post on their behalf usin
 ## sites using utterances
 
 * Haxe [documentation](https://haxe.org/manual) and [cookbook](https://code.haxe.org/)
-* [danyow.net](https://danyow.net)
+* [danyow.net](https://www.danyow.net)
 * [Den by Default](https://dennisdel.com)
 * [os.phil-opp.com](https://os.phil-opp.com/second-edition)
 * **[and many more...](https://github.com/utterance/utterances/blob/master/SITES.md#sites-using-utterances)**
