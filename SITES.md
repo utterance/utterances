@@ -23,3 +23,4 @@
 * [Verummeum](https://verummeum.com/)
 * [theta.eu.org](https://theta.eu.org)
 * [aluc.io](https://aluc.io)
+* [lisp-journey.gitlab.io](https://lisp-journey.gitlab.io)
