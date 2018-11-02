@@ -1,0 +1,6 @@
+@import "./variables";
+
+.bg-gray-light,
+.bg-white {
+  background-color: $bg-gray !important;
+}
