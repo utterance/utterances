@@ -108,7 +108,7 @@ export class ConfigurationComponent {
         <a href="https://github.com/utterance/utterances/blob/master/CONTRIBUTING.md">Contribute</a> a custom theme.
       </p>
 
-      <select id="theme" class="form-select" value="github-light">
+      <select id="theme" class="form-select" value="github-light" aria-label="Theme">
         <option value="github-light">GitHub Light</option>
         <option value="github-dark">GitHub Dark</option>
       </select>
