@@ -7,7 +7,7 @@ export class ConfigurationComponent {
   constructor() {
     this.element = document.createElement('form');
     this.element.innerHTML = `
-      <h3>Repository</h3>
+      <h3 id="heading-repository">Repository</h3>
       <p>
         Choose the repository utterances will connect to.
       </p>
@@ -30,7 +30,7 @@ export class ConfigurationComponent {
         </div>
       </fieldset>
 
-      <h3>Blog Post<->Issue Mapping</h3>
+      <h3 id="heading-mapping">Blog Post<->Issue Mapping</h3>
       <p>Choose how Utterances will map blog posts to GitHub issues.</p>
       <fieldset>
         <div class="form-checkbox">
@@ -101,7 +101,7 @@ export class ConfigurationComponent {
         </div>
       </fieldset>
 
-      <h3>Theme</h3>
+      <h3 id="heading-theme">Theme</h3>
       <p>
         Choose an Utterances theme that matches your blog.
         Can't find a theme you like?
@@ -113,7 +113,7 @@ export class ConfigurationComponent {
         <option value="github-dark">GitHub Dark</option>
       </select>
 
-      <h3>Enable Utterances</h3>
+      <h3 id="heading-enable">Enable Utterances</h3>
 
       <p>Add the following script tag to your blog's template. Position it where you want the
       comments to appear. Customize the layout using the <code>.utterances</code> and
