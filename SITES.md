@@ -1,6 +1,5 @@
 # Sites using Utterances
 
-* [dendoink](http://www.dendoink.com)
 * [danyow.net](https://danyow.net)
 * [Den by Default](https://dennisdel.com)
 * [os.phil-opp.com](https://os.phil-opp.com/second-edition)
@@ -29,3 +28,4 @@
 * [Kujiale-Mobile](https://kujiale-mobile.github.io)
 * [swifttalking.com](https://www.swifttalking.com/)
 * [ASP.NET Hacker](https://asp.net-hacker.rocks/)
+* [dendoink](http://www.dendoink.com)
