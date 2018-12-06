@@ -1,5 +1,6 @@
 # Sites using Utterances
 
+* [dendoink](http://www.dendoink.com)
 * [danyow.net](https://danyow.net)
 * [Den by Default](https://dennisdel.com)
 * [os.phil-opp.com](https://os.phil-opp.com/second-edition)
