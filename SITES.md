@@ -30,3 +30,4 @@
 * [ASP.NET Hacker](https://asp.net-hacker.rocks/)
 * [dendoink](http://www.dendoink.com)
 * [sepisoad](https://sepisoad.com/)
+* [Bram's Dev Blog](http://bram-atmire.github.io/)
