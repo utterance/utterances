@@ -34,3 +34,5 @@
 * [LinuxSuRen](https://linuxsuren.github.io)
 * [OLAINDEX](https://olaindex.ningkai.wang)
 * [Eigenfoo](https://eigenfoo.xyz/)
+* [cergos.io](https://cergos.io)
+* [bilog](bilog.trung.ml)
