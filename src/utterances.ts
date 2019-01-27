@@ -1,4 +1,4 @@
-import { pageAttributes as page } from './page-attributes';
+import { pageAttributes as page, pageAttributes } from './page-attributes';
 import {
   Issue,
   IssueComment,
@@ -16,6 +16,7 @@ import { TimelineComponent } from './timeline-component';
 import { NewCommentComponent } from './new-comment-component';
 import { startMeasuring, scheduleMeasure } from './measure';
 import { loadTheme } from './theme';
+import { getRepoConfig } from './repo-config';
 
 setRepoContext(page);
 
@@ -46,6 +47,7 @@ function bootstrap(issue: Issue | null, user: User | null) {
 
   const submit = async (markdown: string) => {
     if (user) {
+      await assertOrigin();
       if (!issue) {
         issue = await createIssue(
           page.issueTerm as string,
@@ -75,11 +77,34 @@ function bootstrap(issue: Issue | null, user: User | null) {
 addEventListener('not-installed', function handleNotInstalled() {
   removeEventListener('not-installed', handleNotInstalled);
   document.querySelector('.timeline')!.insertAdjacentHTML('afterbegin', `
-  <div class="flash flash-error flash-not-installed">
+  <div class="flash flash-error">
     Error: utterances is not installed on <code>${page.owner}/${page.repo}</code>.
     If you own this repo,
-    <a href="https://github.com/apps/utterances" target="_blank"><strong>install the app</strong></a>.
+    <a href="https://github.com/apps/utterances" target="_top"><strong>install the app</strong></a>.
     Read more about this change in
-    <a href="https://github.com/utterance/utterances/pull/25" target="_blank">the PR</a>.
+    <a href="https://github.com/utterance/utterances/pull/25" target="_top">the PR</a>.
   </div>`);
+  scheduleMeasure();
 });
+
+export async function assertOrigin() {
+  const { origins } = await getRepoConfig();
+  const { origin, owner, repo, url } = page;
+  if (origins.indexOf(origin) !== -1) {
+    return;
+  }
+
+  document.querySelector('.timeline')!.lastElementChild!.insertAdjacentHTML('beforebegin', `
+  <div class="flash flash-error flash-not-installed">
+    Error: <code>${origin}</code> is not permitted to post to <code>${owner}/${repo}</code>.
+    Confirm this is the correct repo for this site's comments. If you own this repo,
+    <a href="https://github.com/${owner}/${repo}/edit/master/utterances.json" target="_top">
+      <strong>update the utterances.json</strong>
+    </a>
+    to include <code>${origin}</code> in the list of origins.<br/><br/>
+    Suggested configuration:<br/>
+    <pre><code>${JSON.stringify({ origins: [origin] }, null, 2)}</code></pre>
+  </div>`);
+  scheduleMeasure();
+  throw new Error('Origin not permitted.');
+}
