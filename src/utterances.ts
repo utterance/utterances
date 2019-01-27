@@ -44,34 +44,27 @@ function bootstrap(issue: Issue | null, user: User | null) {
     return;
   }
 
-  const submit = (markdown: string) => {
+  const submit = async (markdown: string) => {
     if (user) {
-      let commentPromise: Promise<IssueComment>;
-      if (issue) {
-        commentPromise = postComment(issue.number, markdown);
-      } else {
-        commentPromise = createIssue(
+      if (!issue) {
+        issue = await createIssue(
           page.issueTerm as string,
           page.url,
           page.title,
           page.description
-        ).then(newIssue => {
-          issue = newIssue;
-          timeline.setIssue(issue);
-          return postComment(issue.number, markdown);
-        });
+        );
+        timeline.setIssue(issue);
       }
-      return commentPromise.then(comment => {
-        timeline.appendComment(comment);
-        newCommentComponent.clear();
-      });
+      const comment = await postComment(issue.number, markdown);
+      timeline.appendComment(comment);
+      newCommentComponent.clear();
+      return;
     }
 
-    return login().then(() => loadUser()).then(u => {
-      user = u;
-      timeline.setUser(user);
-      newCommentComponent.setUser(user);
-    });
+    await login();
+    user = await loadUser();
+    timeline.setUser(user);
+    newCommentComponent.setUser(user);
   };
 
   const newCommentComponent = new NewCommentComponent(user, submit);
