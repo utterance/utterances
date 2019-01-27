@@ -110,6 +110,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.ConfigurationComponent = void 0;
 
 var ConfigurationComponent = function () {
   function ConfigurationComponent() {
@@ -191,12 +192,8 @@ exports.ConfigurationComponent = ConfigurationComponent;
 },{}],"index.ts":[function(require,module,exports) {
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+var _configurationComponent = require("./configuration-component");
 
-var configuration_component_1 = require("./configuration-component");
-
-document.querySelector('h2#configuration').insertAdjacentElement('afterend', new configuration_component_1.ConfigurationComponent().element);
+document.querySelector('h2#configuration').insertAdjacentElement('afterend', new _configurationComponent.ConfigurationComponent().element);
 },{"./configuration-component":"configuration-component.ts"}]},{},["index.ts"], null)
 //# sourceMappingURL=/src.77de5100.map
