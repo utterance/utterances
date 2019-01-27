@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
+    "module": "esnext",
     "lib": [
       "dom",
       "es2017"
     ],
+    "types": [],
     "strict": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
