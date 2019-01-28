@@ -219,6 +219,7 @@ function readPageAttributes() {
     url: params.url,
     title: params.title,
     description: params.description,
+    label: params.label,
     theme: params.theme || 'github-light'
   };
 }
@@ -549,8 +550,9 @@ function loadUser() {
   });
 }
 
-function createIssue(issueTerm, documentUrl, title, description) {
-  var request = new Request(_utterancesApi.UTTERANCES_API + "/repos/" + owner + "/" + repo + "/issues", {
+function createIssue(issueTerm, documentUrl, title, description, label) {
+  var url = _utterancesApi.UTTERANCES_API + "/repos/" + owner + "/" + repo + "/issues" + (label ? "?label=" + encodeURIComponent(label) : '');
+  var request = new Request(url, {
     method: 'POST',
     body: JSON.stringify({
       title: issueTerm,
@@ -1269,7 +1271,7 @@ function bootstrap(issue, user) {
             _a.sent();
 
             if (!!issue) return [3, 3];
-            return [4, (0, _github.createIssue)(_pageAttributes.pageAttributes.issueTerm, _pageAttributes.pageAttributes.url, _pageAttributes.pageAttributes.title, _pageAttributes.pageAttributes.description)];
+            return [4, (0, _github.createIssue)(_pageAttributes.pageAttributes.issueTerm, _pageAttributes.pageAttributes.url, _pageAttributes.pageAttributes.title, _pageAttributes.pageAttributes.description, _pageAttributes.pageAttributes.label)];
 
           case 2:
             issue = _a.sent();
