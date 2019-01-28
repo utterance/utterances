@@ -14,7 +14,7 @@
     ```bash
     yarn start
     ```
-    This command transpile the source files and start a development webserver. Any change you make to the source TypeScript, HTML and SCSS files will automatically be recompiled. Go to http://localhost:4000/index.html to view your changes.
+    This command compiles the source files and starts a development webserver. Any change you make to the source TypeScript, HTML and SCSS files will automatically be recompiled. Go to http://localhost:4000/index.html to view your changes.
 
 ## Theme Development
 

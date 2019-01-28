@@ -1,4 +1,4 @@
-import { pageAttributes as page } from './page-attributes';
+import { pageAttributes as page, pageAttributes } from './page-attributes';
 import {
   Issue,
   IssueComment,
@@ -16,6 +16,7 @@ import { TimelineComponent } from './timeline-component';
 import { NewCommentComponent } from './new-comment-component';
 import { startMeasuring, scheduleMeasure } from './measure';
 import { loadTheme } from './theme';
+import { getRepoConfig } from './repo-config';
 
 setRepoContext(page);
 
@@ -44,34 +45,26 @@ function bootstrap(issue: Issue | null, user: User | null) {
     return;
   }
 
-  const submit = (markdown: string) => {
+  const submit = async (markdown: string) => {
     if (user) {
-      let commentPromise: Promise<IssueComment>;
-      if (issue) {
-        commentPromise = postComment(issue.number, markdown);
-      } else {
-        commentPromise = createIssue(
+      await assertOrigin();
+      if (!issue) {
+        issue = await createIssue(
           page.issueTerm as string,
           page.url,
           page.title,
-          page.description
-        ).then(newIssue => {
-          issue = newIssue;
-          timeline.setIssue(issue);
-          return postComment(issue.number, markdown);
-        });
+          page.description,
+          page.label
+        );
+        timeline.setIssue(issue);
       }
-      return commentPromise.then(comment => {
-        timeline.appendComment(comment);
-        newCommentComponent.clear();
-      });
+      const comment = await postComment(issue.number, markdown);
+      timeline.appendComment(comment);
+      newCommentComponent.clear();
+      return;
     }
 
-    return login().then(() => loadUser()).then(u => {
-      user = u;
-      timeline.setUser(user);
-      newCommentComponent.setUser(user);
-    });
+    login(page.url);
   };
 
   const newCommentComponent = new NewCommentComponent(user, submit);
@@ -82,11 +75,34 @@ function bootstrap(issue: Issue | null, user: User | null) {
 addEventListener('not-installed', function handleNotInstalled() {
   removeEventListener('not-installed', handleNotInstalled);
   document.querySelector('.timeline')!.insertAdjacentHTML('afterbegin', `
-  <div class="flash flash-error flash-not-installed">
+  <div class="flash flash-error">
     Error: utterances is not installed on <code>${page.owner}/${page.repo}</code>.
     If you own this repo,
-    <a href="https://github.com/apps/utterances" target="_blank"><strong>install the app</strong></a>.
+    <a href="https://github.com/apps/utterances" target="_top"><strong>install the app</strong></a>.
     Read more about this change in
-    <a href="https://github.com/utterance/utterances/pull/25" target="_blank">the PR</a>.
+    <a href="https://github.com/utterance/utterances/pull/25" target="_top">the PR</a>.
   </div>`);
+  scheduleMeasure();
 });
+
+export async function assertOrigin() {
+  const { origins } = await getRepoConfig();
+  const { origin, owner, repo, url } = page;
+  if (origins.indexOf(origin) !== -1) {
+    return;
+  }
+
+  document.querySelector('.timeline')!.lastElementChild!.insertAdjacentHTML('beforebegin', `
+  <div class="flash flash-error flash-not-installed">
+    Error: <code>${origin}</code> is not permitted to post to <code>${owner}/${repo}</code>.
+    Confirm this is the correct repo for this site's comments. If you own this repo,
+    <a href="https://github.com/${owner}/${repo}/edit/master/utterances.json" target="_top">
+      <strong>update the utterances.json</strong>
+    </a>
+    to include <code>${origin}</code> in the list of origins.<br/><br/>
+    Suggested configuration:<br/>
+    <pre><code>${JSON.stringify({ origins: [origin] }, null, 2)}</code></pre>
+  </div>`);
+  scheduleMeasure();
+  throw new Error('Origin not permitted.');
+}

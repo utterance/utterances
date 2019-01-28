@@ -2,6 +2,7 @@ export class ConfigurationComponent {
   public readonly element: HTMLFormElement;
   private readonly script: HTMLDivElement;
   private readonly repo: HTMLInputElement;
+  private readonly label: HTMLInputElement;
   private readonly theme: HTMLSelectElement;
 
   constructor() {
@@ -30,8 +31,8 @@ export class ConfigurationComponent {
         </div>
       </fieldset>
 
-      <h3 id="heading-mapping">Blog Post<->Issue Mapping</h3>
-      <p>Choose how Utterances will map blog posts to GitHub issues.</p>
+      <h3 id="heading-mapping">Blog Post ↔️ Issue Mapping</h3>
+      <p>Choose the mapping between blog posts and GitHub issues.</p>
       <fieldset>
         <div class="form-checkbox">
           <label>
@@ -101,6 +102,23 @@ export class ConfigurationComponent {
         </div>
       </fieldset>
 
+      <h3 id="heading-issue-label">Issue Label</h3>
+      <p>
+        Choose the label that will be assigned to issues created by Utterances.
+      </p>
+      <fieldset>
+        <div>
+          <label for="label">label (optional):</label><br/>
+          <input id="label" class="form-control" type="text" placeholder="Comment">
+          <p class="note">
+            Label names are case sensitive.
+            The label must exist in your repo-
+            Utterances cannot attach labels that do not exist.
+            Emoji are supported in label names.✨💬✨
+          </p>
+        </div>
+      </fieldset>
+
       <h3 id="heading-theme">Theme</h3>
       <p>
         Choose an Utterances theme that matches your blog.
@@ -130,6 +148,8 @@ export class ConfigurationComponent {
     this.script = this.element.querySelector('#script') as HTMLDivElement;
 
     this.repo = this.element.querySelector('#repo') as HTMLInputElement;
+
+    this.label = this.element.querySelector('#label') as HTMLInputElement;
 
     this.theme = this.element.querySelector('#theme') as HTMLSelectElement;
 
@@ -168,6 +188,7 @@ export class ConfigurationComponent {
     this.script.innerHTML = this.makeConfigScript(
       this.makeConfigScriptAttribute('repo', this.repo.value === '' ? '[ENTER REPO HERE]' : this.repo.value) + '\n' +
       mappingAttr + '\n' +
+      (this.label.value ? this.makeConfigScriptAttribute('label', this.label.value) + '\n' : '') +
       this.makeConfigScriptAttribute('theme', this.theme.value) + '\n' +
       this.makeConfigScriptAttribute('crossorigin', 'anonymous'));
   }
