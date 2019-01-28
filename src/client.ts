@@ -19,7 +19,7 @@ for (let i = 0; i < script.attributes.length; i++) {
 const canonicalLink = document.querySelector(`link[rel='canonical']`) as HTMLLinkElement;
 attrs.url = canonicalLink ? canonicalLink.href : location.origin + location.pathname + location.search;
 attrs.origin = location.origin;
-attrs.pathname = location.pathname.substr(1).replace(/\.\w+$/, '');
+attrs.pathname = location.pathname.length < 2 ? 'index' : location.pathname.substr(1).replace(/\.\w+$/, '');
 attrs.title = document.title;
 const descriptionMeta = document.querySelector(`meta[name='description']`) as HTMLMetaElement;
 attrs.description = descriptionMeta ? descriptionMeta.content : '';
