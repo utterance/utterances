@@ -64,10 +64,7 @@ function bootstrap(issue: Issue | null, user: User | null) {
       return;
     }
 
-    await login();
-    user = await loadUser();
-    timeline.setUser(user);
-    newCommentComponent.setUser(user);
+    login(page.url);
   };
 
   const newCommentComponent = new NewCommentComponent(user, submit);

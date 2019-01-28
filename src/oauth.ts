@@ -1,10 +1,5 @@
 import { UTTERANCES_API } from './utterances-api';
-import { param } from './deparam';
-
-const authorizeUrl = `${UTTERANCES_API}/authorize`;
-const tokenUrl = `${UTTERANCES_API}/token`;
-// tslint:disable-next-line:variable-name
-const redirect_uri = `${location.origin}/authorized.html`;
+import { param, deparam } from './deparam';
 
 class Token {
   private readonly storageKey = 'OAUTH_TOKEN2';
@@ -35,15 +30,23 @@ class Token {
 
 export const token = new Token();
 
-export function login() {
-  window.open(`${authorizeUrl}?${param({ redirect_uri })}`);
-  return new Promise(resolve => (window as any).notifyAuthorized = resolve)
-    .then(search => fetch(tokenUrl + search, { mode: 'cors' }))
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      return response.text().then(text => Promise.reject(`Error retrieving token:\n${text}`));
-    })
-    .then(t => { token.value = t; }, reason => { token.value = null; throw reason; });
+// tslint:disable-next-line:variable-name
+export function login(redirect_uri: string) {
+  redirect_uri = `${location.origin}/authorized.html?${param({ redirect_uri })}`;
+  window.open(`${UTTERANCES_API}/authorize?${param({ redirect_uri })}`, '_top');
+}
+
+export async function completeLogin() {
+  const { state, redirect_uri } = deparam(location.search.substr(1));
+  const tokenUrl = `${UTTERANCES_API}/token?${param({ state })}`;
+  const response = await fetch(tokenUrl, { mode: 'cors' });
+  if (!response.ok) {
+    token.value = null;
+    const error = await response.text();
+    document.body.textContent = error;
+    throw new Error(error);
+  }
+  const data = await response.json();
+  token.value = data;
+  location.href = redirect_uri;
 }
