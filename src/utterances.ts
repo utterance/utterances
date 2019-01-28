@@ -53,7 +53,8 @@ function bootstrap(issue: Issue | null, user: User | null) {
           page.issueTerm as string,
           page.url,
           page.title,
-          page.description
+          page.description,
+          page.label
         );
         timeline.setIssue(issue);
       }

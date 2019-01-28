@@ -188,8 +188,9 @@ export function loadUser(): Promise<User | null> {
     });
 }
 
-export function createIssue(issueTerm: string, documentUrl: string, title: string, description: string) {
-  const request = new Request(`${UTTERANCES_API}/repos/${owner}/${repo}/issues`, {
+export function createIssue(issueTerm: string, documentUrl: string, title: string, description: string, label: string) {
+  const url = `${UTTERANCES_API}/repos/${owner}/${repo}/issues${label ? `?label=${encodeURIComponent(label)}` : ''}`;
+  const request = new Request(url, {
     method: 'POST',
     body: JSON.stringify({
       title: issueTerm,
