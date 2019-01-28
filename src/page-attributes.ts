@@ -50,6 +50,7 @@ function readPageAttributes() {
     url: params.url,
     title: params.title,
     description: params.description,
+    label: params.label,
     theme: params.theme || 'github-light'
   };
 }
