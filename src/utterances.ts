@@ -1,7 +1,6 @@
-import { pageAttributes as page, pageAttributes } from './page-attributes';
+import { pageAttributes as page } from './page-attributes';
 import {
   Issue,
-  IssueComment,
   User,
   setRepoContext,
   loadIssueByTerm,
@@ -87,7 +86,7 @@ addEventListener('not-installed', function handleNotInstalled() {
 
 export async function assertOrigin() {
   const { origins } = await getRepoConfig();
-  const { origin, owner, repo, url } = page;
+  const { origin, owner, repo } = page;
   if (origins.indexOf(origin) !== -1) {
     return;
   }
