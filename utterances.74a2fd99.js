@@ -242,7 +242,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.getLoginUrl = getLoginUrl;
-exports.completeLogin = completeLogin;
+exports.loadToken = loadToken;
 exports.token = void 0;
 
 var _utterancesApi = require("./utterances-api");
@@ -388,87 +388,42 @@ var __generator = void 0 && (void 0).__generator || function (thisArg, body) {
   }
 };
 
-var Token = function () {
-  function Token() {
-    this.storageKey = 'OAUTH_TOKEN2';
-    this.token = null;
-
-    try {
-      this.token = localStorage.getItem(this.storageKey);
-    } catch (e) {}
-  }
-
-  Object.defineProperty(Token.prototype, "value", {
-    get: function get() {
-      return this.token;
-    },
-    set: function set(newValue) {
-      this.token = newValue;
-
-      try {
-        if (newValue === null) {
-          localStorage.removeItem(this.storageKey);
-        } else {
-          localStorage.setItem(this.storageKey, newValue);
-        }
-      } catch (e) {}
-    },
-    enumerable: true,
-    configurable: true
-  });
-  return Token;
-}();
-
-var token = new Token();
+var token = {
+  value: null
+};
 exports.token = token;
 
-function getLoginUrl(hostUrl) {
-  var authorizedPage = location.origin + "/authorized.html?" + (0, _deparam.param)({
-    redirect_uri: hostUrl
+function getLoginUrl(redirect_uri) {
+  return _utterancesApi.UTTERANCES_API + "/authorize?" + (0, _deparam.param)({
+    redirect_uri: redirect_uri
   });
-  var apiAuthorizePage = _utterancesApi.UTTERANCES_API + "/authorize?" + (0, _deparam.param)({
-    redirect_uri: authorizedPage
-  });
-  var authorizePage = location.origin + "/authorize.html?" + (0, _deparam.param)({
-    redirect_uri: apiAuthorizePage
-  });
-  return authorizePage;
 }
 
-function completeLogin() {
-  return __awaiter(this, void 0, void 0, function () {
-    var _a, state, redirect_uri, tokenUrl, response, error, data;
-
-    return __generator(this, function (_b) {
-      switch (_b.label) {
+function loadToken() {
+  return __awaiter(this, void 0, Promise, function () {
+    var url, response, t;
+    return __generator(this, function (_a) {
+      switch (_a.label) {
         case 0:
-          _a = (0, _deparam.deparam)(location.search.substr(1)), state = _a.state, redirect_uri = _a.redirect_uri;
-          tokenUrl = _utterancesApi.UTTERANCES_API + "/token?" + (0, _deparam.param)({
-            state: state
-          });
-          return [4, fetch(tokenUrl, {
-            mode: 'cors'
+          url = _utterancesApi.UTTERANCES_API + "/token";
+          return [4, fetch(url, {
+            method: 'POST',
+            mode: 'cors',
+            credentials: 'include'
           })];
 
         case 1:
-          response = _b.sent();
-          if (!!response.ok) return [3, 3];
-          token.value = null;
-          return [4, response.text()];
-
-        case 2:
-          error = _b.sent();
-          document.body.textContent = error;
-          throw new Error(error);
-
-        case 3:
+          response = _a.sent();
+          if (!response.ok) return [3, 3];
           return [4, response.json()];
 
-        case 4:
-          data = _b.sent();
-          token.value = data;
-          location.href = redirect_uri;
-          return [2];
+        case 2:
+          t = _a.sent();
+          token.value = t;
+          return [2, t];
+
+        case 3:
+          return [2, null];
       }
     });
   });
@@ -1392,6 +1347,8 @@ var _theme = require("./theme");
 
 var _repoConfig = require("./repo-config");
 
+var _oauth = require("./oauth");
+
 var __awaiter = void 0 && (void 0).__awaiter || function (thisArg, _arguments, P, generator) {
   return new (P || (P = Promise))(function (resolve, reject) {
     function fulfilled(value) {
@@ -1541,69 +1498,83 @@ function loadIssue() {
   return (0, _github.loadIssueByTerm)(_pageAttributes.pageAttributes.issueTerm);
 }
 
-Promise.all([loadIssue(), (0, _github.loadUser)(), (0, _theme.loadTheme)(_pageAttributes.pageAttributes.theme, _pageAttributes.pageAttributes.origin)]).then(function (_a) {
-  var issue = _a[0],
-      user = _a[1];
-  return bootstrap(issue, user);
-});
+function bootstrap() {
+  return __awaiter(this, void 0, void 0, function () {
+    var _a, issue, user, timeline, submit, newCommentComponent;
 
-function bootstrap(issue, user) {
-  var _this = this;
+    var _this = this;
 
-  (0, _measure.startMeasuring)(_pageAttributes.pageAttributes.origin);
-  var timeline = new _timelineComponent.TimelineComponent(user, issue);
-  document.body.appendChild(timeline.element);
+    return __generator(this, function (_b) {
+      switch (_b.label) {
+        case 0:
+          return [4, (0, _oauth.loadToken)()];
 
-  if (issue && issue.comments > 0) {
-    (0, _github.loadCommentsPage)(issue.number, 1).then(function (_a) {
-      var items = _a.items;
-      return items.forEach(function (comment) {
-        return timeline.appendComment(comment);
-      });
-    });
-  }
+        case 1:
+          _b.sent();
 
-  if (issue && issue.locked) {
-    return;
-  }
+          return [4, Promise.all([loadIssue(), (0, _github.loadUser)(), (0, _theme.loadTheme)(_pageAttributes.pageAttributes.theme, _pageAttributes.pageAttributes.origin)])];
 
-  var submit = function submit(markdown) {
-    return __awaiter(_this, void 0, void 0, function () {
-      var comment;
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            return [4, assertOrigin()];
+        case 2:
+          _a = _b.sent(), issue = _a[0], user = _a[1];
+          (0, _measure.startMeasuring)(_pageAttributes.pageAttributes.origin);
+          timeline = new _timelineComponent.TimelineComponent(user, issue);
+          document.body.appendChild(timeline.element);
 
-          case 1:
-            _a.sent();
+          if (issue && issue.comments > 0) {
+            (0, _github.loadCommentsPage)(issue.number, 1).then(function (_a) {
+              var items = _a.items;
+              return items.forEach(function (comment) {
+                return timeline.appendComment(comment);
+              });
+            });
+          }
 
-            if (!!issue) return [3, 3];
-            return [4, (0, _github.createIssue)(_pageAttributes.pageAttributes.issueTerm, _pageAttributes.pageAttributes.url, _pageAttributes.pageAttributes.title, _pageAttributes.pageAttributes.description, _pageAttributes.pageAttributes.label)];
-
-          case 2:
-            issue = _a.sent();
-            timeline.setIssue(issue);
-            _a.label = 3;
-
-          case 3:
-            return [4, (0, _github.postComment)(issue.number, markdown)];
-
-          case 4:
-            comment = _a.sent();
-            timeline.appendComment(comment);
-            newCommentComponent.clear();
+          if (issue && issue.locked) {
             return [2];
-        }
-      });
-    });
-  };
+          }
 
-  var newCommentComponent = new _newCommentComponent.NewCommentComponent(user, submit);
-  timeline.element.appendChild(newCommentComponent.element);
-  (0, _measure.scheduleMeasure)();
+          submit = function submit(markdown) {
+            return __awaiter(_this, void 0, void 0, function () {
+              var comment;
+              return __generator(this, function (_a) {
+                switch (_a.label) {
+                  case 0:
+                    return [4, assertOrigin()];
+
+                  case 1:
+                    _a.sent();
+
+                    if (!!issue) return [3, 3];
+                    return [4, (0, _github.createIssue)(_pageAttributes.pageAttributes.issueTerm, _pageAttributes.pageAttributes.url, _pageAttributes.pageAttributes.title, _pageAttributes.pageAttributes.description, _pageAttributes.pageAttributes.label)];
+
+                  case 2:
+                    issue = _a.sent();
+                    timeline.setIssue(issue);
+                    _a.label = 3;
+
+                  case 3:
+                    return [4, (0, _github.postComment)(issue.number, markdown)];
+
+                  case 4:
+                    comment = _a.sent();
+                    timeline.appendComment(comment);
+                    newCommentComponent.clear();
+                    return [2];
+                }
+              });
+            });
+          };
+
+          newCommentComponent = new _newCommentComponent.NewCommentComponent(user, submit);
+          timeline.element.appendChild(newCommentComponent.element);
+          (0, _measure.scheduleMeasure)();
+          return [2];
+      }
+    });
+  });
 }
 
+bootstrap();
 addEventListener('not-installed', function handleNotInstalled() {
   removeEventListener('not-installed', handleNotInstalled);
   document.querySelector('.timeline').insertAdjacentHTML('afterbegin', "\n  <div class=\"flash flash-error\">\n    Error: utterances is not installed on <code>" + _pageAttributes.pageAttributes.owner + "/" + _pageAttributes.pageAttributes.repo + "</code>.\n    If you own this repo,\n    <a href=\"https://github.com/apps/utterances\" target=\"_top\"><strong>install the app</strong></a>.\n    Read more about this change in\n    <a href=\"https://github.com/utterance/utterances/pull/25\" target=\"_top\">the PR</a>.\n  </div>");
@@ -1635,5 +1606,5 @@ function assertOrigin() {
     });
   });
 }
-},{"./page-attributes":"page-attributes.ts","./github":"github.ts","./timeline-component":"timeline-component.ts","./new-comment-component":"new-comment-component.ts","./measure":"measure.ts","./theme":"theme.ts","./repo-config":"repo-config.ts"}]},{},["utterances.ts"], null)
+},{"./page-attributes":"page-attributes.ts","./github":"github.ts","./timeline-component":"timeline-component.ts","./new-comment-component":"new-comment-component.ts","./measure":"measure.ts","./theme":"theme.ts","./repo-config":"repo-config.ts","./oauth":"oauth.ts"}]},{},["utterances.ts"], null)
 //# sourceMappingURL=/utterances.74a2fd99.map
