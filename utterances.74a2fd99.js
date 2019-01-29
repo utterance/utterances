@@ -426,9 +426,13 @@ function getLoginUrl(hostUrl) {
   var authorizedPage = location.origin + "/authorized.html?" + (0, _deparam.param)({
     redirect_uri: hostUrl
   });
-  return _utterancesApi.UTTERANCES_API + "/authorize?" + (0, _deparam.param)({
+  var apiAuthorizePage = _utterancesApi.UTTERANCES_API + "/authorize?" + (0, _deparam.param)({
     redirect_uri: authorizedPage
   });
+  var authorizePage = location.origin + "/authorize.html?" + (0, _deparam.param)({
+    redirect_uri: apiAuthorizePage
+  });
+  return authorizePage;
 }
 
 function completeLogin() {
