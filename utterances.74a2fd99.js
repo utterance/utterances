@@ -394,6 +394,12 @@ var token = {
 exports.token = token;
 
 function getLoginUrl(redirect_uri) {
+  if (typeof URL !== 'undefined') {
+    var url = new URL(redirect_uri);
+    url.hash = '#utterances';
+    redirect_uri = url.href;
+  }
+
   return _utterancesApi.UTTERANCES_API + "/authorize?" + (0, _deparam.param)({
     redirect_uri: redirect_uri
   });
@@ -1256,6 +1262,7 @@ var NewCommentComponent = function () {
     this.signInAnchor = this.form.lastElementChild.lastElementChild;
     this.submitButton = this.signInAnchor.previousElementSibling;
     this.setUser(user);
+    this.submitButton.disabled = true;
     this.textarea.addEventListener('input', this.handleInput);
     this.form.addEventListener('submit', this.handleSubmit);
     this.form.addEventListener('click', this.handleClick);
