@@ -82,6 +82,7 @@ export class NewCommentComponent {
     this.submitButton = this.signInAnchor.previousElementSibling! as HTMLButtonElement;
 
     this.setUser(user);
+    this.submitButton.disabled = true;
 
     this.textarea.addEventListener('input', this.handleInput);
     this.form.addEventListener('submit', this.handleSubmit);

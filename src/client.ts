@@ -1,4 +1,4 @@
-import { param, deparam } from './deparam';
+import { param } from './deparam';
 import { ResizeMessage } from './measure';
 
 let script = document.currentScript as HTMLScriptElement;
