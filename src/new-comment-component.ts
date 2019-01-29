@@ -1,7 +1,9 @@
+import { pageAttributes as page } from './page-attributes';
 import { User, renderMarkdown } from './github';
 import { scheduleMeasure } from './measure';
 import { processRenderedMarkdown } from './comment-component';
 import { getRepoConfig } from './repo-config';
+import { getLoginUrl } from './oauth';
 
 // tslint:disable-next-line:max-line-length
 const anonymousAvatar = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 16" version="1.1"><path fill="rgb(179,179,179)" fill-rule="evenodd" d="M8 10.5L9 14H5l1-3.5L5.25 9h3.5L8 10.5zM10 6H4L2 7h10l-2-1zM9 2L7 3 5 2 4 5h6L9 2zm4.03 7.75L10 9l1 2-2 3h3.22c.45 0 .86-.31.97-.75l.56-2.28c.14-.53-.19-1.08-.72-1.22zM4 9l-3.03.75c-.53.14-.86.69-.72 1.22l.56 2.28c.11.44.52.75.97.75H5l-2-3 1-2z"></path></svg>`;
@@ -19,6 +21,7 @@ export class NewCommentComponent {
   private textarea: HTMLTextAreaElement;
   private preview: HTMLDivElement;
   private submitButton: HTMLButtonElement;
+  private signInAnchor: HTMLAnchorElement;
 
   private submitting = false;
   private renderTimeout = 0;
@@ -66,6 +69,7 @@ export class NewCommentComponent {
             Styling with Markdown is supported
           </a>
           <button class="btn btn-primary" type="submit">Comment</button>
+          <a class="btn btn-primary" href="${getLoginUrl(page.url)}" target="_top">Sign in to comment</a>
         </footer>
       </form>`;
 
@@ -74,7 +78,8 @@ export class NewCommentComponent {
     this.form = this.avatarAnchor.nextElementSibling as HTMLFormElement;
     this.textarea = this.form!.firstElementChild!.nextElementSibling!.firstElementChild as HTMLTextAreaElement;
     this.preview = this.form!.firstElementChild!.nextElementSibling!.lastElementChild as HTMLDivElement;
-    this.submitButton = this.form!.lastElementChild!.lastElementChild as HTMLButtonElement;
+    this.signInAnchor = this.form!.lastElementChild!.lastElementChild! as HTMLAnchorElement;
+    this.submitButton = this.signInAnchor.previousElementSibling! as HTMLButtonElement;
 
     this.setUser(user);
 
@@ -87,9 +92,8 @@ export class NewCommentComponent {
 
   public setUser(user: User | null) {
     this.user = user;
-    this.submitButton.textContent = user ? 'Comment' : 'Sign in to comment';
-    this.submitButton.disabled = !!user;
-
+    this.submitButton.hidden = !user;
+    this.signInAnchor.hidden = !!user;
     if (user) {
       this.avatarAnchor.href = user.html_url;
       this.avatar.alt = '@' + user.login;
@@ -129,24 +133,21 @@ export class NewCommentComponent {
     }
   }
 
-  private handleSubmit = (event: Event) => {
+  private handleSubmit = async (event: Event) => {
     event.preventDefault();
     if (this.submitting) {
       return;
     }
     this.submitting = true;
-    if (this.user) {
-      this.textarea.disabled = true;
-      this.submitButton.disabled = true;
-    }
-    this.submit(this.textarea.value).catch(() => 0).then(() => {
-      this.submitting = false;
-      this.textarea.disabled = !this.user;
-      this.textarea.value = '';
-      this.submitButton.disabled = false;
-      this.handleClick({ target: this.form.querySelector('.tabnav-tab.tab-write') } as any);
-      this.preview.textContent = nothingToPreview;
-    });
+    this.textarea.disabled = true;
+    this.submitButton.disabled = true;
+    await this.submit(this.textarea.value).catch(() => 0);
+    this.submitting = false;
+    this.textarea.disabled = !this.user;
+    this.textarea.value = '';
+    this.submitButton.disabled = false;
+    this.handleClick({ target: this.form.querySelector('.tabnav-tab.tab-write') } as any);
+    this.preview.textContent = nothingToPreview;
   }
 
   private handleClick = ({ target }: Event) => {

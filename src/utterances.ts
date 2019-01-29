@@ -1,7 +1,6 @@
 import { pageAttributes as page } from './page-attributes';
 import {
   Issue,
-  User,
   setRepoContext,
   loadIssueByTerm,
   loadIssueByNumber,
@@ -10,12 +9,12 @@ import {
   postComment,
   createIssue
 } from './github';
-import { login } from './oauth';
 import { TimelineComponent } from './timeline-component';
 import { NewCommentComponent } from './new-comment-component';
 import { startMeasuring, scheduleMeasure } from './measure';
 import { loadTheme } from './theme';
 import { getRepoConfig } from './repo-config';
+import { loadToken } from './oauth';
 
 setRepoContext(page);
 
@@ -26,10 +25,15 @@ function loadIssue(): Promise<Issue | null> {
   return loadIssueByTerm(page.issueTerm as string);
 }
 
-Promise.all([loadIssue(), loadUser(), loadTheme(page.theme, page.origin)])
-  .then(([issue, user]) => bootstrap(issue, user));
+async function bootstrap() {
+  await loadToken();
+  // tslint:disable-next-line:prefer-const
+  let [issue, user] = await Promise.all([
+    loadIssue(),
+    loadUser(),
+    loadTheme(page.theme, page.origin)
+  ]);
 
-function bootstrap(issue: Issue | null, user: User | null) {
   startMeasuring(page.origin);
 
   const timeline = new TimelineComponent(user, issue);
@@ -45,31 +49,28 @@ function bootstrap(issue: Issue | null, user: User | null) {
   }
 
   const submit = async (markdown: string) => {
-    if (user) {
-      await assertOrigin();
-      if (!issue) {
-        issue = await createIssue(
-          page.issueTerm as string,
-          page.url,
-          page.title,
-          page.description,
-          page.label
-        );
-        timeline.setIssue(issue);
-      }
-      const comment = await postComment(issue.number, markdown);
-      timeline.appendComment(comment);
-      newCommentComponent.clear();
-      return;
+    await assertOrigin();
+    if (!issue) {
+      issue = await createIssue(
+        page.issueTerm as string,
+        page.url,
+        page.title,
+        page.description,
+        page.label
+      );
+      timeline.setIssue(issue);
     }
-
-    login(page.url);
+    const comment = await postComment(issue.number, markdown);
+    timeline.appendComment(comment);
+    newCommentComponent.clear();
   };
 
   const newCommentComponent = new NewCommentComponent(user, submit);
   timeline.element.appendChild(newCommentComponent.element);
   scheduleMeasure();
 }
+
+bootstrap();
 
 addEventListener('not-installed', function handleNotInstalled() {
   removeEventListener('not-installed', handleNotInstalled);
