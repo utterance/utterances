@@ -394,12 +394,6 @@ var token = {
 exports.token = token;
 
 function getLoginUrl(redirect_uri) {
-  if (typeof URL !== 'undefined') {
-    var url = new URL(redirect_uri);
-    url.hash = '#utterances';
-    redirect_uri = url.href;
-  }
-
   return _utterancesApi.UTTERANCES_API + "/authorize?" + (0, _deparam.param)({
     redirect_uri: redirect_uri
   });
