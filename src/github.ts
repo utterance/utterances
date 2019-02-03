@@ -6,7 +6,8 @@ const GITHUB_API = 'https://api.github.com/';
 const GITHUB_ENCODING__HTML_JSON = 'application/vnd.github.VERSION.html+json';
 const GITHUB_ENCODING__HTML = 'application/vnd.github.VERSION.html';
 const GITHUB_ENCODING__REACTIONS_PREVIEW = 'application/vnd.github.squirrel-girl-preview';
-const PAGE_SIZE = 100;
+
+export const PAGE_SIZE = 25;
 
 let owner: string;
 let repo: string;
@@ -163,15 +164,13 @@ function commentsRequest(issueNumber: number, page: number) {
   return request;
 }
 
-export function loadCommentsPage(issueNumber: number, page: number) {
+export function loadCommentsPage(issueNumber: number, page: number): Promise<IssueComment[]> {
   const request = commentsRequest(issueNumber, page);
   return githubFetch(request).then(response => {
     if (!response.ok) {
       throw new Error('Error fetching comments.');
     }
-    const nextPage = readRelNext(response);
-    return response.json()
-      .then<CommentsPage>((items: IssueComment[]) => ({ items, nextPage }));
+    return response.json();
   });
 }
 
