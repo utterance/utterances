@@ -40,8 +40,14 @@ async function bootstrap() {
   document.body.appendChild(timeline.element);
 
   if (issue && issue.comments > 0) {
-    loadCommentsPage(issue.number, 1)
-      .then(({ items }) => items.forEach(comment => timeline.appendComment(comment)));
+    const issueNumber = issue.number;
+    addEventListener('message', async event => {
+      if (event.origin !== page.origin || event.data !== 'load-comments') {
+        return;
+      }
+      const { items: comments } = await loadCommentsPage(issueNumber, 1);
+      comments.forEach(comment => timeline.appendComment(comment));
+    });
   }
 
   if (issue && issue.locked) {

@@ -61,7 +61,24 @@ script.insertAdjacentHTML(
     <iframe class="utterances-frame" title="Comments" scrolling="no" src="${url}?${param(attrs)}"></iframe>
   </div>`);
 const container = script.nextElementSibling as HTMLDivElement;
+const iframe = container.firstElementChild as HTMLIFrameElement;
 script.parentElement!.removeChild(script);
+
+// load comments when utterances becomes visible.
+const loadComments = () => iframe.contentWindow!.postMessage('load-comments', utterancesOrigin);
+const enableIntersectionObserver = attrs['intersection-observer'] !== 'false';
+if (enableIntersectionObserver && typeof IntersectionObserver !== undefined) {
+  const observer = new IntersectionObserver(([{ isIntersecting }]) => {
+    if (!isIntersecting) {
+      return;
+    }
+    observer.disconnect();
+    loadComments();
+  });
+  observer.observe(container);
+} else {
+  loadComments();
+}
 
 // adjust the iframe's height when the height of it's content changes
 addEventListener('message', event => {
