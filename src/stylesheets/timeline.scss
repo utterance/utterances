@@ -16,3 +16,15 @@
 .timeline-header em {
   font-weight: $font-weight-normal;
 }
+
+.page-loader {
+  position: relative;
+  margin: 40px 0;
+  
+  .btn {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) translateY(calc(-50% - 8px));
+    z-index: 1;
+  }
+}
