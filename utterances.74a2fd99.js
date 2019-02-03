@@ -455,6 +455,7 @@ exports.loadUser = loadUser;
 exports.createIssue = createIssue;
 exports.postComment = postComment;
 exports.renderMarkdown = renderMarkdown;
+exports.PAGE_SIZE = void 0;
 
 var _oauth = require("./oauth");
 
@@ -466,7 +467,8 @@ var GITHUB_API = 'https://api.github.com/';
 var GITHUB_ENCODING__HTML_JSON = 'application/vnd.github.VERSION.html+json';
 var GITHUB_ENCODING__HTML = 'application/vnd.github.VERSION.html';
 var GITHUB_ENCODING__REACTIONS_PREVIEW = 'application/vnd.github.squirrel-girl-preview';
-var PAGE_SIZE = 100;
+var PAGE_SIZE = 25;
+exports.PAGE_SIZE = PAGE_SIZE;
 var owner;
 var repo;
 var branch = 'master';
@@ -643,13 +645,7 @@ function loadCommentsPage(issueNumber, page) {
       throw new Error('Error fetching comments.');
     }
 
-    var nextPage = readRelNext(response);
-    return response.json().then(function (items) {
-      return {
-        items: items,
-        nextPage: nextPage
-      };
-    });
+    return response.json();
   });
 }
 
@@ -928,19 +924,61 @@ var TimelineComponent = function () {
     this.issue = issue;
 
     if (issue) {
+      this.count = issue.comments;
       this.countAnchor.href = issue.html_url;
+      this.renderCount();
     } else {
       this.countAnchor.removeAttribute('href');
     }
   };
 
-  TimelineComponent.prototype.appendComment = function (comment) {
+  TimelineComponent.prototype.insertComment = function (comment, incrementCount) {
     var component = new _commentComponent.CommentComponent(comment, this.user ? this.user.login : null);
-    this.timeline.push(component);
-    this.element.insertBefore(component.element, this.marker);
-    this.count++;
-    this.renderCount();
+    var index = this.timeline.findIndex(function (x) {
+      return x.comment.id >= comment.id;
+    });
+
+    if (index === -1) {
+      this.timeline.push(component);
+      this.element.insertBefore(component.element, this.marker);
+    } else {
+      var next = this.timeline[index];
+      var remove = next.comment.id === comment.id;
+      this.element.insertBefore(component.element, next.element);
+      this.timeline.splice(index, remove ? 1 : 0, component);
+
+      if (remove) {
+        next.element.remove();
+      }
+    }
+
+    if (incrementCount) {
+      this.count++;
+      this.renderCount();
+    }
+
     (0, _measure.scheduleMeasure)();
+  };
+
+  TimelineComponent.prototype.insertPageLoader = function (insertAfter, count, callback) {
+    var insertAfterElement = this.timeline.find(function (x) {
+      return x.comment.id >= insertAfter.id;
+    }).element;
+    insertAfterElement.insertAdjacentHTML('afterend', "\n      <div class=\"page-loader\">\n        <div class=\"zigzag\"></div>\n        <button type=\"button\" class=\"btn btn-outline btn-large\">\n          " + count + " hidden items<br/>\n          <span>Load more...</span>\n        </button>\n      </div>\n    ");
+    var element = insertAfterElement.nextElementSibling;
+    var button = element.lastElementChild;
+    var statusSpan = button.lastElementChild;
+    button.onclick = callback;
+    return {
+      setBusy: function setBusy() {
+        statusSpan.textContent = 'Loading...';
+        button.disabled = true;
+      },
+      remove: function remove() {
+        button.onclick = null;
+        element.remove();
+      }
+    };
   };
 
   TimelineComponent.prototype.renderCount = function () {
@@ -1522,13 +1560,10 @@ function bootstrap() {
           document.body.appendChild(timeline.element);
 
           if (issue && issue.comments > 0) {
-            (0, _github.loadCommentsPage)(issue.number, 1).then(function (_a) {
-              var items = _a.items;
-              return items.forEach(function (comment) {
-                return timeline.appendComment(comment);
-              });
-            });
+            renderComments(issue, timeline);
           }
+
+          (0, _measure.scheduleMeasure)();
 
           if (issue && issue.locked) {
             return [2];
@@ -1558,7 +1593,7 @@ function bootstrap() {
 
                   case 4:
                     comment = _a.sent();
-                    timeline.appendComment(comment);
+                    timeline.insertComment(comment, true);
                     newCommentComponent.clear();
                     return [2];
                 }
@@ -1568,7 +1603,6 @@ function bootstrap() {
 
           newCommentComponent = new _newCommentComponent.NewCommentComponent(user, submit);
           timeline.element.appendChild(newCommentComponent.element);
-          (0, _measure.scheduleMeasure)();
           return [2];
       }
     });
@@ -1581,6 +1615,87 @@ addEventListener('not-installed', function handleNotInstalled() {
   document.querySelector('.timeline').insertAdjacentHTML('afterbegin', "\n  <div class=\"flash flash-error\">\n    Error: utterances is not installed on <code>" + _pageAttributes.pageAttributes.owner + "/" + _pageAttributes.pageAttributes.repo + "</code>.\n    If you own this repo,\n    <a href=\"https://github.com/apps/utterances\" target=\"_top\"><strong>install the app</strong></a>.\n    Read more about this change in\n    <a href=\"https://github.com/utterance/utterances/pull/25\" target=\"_top\">the PR</a>.\n  </div>");
   (0, _measure.scheduleMeasure)();
 });
+
+function renderComments(issue, timeline) {
+  return __awaiter(this, void 0, void 0, function () {
+    var renderPage, pageCount, pageLoads, pages, _i, pages_1, page_1, hiddenPageCount, nextHiddenPage, _renderLoader;
+
+    var _this = this;
+
+    return __generator(this, function (_a) {
+      switch (_a.label) {
+        case 0:
+          renderPage = function renderPage(page) {
+            for (var _i = 0, page_2 = page; _i < page_2.length; _i++) {
+              var comment = page_2[_i];
+              timeline.insertComment(comment, false);
+            }
+          };
+
+          pageCount = Math.ceil(issue.comments / _github.PAGE_SIZE);
+          pageLoads = [(0, _github.loadCommentsPage)(issue.number, 1)];
+
+          if (pageCount > 1) {
+            pageLoads.push((0, _github.loadCommentsPage)(issue.number, pageCount));
+          }
+
+          if (pageCount > 2 && issue.comments % _github.PAGE_SIZE < 3) {
+            pageLoads.push((0, _github.loadCommentsPage)(issue.number, pageCount - 1));
+          }
+
+          return [4, Promise.all(pageLoads)];
+
+        case 1:
+          pages = _a.sent();
+
+          for (_i = 0, pages_1 = pages; _i < pages_1.length; _i++) {
+            page_1 = pages_1[_i];
+            renderPage(page_1);
+          }
+
+          hiddenPageCount = pageCount - pageLoads.length;
+          nextHiddenPage = 2;
+
+          _renderLoader = function renderLoader(afterPage) {
+            if (hiddenPageCount === 0) {
+              return;
+            }
+
+            var load = function load() {
+              return __awaiter(_this, void 0, void 0, function () {
+                var page;
+                return __generator(this, function (_a) {
+                  switch (_a.label) {
+                    case 0:
+                      loader.setBusy();
+                      return [4, (0, _github.loadCommentsPage)(issue.number, nextHiddenPage)];
+
+                    case 1:
+                      page = _a.sent();
+                      loader.remove();
+                      renderPage(page);
+                      hiddenPageCount--;
+                      nextHiddenPage++;
+
+                      _renderLoader(page);
+
+                      return [2];
+                  }
+                });
+              });
+            };
+
+            var afterComment = afterPage.pop();
+            var loader = timeline.insertPageLoader(afterComment, hiddenPageCount * _github.PAGE_SIZE, load);
+          };
+
+          _renderLoader(pages[0]);
+
+          return [2];
+      }
+    });
+  });
+}
 
 function assertOrigin() {
   return __awaiter(this, void 0, void 0, function () {
