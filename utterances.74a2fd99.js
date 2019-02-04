@@ -454,8 +454,9 @@ exports.loadCommentsPage = loadCommentsPage;
 exports.loadUser = loadUser;
 exports.createIssue = createIssue;
 exports.postComment = postComment;
+exports.toggleReaction = toggleReaction;
 exports.renderMarkdown = renderMarkdown;
-exports.PAGE_SIZE = void 0;
+exports.reactionTypes = exports.PAGE_SIZE = void 0;
 
 var _oauth = require("./oauth");
 
@@ -463,12 +464,153 @@ var _encoding = require("./encoding");
 
 var _utterancesApi = require("./utterances-api");
 
+var __awaiter = void 0 && (void 0).__awaiter || function (thisArg, _arguments, P, generator) {
+  return new (P || (P = Promise))(function (resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function step(result) {
+      result.done ? resolve(result.value) : new P(function (resolve) {
+        resolve(result.value);
+      }).then(fulfilled, rejected);
+    }
+
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+
+var __generator = void 0 && (void 0).__generator || function (thisArg, body) {
+  var _ = {
+    label: 0,
+    sent: function sent() {
+      if (t[0] & 1) throw t[1];
+      return t[1];
+    },
+    trys: [],
+    ops: []
+  },
+      f,
+      y,
+      t,
+      g;
+  return g = {
+    next: verb(0),
+    "throw": verb(1),
+    "return": verb(2)
+  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+    return this;
+  }), g;
+
+  function verb(n) {
+    return function (v) {
+      return step([n, v]);
+    };
+  }
+
+  function step(op) {
+    if (f) throw new TypeError("Generator is already executing.");
+
+    while (_) {
+      try {
+        if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+        if (y = 0, t) op = [op[0] & 2, t.value];
+
+        switch (op[0]) {
+          case 0:
+          case 1:
+            t = op;
+            break;
+
+          case 4:
+            _.label++;
+            return {
+              value: op[1],
+              done: false
+            };
+
+          case 5:
+            _.label++;
+            y = op[1];
+            op = [0];
+            continue;
+
+          case 7:
+            op = _.ops.pop();
+
+            _.trys.pop();
+
+            continue;
+
+          default:
+            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+              _ = 0;
+              continue;
+            }
+
+            if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+              _.label = op[1];
+              break;
+            }
+
+            if (op[0] === 6 && _.label < t[1]) {
+              _.label = t[1];
+              t = op;
+              break;
+            }
+
+            if (t && _.label < t[2]) {
+              _.label = t[2];
+
+              _.ops.push(op);
+
+              break;
+            }
+
+            if (t[2]) _.ops.pop();
+
+            _.trys.pop();
+
+            continue;
+        }
+
+        op = body.call(thisArg, _);
+      } catch (e) {
+        op = [6, e];
+        y = 0;
+      } finally {
+        f = t = 0;
+      }
+    }
+
+    if (op[0] & 5) throw op[1];
+    return {
+      value: op[0] ? op[1] : void 0,
+      done: true
+    };
+  }
+};
+
 var GITHUB_API = 'https://api.github.com/';
 var GITHUB_ENCODING__HTML_JSON = 'application/vnd.github.VERSION.html+json';
 var GITHUB_ENCODING__HTML = 'application/vnd.github.VERSION.html';
 var GITHUB_ENCODING__REACTIONS_PREVIEW = 'application/vnd.github.squirrel-girl-preview';
 var PAGE_SIZE = 25;
 exports.PAGE_SIZE = PAGE_SIZE;
+var reactionTypes = ['+1', '-1', 'laugh', 'hooray', 'confused', 'heart', 'rocket', 'eyes'];
+exports.reactionTypes = reactionTypes;
 var owner;
 var repo;
 var branch = 'master';
@@ -703,6 +845,69 @@ function postComment(issueNumber, markdown) {
   });
 }
 
+function toggleReaction(url, content) {
+  return __awaiter(this, void 0, void 0, function () {
+    var body, postRequest, response, reaction, _a, deleteRequest;
+
+    return __generator(this, function (_b) {
+      switch (_b.label) {
+        case 0:
+          url = url.replace(GITHUB_API, '');
+          body = JSON.stringify({
+            content: content
+          });
+          postRequest = githubRequest(url, {
+            method: 'POST',
+            body: body
+          });
+          postRequest.headers.set('Accept', GITHUB_ENCODING__REACTIONS_PREVIEW);
+          return [4, githubFetch(postRequest)];
+
+        case 1:
+          response = _b.sent();
+          if (!response.ok) return [3, 3];
+          return [4, response.json()];
+
+        case 2:
+          _a = _b.sent();
+          return [3, 4];
+
+        case 3:
+          _a = null;
+          _b.label = 4;
+
+        case 4:
+          reaction = _a;
+
+          if (response.status === 201) {
+            return [2, {
+              reaction: reaction,
+              deleted: false
+            }];
+          }
+
+          if (response.status !== 200) {
+            throw new Error('expected "201 reaction created" or "200 reaction already exists"');
+          }
+
+          deleteRequest = githubRequest("reactions/" + reaction.id, {
+            method: 'DELETE'
+          });
+          deleteRequest.headers.set('Accept', GITHUB_ENCODING__REACTIONS_PREVIEW);
+          return [4, githubFetch(deleteRequest)];
+
+        case 5:
+          _b.sent();
+
+          return [2, {
+            reaction: reaction,
+            deleted: true
+          }];
+      }
+    });
+  });
+}
+
 function renderMarkdown(text) {
   var body = JSON.stringify({
     text: text,
@@ -796,7 +1001,267 @@ function scheduleMeasure() {
     setTimeout(measure, 50);
   }
 }
-},{}],"comment-component.ts":[function(require,module,exports) {
+},{}],"reactions.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getReactionHtml = getReactionHtml;
+exports.enableReactions = enableReactions;
+exports.getReactionsMenuHtml = getReactionsMenuHtml;
+exports.getSignInToReactMenuHtml = getSignInToReactMenuHtml;
+exports.reactionEmoji = exports.reactionNames = void 0;
+
+var _github = require("./github");
+
+var _oauth = require("./oauth");
+
+var _pageAttributes = require("./page-attributes");
+
+var __awaiter = void 0 && (void 0).__awaiter || function (thisArg, _arguments, P, generator) {
+  return new (P || (P = Promise))(function (resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function step(result) {
+      result.done ? resolve(result.value) : new P(function (resolve) {
+        resolve(result.value);
+      }).then(fulfilled, rejected);
+    }
+
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+
+var __generator = void 0 && (void 0).__generator || function (thisArg, body) {
+  var _ = {
+    label: 0,
+    sent: function sent() {
+      if (t[0] & 1) throw t[1];
+      return t[1];
+    },
+    trys: [],
+    ops: []
+  },
+      f,
+      y,
+      t,
+      g;
+  return g = {
+    next: verb(0),
+    "throw": verb(1),
+    "return": verb(2)
+  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+    return this;
+  }), g;
+
+  function verb(n) {
+    return function (v) {
+      return step([n, v]);
+    };
+  }
+
+  function step(op) {
+    if (f) throw new TypeError("Generator is already executing.");
+
+    while (_) {
+      try {
+        if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+        if (y = 0, t) op = [op[0] & 2, t.value];
+
+        switch (op[0]) {
+          case 0:
+          case 1:
+            t = op;
+            break;
+
+          case 4:
+            _.label++;
+            return {
+              value: op[1],
+              done: false
+            };
+
+          case 5:
+            _.label++;
+            y = op[1];
+            op = [0];
+            continue;
+
+          case 7:
+            op = _.ops.pop();
+
+            _.trys.pop();
+
+            continue;
+
+          default:
+            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+              _ = 0;
+              continue;
+            }
+
+            if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+              _.label = op[1];
+              break;
+            }
+
+            if (op[0] === 6 && _.label < t[1]) {
+              _.label = t[1];
+              t = op;
+              break;
+            }
+
+            if (t && _.label < t[2]) {
+              _.label = t[2];
+
+              _.ops.push(op);
+
+              break;
+            }
+
+            if (t[2]) _.ops.pop();
+
+            _.trys.pop();
+
+            continue;
+        }
+
+        op = body.call(thisArg, _);
+      } catch (e) {
+        op = [6, e];
+        y = 0;
+      } finally {
+        f = t = 0;
+      }
+    }
+
+    if (op[0] & 5) throw op[1];
+    return {
+      value: op[0] ? op[1] : void 0,
+      done: true
+    };
+  }
+};
+
+var reactionNames = {
+  '+1': 'Thumbs Up',
+  '-1': 'Thumbs Down',
+  'laugh': 'Laugh',
+  'hooray': 'Hooray',
+  'confused': 'Confused',
+  'heart': 'Heart',
+  'rocket': 'Rocket',
+  'eyes': 'Eyes'
+};
+exports.reactionNames = reactionNames;
+var reactionEmoji = {
+  '+1': '👍',
+  '-1': '👎',
+  'laugh': '️😂',
+  'hooray': '️🎉',
+  'confused': '😕',
+  'heart': '❤️',
+  'rocket': '🚀',
+  'eyes': '👀'
+};
+exports.reactionEmoji = reactionEmoji;
+
+function getReactionHtml(url, reaction, disabled, count) {
+  return "\n  <button\n    reaction\n    type=\"submit\"\n    action=\"javascript:\"\n    formaction=\"" + url + "\"\n    class=\"btn BtnGroup-item btn-outline reaction-button\"\n    value=\"" + reaction + "\"\n    aria-label=\"Toggle " + reactionNames[reaction] + " reaction\"\n    reaction-count=\"" + count + "\"\n    " + (disabled ? 'disabled' : '') + ">\n    " + reactionEmoji[reaction] + "\n  </button>";
+}
+
+function enableReactions(authenticated) {
+  var _this = this;
+
+  var submitReaction = function submitReaction(event) {
+    return __awaiter(_this, void 0, void 0, function () {
+      var button, parentMenu, url, id, deleted, selector, elements, delta, _i, elements_1, element;
+
+      return __generator(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            button = event.target instanceof HTMLElement && event.target.closest('button');
+
+            if (!button) {
+              return [2];
+            }
+
+            if (!button.hasAttribute('reaction')) {
+              return [2];
+            }
+
+            event.preventDefault();
+
+            if (!authenticated) {
+              return [2];
+            }
+
+            button.disabled = true;
+            parentMenu = button.closest('details');
+
+            if (parentMenu) {
+              parentMenu.open = false;
+            }
+
+            url = button.formAction;
+            id = button.value;
+            return [4, (0, _github.toggleReaction)(url, id)];
+
+          case 1:
+            deleted = _a.sent().deleted;
+            selector = "button[reaction][formaction=\"" + url + "\"][value=\"" + id + "\"],[reaction-count][reaction-url=\"" + url + "\"]";
+            elements = Array.from(document.querySelectorAll(selector));
+            delta = deleted ? -1 : 1;
+
+            for (_i = 0, elements_1 = elements; _i < elements_1.length; _i++) {
+              element = elements_1[_i];
+              element.setAttribute('reaction-count', (parseInt(element.getAttribute('reaction-count'), 10) + delta).toString());
+            }
+
+            button.disabled = false;
+            return [2];
+        }
+      });
+    });
+  };
+
+  addEventListener('click', submitReaction, true);
+}
+
+function getReactionsMenuHtml(url, align) {
+  var position = align === 'center' ? 'left: 50%;transform: translateX(-50%)' : 'right:6px';
+  var alignmentClass = align === 'center' ? '' : 'Popover-message--top-right';
+
+  var getButtonAndSpan = function getButtonAndSpan(id) {
+    return getReactionHtml(url, id, false, 0) + ("<span class=\"reaction-name\" aria-hidden=\"true\">" + reactionNames[id] + "</span>");
+  };
+
+  return "\n  <details class=\"details-overlay details-popover reactions-popover\">\n    <summary>" + addReactionSvgs + "</summary>\n    <div class=\"Popover\" style=\"" + position + "\">\n      <form class=\"Popover-message " + alignmentClass + " box-shadow-large\" action=\"javascript:\">\n        <span class=\"reaction-name\">Pick your reaction</span>\n        <div class=\"BtnGroup\">\n          " + _github.reactionTypes.slice(0, 4).map(getButtonAndSpan).join('') + "\n        </div>\n        <div class=\"BtnGroup\">\n          " + _github.reactionTypes.slice(4).map(getButtonAndSpan).join('') + "\n        </div>\n      </form>\n    </div>\n  </details>";
+}
+
+function getSignInToReactMenuHtml(align) {
+  var position = align === 'center' ? 'left: 50%;transform: translateX(-50%)' : 'right:6px';
+  var alignmentClass = align === 'center' ? '' : 'Popover-message--top-right';
+  return "\n  <details class=\"details-overlay details-popover reactions-popover\">\n    <summary aria-label=\"Reactions Menu\">" + addReactionSvgs + "</summary>\n    <div class=\"Popover\" style=\"" + position + "\">\n      <div class=\"Popover-message " + alignmentClass + " box-shadow-large\" style=\"padding: 16px\">\n        <span><a href=\"" + (0, _oauth.getLoginUrl)(_pageAttributes.pageAttributes.url) + "\">Sign in</a> to add your reaction.</span>\n      </div>\n    </div>\n  </details>";
+}
+
+var addReactionSvgs = "<svg class=\"octicon\" style=\"margin-right:3px\" viewBox=\"0 0 7 16\" version=\"1.1\" width=\"7\" height=\"16\" aria-hidden=\"true\"><path fill-rule=\"evenodd\" d=\"M4 4H3v3H0v1h3v3h1V8h3V7H4V4z\"></path></svg><svg class=\"octicon\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"><path fill-rule=\"evenodd\" d=\"M8 0C3.58 0 0 3.58 0 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm4.81 12.81a6.72 6.72 0 0 1-2.17 1.45c-.83.36-1.72.53-2.64.53-.92 0-1.81-.17-2.64-.53-.81-.34-1.55-.83-2.17-1.45a6.773 6.773 0 0 1-1.45-2.17A6.59 6.59 0 0 1 1.21 8c0-.92.17-1.81.53-2.64.34-.81.83-1.55 1.45-2.17.62-.62 1.36-1.11 2.17-1.45A6.59 6.59 0 0 1 8 1.21c.92 0 1.81.17 2.64.53.81.34 1.55.83 2.17 1.45.62.62 1.11 1.36 1.45 2.17.36.83.53 1.72.53 2.64 0 .92-.17 1.81-.53 2.64-.34.81-.83 1.55-1.45 2.17zM4 6.8v-.59c0-.66.53-1.19 1.2-1.19h.59c.66 0 1.19.53 1.19 1.19v.59c0 .67-.53 1.2-1.19 1.2H5.2C4.53 8 4 7.47 4 6.8zm5 0v-.59c0-.66.53-1.19 1.2-1.19h.59c.66 0 1.19.53 1.19 1.19v.59c0 .67-.53 1.2-1.19 1.2h-.59C9.53 8 9 7.47 9 6.8zm4 3.2c-.72 1.88-2.91 3-5 3s-4.28-1.13-5-3c-.14-.39.23-1 .66-1h8.59c.41 0 .89.61.75 1z\"></path></svg>";
+},{"./github":"github.ts","./oauth":"oauth.ts","./page-attributes":"page-attributes.ts"}],"comment-component.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -805,9 +1270,13 @@ Object.defineProperty(exports, "__esModule", {
 exports.processRenderedMarkdown = processRenderedMarkdown;
 exports.CommentComponent = void 0;
 
+var _github = require("./github");
+
 var _timeAgo = require("./time-ago");
 
 var _measure = require("./measure");
+
+var _reactions = require("./reactions");
 
 var avatarArgs = '?v=3&s=88';
 var displayAssociations = {
@@ -825,7 +1294,8 @@ var CommentComponent = function () {
         html_url = comment.html_url,
         created_at = comment.created_at,
         body_html = comment.body_html,
-        author_association = comment.author_association;
+        author_association = comment.author_association,
+        reactions = comment.reactions;
     this.element = document.createElement('article');
     this.element.classList.add('timeline-comment');
 
@@ -834,7 +1304,14 @@ var CommentComponent = function () {
     }
 
     var association = displayAssociations[author_association];
-    this.element.innerHTML = "\n      <a class=\"avatar\" href=\"" + user.html_url + "\" target=\"_blank\" tabindex=\"-1\">\n        <img alt=\"@" + user.login + "\" height=\"44\" width=\"44\"\n              src=\"" + user.avatar_url + avatarArgs + "\">\n      </a>\n      <div class=\"comment\">\n        <header class=\"comment-header\">\n          <span class=\"comment-meta\">\n            <a class=\"text-link\" href=\"" + user.html_url + "\" target=\"_blank\"><strong>" + user.login + "</strong></a>\n            commented\n            <a class=\"text-link\" href=\"" + html_url + "\" target=\"_blank\">" + (0, _timeAgo.timeAgo)(Date.now(), new Date(created_at)) + "</a>\n          </span>\n          " + (association ? "<span class=\"author-association-badge\">" + association + "</span>" : '') + "\n        </header>\n        <div class=\"markdown-body markdown-body-scrollable\">\n          " + body_html + "\n        </div>\n      </div>";
+
+    var reactionCount = _github.reactionTypes.reduce(function (sum, id) {
+      return sum + reactions[id];
+    }, 0);
+
+    this.element.innerHTML = "\n      <a class=\"avatar\" href=\"" + user.html_url + "\" target=\"_blank\" tabindex=\"-1\">\n        <img alt=\"@" + user.login + "\" height=\"44\" width=\"44\"\n              src=\"" + user.avatar_url + avatarArgs + "\">\n      </a>\n      <div class=\"comment\">\n        <header class=\"comment-header\">\n          <span class=\"comment-meta\">\n            <a class=\"text-link\" href=\"" + user.html_url + "\" target=\"_blank\"><strong>" + user.login + "</strong></a>\n            commented\n            <a class=\"text-link\" href=\"" + html_url + "\" target=\"_blank\">" + (0, _timeAgo.timeAgo)(Date.now(), new Date(created_at)) + "</a>\n          </span>\n          <div class=\"comment-actions\">\n            " + (association ? "<span class=\"author-association-badge\">" + association + "</span>" : '') + "\n            " + (currentUser ? (0, _reactions.getReactionsMenuHtml)(comment.reactions.url, 'right') : (0, _reactions.getSignInToReactMenuHtml)('right')) + "\n          </div>\n        </header>\n        <div class=\"markdown-body markdown-body-scrollable\">\n          " + body_html + "\n        </div>\n        <div class=\"comment-footer\" reaction-count=\"" + reactionCount + "\" reaction-url=\"" + reactions.url + "\">\n          <form class=\"reaction-list BtnGroup\" action=\"javascript:\">\n            " + _github.reactionTypes.map(function (id) {
+      return (0, _reactions.getReactionHtml)(reactions.url, id, !currentUser, reactions[id]);
+    }).join('') + "\n          </form>\n          " + (currentUser ? (0, _reactions.getReactionsMenuHtml)(comment.reactions.url, 'center') : (0, _reactions.getSignInToReactMenuHtml)('center')) + "\n        </div>\n      </div>";
     var markdownBody = this.element.lastElementChild.lastElementChild;
     var emailToggle = markdownBody.querySelector('.email-hidden-toggle a');
 
@@ -881,7 +1358,7 @@ function processRenderedMarkdown(markdownBody) {
     return a.href = 'https://github.com' + a.pathname;
   });
 }
-},{"./time-ago":"time-ago.ts","./measure":"measure.ts"}],"timeline-component.ts":[function(require,module,exports) {
+},{"./github":"github.ts","./time-ago":"time-ago.ts","./measure":"measure.ts","./reactions":"reactions.ts"}],"timeline-component.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1285,7 +1762,7 @@ var NewCommentComponent = function () {
 
     this.element = document.createElement('article');
     this.element.classList.add('timeline-comment');
-    this.element.innerHTML = "\n      <a class=\"avatar\" target=\"_blank\" tabindex=\"-1\">\n        <img height=\"44\" width=\"44\">\n      </a>\n      <form class=\"comment\" accept-charset=\"UTF-8\" action=\"javascript:\">\n        <header class=\"new-comment-header\">\n          <nav class=\"tabnav-tabs\" role=\"tablist\">\n            <button type=\"button\" class=\"tabnav-tab tab-write selected\"\n                    role=\"tab\" aria-selected=\"true\">\n              Write\n            </button>\n            <button type=\"button\" class=\"tabnav-tab tab-preview\"\n                    role=\"tab\">\n              Preview\n            </button>\n          </nav>\n        </header>\n        <div class=\"comment-body\">\n          <textarea class=\"form-control\" placeholder=\"Leave a comment\" aria-label=\"comment\"></textarea>\n          <div class=\"markdown-body\" style=\"display: none\">\n            " + nothingToPreview + "\n          </div>\n        </div>\n        <footer class=\"comment-footer\">\n          <a class=\"text-link markdown-info\" tabindex=\"-1\" target=\"_blank\"\n             href=\"https://guides.github.com/features/mastering-markdown/\">\n            <svg class=\"octicon v-align-bottom\" viewBox=\"0 0 16 16\" version=\"1.1\"\n              width=\"16\" height=\"16\" aria-hidden=\"true\">\n              <path fill-rule=\"evenodd\" d=\"M14.85 3H1.15C.52 3 0 3.52 0 4.15v7.69C0 12.48.52 13 1.15\n                13h13.69c.64 0 1.15-.52 1.15-1.15v-7.7C16 3.52 15.48 3 14.85 3zM9 11H7V8L5.5 9.92 4\n                8v3H2V5h2l1.5 2L7 5h2v6zm2.99.5L9.5 8H11V5h2v3h1.5l-2.51 3.5z\">\n              </path>\n            </svg>\n            Styling with Markdown is supported\n          </a>\n          <button class=\"btn btn-primary\" type=\"submit\">Comment</button>\n          <a class=\"btn btn-primary\" href=\"" + (0, _oauth.getLoginUrl)(_pageAttributes.pageAttributes.url) + "\" target=\"_top\">Sign in to comment</a>\n        </footer>\n      </form>";
+    this.element.innerHTML = "\n      <a class=\"avatar\" target=\"_blank\" tabindex=\"-1\">\n        <img height=\"44\" width=\"44\">\n      </a>\n      <form class=\"comment\" accept-charset=\"UTF-8\" action=\"javascript:\">\n        <header class=\"new-comment-header\">\n          <nav class=\"tabnav-tabs\" role=\"tablist\">\n            <button type=\"button\" class=\"tabnav-tab tab-write selected\"\n                    role=\"tab\" aria-selected=\"true\">\n              Write\n            </button>\n            <button type=\"button\" class=\"tabnav-tab tab-preview\"\n                    role=\"tab\">\n              Preview\n            </button>\n          </nav>\n        </header>\n        <div class=\"comment-body\">\n          <textarea class=\"form-control\" placeholder=\"Leave a comment\" aria-label=\"comment\"></textarea>\n          <div class=\"markdown-body\" style=\"display: none\">\n            " + nothingToPreview + "\n          </div>\n        </div>\n        <footer class=\"new-comment-footer\">\n          <a class=\"text-link markdown-info\" tabindex=\"-1\" target=\"_blank\"\n             href=\"https://guides.github.com/features/mastering-markdown/\">\n            <svg class=\"octicon v-align-bottom\" viewBox=\"0 0 16 16\" version=\"1.1\"\n              width=\"16\" height=\"16\" aria-hidden=\"true\">\n              <path fill-rule=\"evenodd\" d=\"M14.85 3H1.15C.52 3 0 3.52 0 4.15v7.69C0 12.48.52 13 1.15\n                13h13.69c.64 0 1.15-.52 1.15-1.15v-7.7C16 3.52 15.48 3 14.85 3zM9 11H7V8L5.5 9.92 4\n                8v3H2V5h2l1.5 2L7 5h2v6zm2.99.5L9.5 8H11V5h2v3h1.5l-2.51 3.5z\">\n              </path>\n            </svg>\n            Styling with Markdown is supported\n          </a>\n          <button class=\"btn btn-primary\" type=\"submit\">Comment</button>\n          <a class=\"btn btn-primary\" href=\"" + (0, _oauth.getLoginUrl)(_pageAttributes.pageAttributes.url) + "\" target=\"_top\">Sign in to comment</a>\n        </footer>\n      </form>";
     this.avatarAnchor = this.element.firstElementChild;
     this.avatar = this.avatarAnchor.firstElementChild;
     this.form = this.avatarAnchor.nextElementSibling;
@@ -1387,6 +1864,8 @@ var _theme = require("./theme");
 var _repoConfig = require("./repo-config");
 
 var _oauth = require("./oauth");
+
+var _reactions = require("./reactions");
 
 var __awaiter = void 0 && (void 0).__awaiter || function (thisArg, _arguments, P, generator) {
   return new (P || (P = Promise))(function (resolve, reject) {
@@ -1569,6 +2048,8 @@ function bootstrap() {
             return [2];
           }
 
+          (0, _reactions.enableReactions)(!!user);
+
           submit = function submit(markdown) {
             return __awaiter(_this, void 0, void 0, function () {
               var comment;
@@ -1722,5 +2203,5 @@ function assertOrigin() {
     });
   });
 }
-},{"./page-attributes":"page-attributes.ts","./github":"github.ts","./timeline-component":"timeline-component.ts","./new-comment-component":"new-comment-component.ts","./measure":"measure.ts","./theme":"theme.ts","./repo-config":"repo-config.ts","./oauth":"oauth.ts"}]},{},["utterances.ts"], null)
+},{"./page-attributes":"page-attributes.ts","./github":"github.ts","./timeline-component":"timeline-component.ts","./new-comment-component":"new-comment-component.ts","./measure":"measure.ts","./theme":"theme.ts","./repo-config":"repo-config.ts","./oauth":"oauth.ts","./reactions":"reactions.ts"}]},{},["utterances.ts"], null)
 //# sourceMappingURL=/utterances.74a2fd99.map
