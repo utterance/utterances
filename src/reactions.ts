@@ -1,4 +1,6 @@
 import { toggleReaction, ReactionID, reactionTypes } from './github';
+import { getLoginUrl } from './oauth';
+import { pageAttributes } from './page-attributes';
 
 export const reactionNames: { [key in ReactionID]: string; } = {
   '+1': 'Thumbs Up',
@@ -38,7 +40,7 @@ export function getReactionHtml(url: string, reaction: ReactionID, disabled: boo
   </button>`;
 }
 
-export function enableReactions() {
+export function enableReactions(authenticated: boolean) {
   const submitReaction = async (event: Event) => {
     const button = event.target instanceof HTMLElement && event.target.closest('button');
     if (!button) {
@@ -48,6 +50,9 @@ export function enableReactions() {
       return;
     }
     event.preventDefault();
+    if (!authenticated) {
+      return;
+    }
     button.disabled = true;
     const parentMenu = button.closest('details');
     if (parentMenu) {
@@ -69,13 +74,13 @@ export function enableReactions() {
   addEventListener('click', submitReaction, true);
 }
 
-export function getReactionsMenuHtml(url: string, align: 'center' | 'right', classes: string) {
+export function getReactionsMenuHtml(url: string, align: 'center' | 'right') {
   const position = align === 'center' ? 'left: 50%;transform: translateX(-50%)' : 'right:6px';
   const alignmentClass = align === 'center' ? '' : 'Popover-message--top-right';
   const getButtonAndSpan = (id: ReactionID) => getReactionHtml(url, id, false, 0)
     + `<span class="reaction-name" aria-hidden="true">${reactionNames[id]}</span>`;
   return `
-  <details class="details-overlay details-popover reactions-popover ${classes}">
+  <details class="details-overlay details-popover reactions-popover">
     <summary>${addReactionSvgs}</summary>
     <div class="Popover" style="${position}">
       <form class="Popover-message ${alignmentClass} box-shadow-large" action="javascript:">
@@ -87,6 +92,22 @@ export function getReactionsMenuHtml(url: string, align: 'center' | 'right', cla
           ${reactionTypes.slice(4).map(getButtonAndSpan).join('')}
         </div>
       </form>
+    </div>
+  </details>`;
+}
+
+export function getSignInToReactMenuHtml(align: 'center' | 'right') {
+  const position = align === 'center' ? 'left: 50%;transform: translateX(-50%)' : 'right:6px';
+  const alignmentClass = align === 'center' ? '' : 'Popover-message--top-right';
+  return `
+  <details class="details-overlay details-popover reactions-popover">
+    <summary>${addReactionSvgs}</summary>
+    <div class="Popover" style="${position}">
+      <div class="Popover-message ${alignmentClass} box-shadow-large" style="padding: 16px">
+        <span>
+          <a href="${getLoginUrl(pageAttributes.url)}">Sign in</a> to add your reaction.
+        </span>
+      </div>
     </div>
   </details>`;
 }

@@ -1,7 +1,7 @@
 import { IssueComment, reactionTypes } from './github';
 import { timeAgo } from './time-ago';
 import { scheduleMeasure } from './measure';
-import { getReactionsMenuHtml, getReactionHtml } from './reactions';
+import { getReactionsMenuHtml, getReactionHtml, getSignInToReactMenuHtml } from './reactions';
 
 const avatarArgs = '?v=3&s=88';
 const displayAssociations: { [association: string]: string; } = {
@@ -40,7 +40,7 @@ export class CommentComponent {
           </span>
           <div class="comment-actions">
             ${association ? `<span class="author-association-badge">${association}</span>` : ''}
-            ${getReactionsMenuHtml(comment.reactions.url, 'right', '')}
+            ${currentUser ? getReactionsMenuHtml(comment.reactions.url, 'right') : getSignInToReactMenuHtml('right')}
           </div>
         </header>
         <div class="markdown-body markdown-body-scrollable">
@@ -48,9 +48,9 @@ export class CommentComponent {
         </div>
         <div class="comment-footer" reaction-count="${reactionCount}" reaction-url="${reactions.url}">
           <form class="reaction-list BtnGroup" action="javascript:">
-            ${reactionTypes.map(id => getReactionHtml(reactions.url, id, !user, reactions[id])).join('')}
+            ${reactionTypes.map(id => getReactionHtml(reactions.url, id, !currentUser, reactions[id])).join('')}
           </form>
-          ${getReactionsMenuHtml(comment.reactions.url, 'center', '')}
+          ${currentUser ? getReactionsMenuHtml(comment.reactions.url, 'center') : getSignInToReactMenuHtml('center')}
         </div>
       </div>`;
 

@@ -41,7 +41,6 @@
   .Popover-message {
     position: relative;
     padding: $spacer-1;
-    padding-top: $spacer-6;
     display: flex;
     flex-wrap: wrap;
     width: 44px * 4;
@@ -52,6 +51,9 @@
 
   .BtnGroup {
     margin: 0 auto;
+    &:first-of-type {
+      margin-top: $spacer-6;
+    }
   }
 
   .reaction-button {
@@ -74,6 +76,7 @@
   border-bottom: $border;
   padding: $spacer-2 $spacer-3;
   background-color: $bg-white;
+  pointer-events: none;
 
   .reaction-button + & {
     display: none;

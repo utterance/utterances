@@ -52,9 +52,7 @@ async function bootstrap() {
     return;
   }
 
-  if (user) {
-    enableReactions();
-  }
+  enableReactions(!!user);
 
   const submit = async (markdown: string) => {
     await assertOrigin();
