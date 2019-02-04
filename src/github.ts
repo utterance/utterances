@@ -9,6 +9,10 @@ const GITHUB_ENCODING__REACTIONS_PREVIEW = 'application/vnd.github.squirrel-girl
 
 export const PAGE_SIZE = 25;
 
+export type ReactionID = '+1' | '-1' | 'laugh' | 'hooray' | 'confused' | 'heart' | 'rocket' | 'eyes';
+
+export const reactionTypes: ReactionID[] = ['+1', '-1', 'laugh', 'hooray', 'confused', 'heart', 'rocket', 'eyes'];
+
 let owner: string;
 let repo: string;
 const branch = 'master';
@@ -220,6 +224,28 @@ export function postComment(issueNumber: number, markdown: string) {
   });
 }
 
+export async function toggleReaction(url: string, content: ReactionID) {
+  url = url.replace(GITHUB_API, '');
+  // We don't know if the reaction exists or not. Attempt to create it. If the GitHub
+  // API responds that the reaction already exists, delete it.
+  const body = JSON.stringify({ content });
+  const postRequest = githubRequest(url, { method: 'POST', body });
+  postRequest.headers.set('Accept', GITHUB_ENCODING__REACTIONS_PREVIEW);
+  const response = await githubFetch(postRequest);
+  const reaction: Reaction = response.ok ? await response.json() : null;
+  if (response.status === 201) { // reaction created.
+    return { reaction, deleted: false };
+  }
+  if (response.status !== 200) {
+    throw new Error('expected "201 reaction created" or "200 reaction already exists"');
+  }
+  // reaction already exists... delete.
+  const deleteRequest = githubRequest(`reactions/${reaction.id}`, { method: 'DELETE' });
+  deleteRequest.headers.set('Accept', GITHUB_ENCODING__REACTIONS_PREVIEW);
+  await githubFetch(deleteRequest);
+  return { reaction, deleted: true };
+}
+
 export function renderMarkdown(text: string) {
   const body = JSON.stringify({ text, mode: 'gfm', context: `${owner}/${repo}` });
   return githubFetch(githubRequest('markdown', { method: 'POST', body }))
@@ -260,6 +286,26 @@ export type CommentAuthorAssociation =
   | 'NONE'
   | 'OWNER';
 
+export interface Reactions {
+  url: string;
+  total_count: number;
+  '+1': number;
+  '-1': number;
+  laugh: number;
+  hooray: number;
+  confused: number;
+  heart: number;
+  rocket: number;
+  eyes: number;
+}
+
+export interface Reaction {
+  id: number;
+  user: User;
+  content: ReactionID;
+  created_at: string;
+}
+
 export interface Issue {
   url: string;
   repository_url: string;
@@ -291,16 +337,7 @@ export interface Issue {
   };
   body: string;
   score: number;
-  reactions: {
-    total_count: number;
-    '+1': number;
-    '-1': number;
-    laugh: number;
-    confused: number;
-    heart: number;
-    hooray: number;
-    url: string;
-  };
+  reactions: Reactions;
   author_association: CommentAuthorAssociation;
 }
 
@@ -327,11 +364,7 @@ export interface IssueComment {
   created_at: string;
   updated_at: string;
   author_association: CommentAuthorAssociation;
-}
-
-export interface CommentsPage {
-  items: IssueComment[];
-  nextPage: number;
+  reactions: Reactions;
 }
 
 /*

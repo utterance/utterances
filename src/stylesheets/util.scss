@@ -25,3 +25,14 @@
 .btn-outline {
   border-color: $border-gray;
 }
+
+.details-popover {
+  position: relative;
+
+  & > summary {
+    list-style-type: none;
+    &::-webkit-details-marker {
+        display: none;
+    }
+  }
+}
