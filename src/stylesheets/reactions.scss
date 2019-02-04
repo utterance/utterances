@@ -1,0 +1,94 @@
+.reaction-list {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-top: -1px;
+  margin-bottom: -1px;
+  margin-left: -1px;
+  border-right: $border;
+  overflow-x: hidden;
+  overflow-y: visible;
+  > .reaction-button:last-child {
+    border-right: none!important;
+  }
+}
+
+.reaction-list > .reaction-button {
+  font-weight: normal;
+  padding: $spacer-2 $spacer-3;
+  border-radius: 0!important;
+
+  &[reaction-count="0"] {
+    display: none;
+  }
+
+  &::after {
+    display: inline-block;
+    margin-left: 2px;
+    content: attr(reaction-count);
+  }
+}
+
+.reactions-popover {
+  summary {
+    margin: -1px 0;
+    padding: $spacer-2 $spacer-3;
+    color: $text-gray;
+    white-space: nowrap;
+    &:hover {
+      color: $text-blue;
+    }
+  }
+
+  .Popover {
+    margin-top: $spacer-2;
+  }
+
+  .Popover-message {
+    position: relative;
+    padding: $spacer-1;
+    display: flex;
+    flex-wrap: wrap;
+    width: 44px * 4;
+    background-color: $bg-white;
+    border: $border;
+    border-radius: $border-radius;
+  }
+
+  .BtnGroup {
+    margin: 0 auto;
+    &:first-of-type {
+      margin-top: $spacer-6;
+    }
+  }
+
+  .reaction-button {
+    border: none;
+    border-radius: 0!important;
+    transition: transform .15s cubic-bezier(.2, 0, .13, 2);
+    background: transparent!important;
+    white-space: nowrap;
+    
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+}
+
+.reaction-name {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  border-bottom: $border;
+  padding: $spacer-2 $spacer-3;
+  background-color: $bg-white;
+  pointer-events: none;
+
+  .reaction-button + & {
+    display: none;
+  }
+
+  .reaction-button:hover + & {
+    display: block;
+  }
+}

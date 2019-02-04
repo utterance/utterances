@@ -26,10 +26,18 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px $spacer-3;
     color: $text-gray;
     background-color: $bg-gray;
     border-bottom: $border;
+  }
+
+  .comment-meta {
+    padding: 10px $spacer-3;
+  }
+
+  .comment-actions {
+    display: flex;
+    align-items: center;
   }
 
   .new-comment-header {
@@ -73,6 +81,19 @@
 
   .comment-footer {
     display: flex;
+    border-top: $border;
+
+    &[reaction-count="0"] {
+      display: none;
+    }
+
+    &:not(:hover) .reactions-popover:not([open]) {
+      display: none;
+    }
+  }
+
+  .new-comment-footer {
+    display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 $spacer-2 $spacer-2 $spacer-2;
@@ -88,11 +109,16 @@
 
   .author-association-badge {
     margin-top: -1px;
+    margin-right: $spacer-1;
     padding: 2px 5px;
     border: $border;
     border-radius: $border-radius;
     font-size: $font-size-small;
     font-weight: $font-weight-semibold;
+  }
+
+  .reactions-popover {
+    display: none;
   }
 
   @media screen and (min-width: map-get($breakpoints, sm)) {
@@ -107,6 +133,10 @@
 
     &.current-user .comment {
       @include double-caret($bg-blue-light, $border-gray-dark);
+    }
+
+    .reactions-popover {
+      display: inline-block;
     }
   }
 }

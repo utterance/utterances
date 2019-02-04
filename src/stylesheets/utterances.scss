@@ -1,15 +1,19 @@
 @import "primer-base/index";
-@import "primer-buttons/lib/button";
+@import "primer-utilities/lib/details";
+@import "primer-utilities/lib/box-shadow";
+@import "primer-buttons/index";
 @import "primer-markdown/index";
 @import "primer-alerts/index";
 @import "primer-navigation/lib/tabnav";
 @import "primer-forms/lib/form-control";
+@import "primer-popover/index";
 @import "./util";
 @import "./timeline";
 @import "./timeline-comment";
 @import "./permalink-code";
 @import "./email-fragment";
 @import "./zigzag";
+@import "./reactions";
 
 html,
 body {

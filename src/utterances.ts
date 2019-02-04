@@ -17,6 +17,7 @@ import { startMeasuring, scheduleMeasure } from './measure';
 import { loadTheme } from './theme';
 import { getRepoConfig } from './repo-config';
 import { loadToken } from './oauth';
+import { enableReactions } from './reactions';
 
 setRepoContext(page);
 
@@ -50,6 +51,8 @@ async function bootstrap() {
   if (issue && issue.locked) {
     return;
   }
+
+  enableReactions(!!user);
 
   const submit = async (markdown: string) => {
     await assertOrigin();

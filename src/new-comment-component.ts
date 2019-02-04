@@ -56,7 +56,7 @@ export class NewCommentComponent {
             ${nothingToPreview}
           </div>
         </div>
-        <footer class="comment-footer">
+        <footer class="new-comment-footer">
           <a class="text-link markdown-info" tabindex="-1" target="_blank"
              href="https://guides.github.com/features/mastering-markdown/">
             <svg class="octicon v-align-bottom" viewBox="0 0 16 16" version="1.1"
