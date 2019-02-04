@@ -87,7 +87,7 @@
       display: none;
     }
 
-    &:not(:hover) details:not([open]) {
+    &:not(:hover) .reactions-popover:not([open]) {
       display: none;
     }
   }
@@ -117,6 +117,10 @@
     font-weight: $font-weight-semibold;
   }
 
+  .reactions-popover {
+    display: none;
+  }
+
   @media screen and (min-width: map-get($breakpoints, sm)) {
     .avatar {
       display: block;
@@ -129,6 +133,10 @@
 
     &.current-user .comment {
       @include double-caret($bg-blue-light, $border-gray-dark);
+    }
+
+    .reactions-popover {
+      display: inline-block;
     }
   }
 }

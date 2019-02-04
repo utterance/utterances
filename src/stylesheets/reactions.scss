@@ -1,8 +1,12 @@
 .reaction-list {
+  display: flex;
+  flex-wrap: nowrap;
   margin-top: -1px;
   margin-bottom: -1px;
   margin-left: -1px;
   border-right: $border;
+  overflow-x: hidden;
+  overflow-y: visible;
   > .reaction-button:last-child {
     border-right: none!important;
   }
@@ -29,6 +33,7 @@
     margin: -1px 0;
     padding: $spacer-2 $spacer-3;
     color: $text-gray;
+    white-space: nowrap;
     &:hover {
       color: $text-blue;
     }
@@ -61,6 +66,7 @@
     border-radius: 0!important;
     transition: transform .15s cubic-bezier(.2, 0, .13, 2);
     background: transparent!important;
+    white-space: nowrap;
     
     &:hover {
       transform: scale(1.2);
