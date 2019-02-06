@@ -14,8 +14,13 @@
           '<script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.5.0/bluebird.min.js" integrity="sha256-/l7dZnd9iW5Iw9P2Qn/0ghByeFDKnIcPd4DTptDaK20=" crossorigin="anonymous"><\/script>',
           '<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js" integrity="sha256-aB35laj7IZhLTx58xw/Gm1EKOoJJKZt6RY+bH1ReHxs=" crossorigin="anonymous"><\/script>',
           '<script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js" integrity="sha384-hmjwm4yehDT6Ezcxh87+SDcTlQYHxrisDyYCrBHPc0VFPfUqGl8jGF7I7gprJpIr" crossorigin="anonymous"><\/script>',
-          '<script src="https://cdn.jsdelivr.net/npm/custom-event-polyfill@0.3.0/custom-event-polyfill.min.js" integrity="sha384-LA1yvfV5pKonJnGIRvMu236XXaEJvI11iV52RIkwsE4QAWpgge1OcxfBHk/0t3UP" crossorigin="anonymous"><\/script>'
+          '<script src="https://cdn.jsdelivr.net/npm/custom-event-polyfill@0.3.0/custom-event-polyfill.min.js" integrity="sha384-LA1yvfV5pKonJnGIRvMu236XXaEJvI11iV52RIkwsE4QAWpgge1OcxfBHk/0t3UP" crossorigin="anonymous"><\/script>',
+          '<script src="https://cdn.jsdelivr.net/npm/details-element-polyfill@2.3.0/dist/details-element-polyfill.min.js" integrity="sha384-EYcJYjEW6+UmvWEL8lwBmrI7McPuR6P3dAu8ufaO0U9+seComgcQ2ssAIHJjXLdR" crossorigin="anonymous"><\/script>'
         );
+      }
+      if (!('open' in document.createElement('details'))) {
+        document.head.insertAdjacentHTML('afterbegin', '<style>summary::before{content:"";padding-right:0;font-size:0.6rem;cursor:pointer;} [open]>summary::before{content:"";}</style>');
+        document.write('<script src="https://cdn.jsdelivr.net/npm/details-element-polyfill@2.3.0/dist/details-element-polyfill.min.js" integrity="sha384-EYcJYjEW6+UmvWEL8lwBmrI7McPuR6P3dAu8ufaO0U9+seComgcQ2ssAIHJjXLdR" crossorigin="anonymous"><\/script>');
       }
     </script>
   </head>
