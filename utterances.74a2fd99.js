@@ -1312,11 +1312,10 @@ var CommentComponent = function () {
     this.element.innerHTML = "\n      <a class=\"avatar\" href=\"" + user.html_url + "\" target=\"_blank\" tabindex=\"-1\">\n        <img alt=\"@" + user.login + "\" height=\"44\" width=\"44\"\n              src=\"" + user.avatar_url + avatarArgs + "\">\n      </a>\n      <div class=\"comment\">\n        <header class=\"comment-header\">\n          <span class=\"comment-meta\">\n            <a class=\"text-link\" href=\"" + user.html_url + "\" target=\"_blank\"><strong>" + user.login + "</strong></a>\n            commented\n            <a class=\"text-link\" href=\"" + html_url + "\" target=\"_blank\">" + (0, _timeAgo.timeAgo)(Date.now(), new Date(created_at)) + "</a>\n          </span>\n          <div class=\"comment-actions\">\n            " + (association ? "<span class=\"author-association-badge\">" + association + "</span>" : '') + "\n            " + (currentUser ? (0, _reactions.getReactionsMenuHtml)(comment.reactions.url, 'right') : (0, _reactions.getSignInToReactMenuHtml)('right')) + "\n          </div>\n        </header>\n        <div class=\"markdown-body markdown-body-scrollable\">\n          " + body_html + "\n        </div>\n        <div class=\"comment-footer\" reaction-count=\"" + reactionCount + "\" reaction-url=\"" + reactions.url + "\">\n          <form class=\"reaction-list BtnGroup\" action=\"javascript:\">\n            " + _github.reactionTypes.map(function (id) {
       return (0, _reactions.getReactionHtml)(reactions.url, id, !currentUser, reactions[id]);
     }).join('') + "\n          </form>\n          " + (currentUser ? (0, _reactions.getReactionsMenuHtml)(comment.reactions.url, 'center') : (0, _reactions.getSignInToReactMenuHtml)('center')) + "\n        </div>\n      </div>";
-    var markdownBody = this.element.lastElementChild.lastElementChild;
-    var emailToggle = markdownBody.querySelector('.email-hidden-toggle a');
+    var emailToggle = this.element.querySelector('.markdown-body .email-hidden-toggle a');
 
     if (emailToggle) {
-      var emailReply_1 = markdownBody.querySelector('.email-hidden-reply');
+      var emailReply_1 = this.element.querySelector('.markdown-body .email-hidden-reply');
 
       emailToggle.onclick = function (event) {
         event.preventDefault();
