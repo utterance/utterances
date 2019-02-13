@@ -54,7 +54,7 @@ export class CommentComponent {
         </div>
       </div>`;
 
-    const markdownBody = this.element.lastElementChild!.lastElementChild!;
+    const markdownBody = this.element.querySelector('.markdown-body')!;
     const emailToggle = markdownBody.querySelector('.email-hidden-toggle a') as HTMLAnchorElement;
     if (emailToggle) {
       const emailReply = markdownBody.querySelector('.email-hidden-reply') as HTMLDivElement;
