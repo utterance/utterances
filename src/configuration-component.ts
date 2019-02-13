@@ -129,6 +129,7 @@ export class ConfigurationComponent {
       <select id="theme" class="form-select" value="github-light" aria-label="Theme">
         <option value="github-light">GitHub Light</option>
         <option value="github-dark">GitHub Dark</option>
+        <option value="github-dark-orange">GitHub Dark Orange</option>
       </select>
 
       <h3 id="heading-enable">Enable Utterances</h3>

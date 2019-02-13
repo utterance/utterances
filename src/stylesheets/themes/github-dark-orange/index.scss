@@ -1,0 +1,24 @@
+@import "./variables";
+@import "../../index";
+@import "./syntax";
+@import "./button.scss";
+@import "./glow.scss";
+@import "./heading.scss";
+@import "./comment.scss";
+@import "./selection.scss";
+@import "./placeholder.scss";
+@import "./combobox.scss";
+@import "./code.scss";
+
+body {
+  background-color: $bg-page;
+}
+
+iframe {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
