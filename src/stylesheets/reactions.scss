@@ -34,6 +34,7 @@
     padding: $spacer-2 $spacer-3;
     color: $text-gray;
     white-space: nowrap;
+    transition: opacity 0.3s ease-in-out;
     &:hover {
       color: $text-blue;
     }

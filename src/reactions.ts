@@ -81,7 +81,7 @@ export function getReactionsMenuHtml(url: string, align: 'center' | 'right') {
     + `<span class="reaction-name" aria-hidden="true">${reactionNames[id]}</span>`;
   return `
   <details class="details-overlay details-popover reactions-popover">
-    <summary>${addReactionSvgs}</summary>
+    <summary ${align == 'center' ? 'tabindex="-1"' : ''}>${addReactionSvgs}</summary>
     <div class="Popover" style="${position}">
       <form class="Popover-message ${alignmentClass} box-shadow-large" action="javascript:">
         <span class="reaction-name">Pick your reaction</span>
