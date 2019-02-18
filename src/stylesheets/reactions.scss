@@ -8,7 +8,7 @@
   overflow-x: hidden;
   overflow-y: visible;
   > .reaction-button:last-child {
-    border-right: none!important;
+    border-right: 1.5px !important;
   }
 }
 
@@ -16,6 +16,8 @@
   font-weight: normal;
   padding: $spacer-2 $spacer-3;
   border-radius: 0!important;
+  border-right-width: 0px !important;
+  border-left-width: 1px !important;
 
   &[reaction-count="0"] {
     display: none;
