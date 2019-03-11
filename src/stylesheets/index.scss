@@ -1,10 +1,10 @@
-@import "primer-base/index";
-@import "primer-buttons/lib/button";
-@import "primer-forms/lib/form-control";
-@import "primer-forms/lib/form-select";
-@import "primer-forms/lib/form-group";
-@import "primer-forms/lib/input-group";
-@import "primer-markdown/index";
+@import "@primer/css/base/index";
+@import "@primer/css/buttons/button";
+@import "@primer/css/forms/form-control";
+@import "@primer/css/forms/form-select";
+@import "@primer/css/forms/form-group";
+@import "@primer/css/forms/input-group";
+@import "@primer/css/markdown/index";
 @import "./util";
 @import "./timeline";
 @import "./timeline-comment";
