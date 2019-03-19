@@ -84,11 +84,18 @@
     border-top: $border;
 
     &[reaction-count="0"] {
-      display: none;
+      height: 0;
+      overflow: hidden;
+      opacity: 0;
     }
 
     &:not(:hover) .reactions-popover:not([open]) {
-      display: none;
+      height: 0;
+      overflow: hidden;
+      opacity: 0;
+      summary {
+        opacity: 0;
+      }
     }
   }
 
