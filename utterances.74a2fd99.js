@@ -5,8 +5,6 @@
 //
 // anything defined in a previous bundle is accessed via the
 // orig method which is the require for previous bundles
-
-// eslint-disable-next-line no-global-assign
 parcelRequire = (function (modules, cache, entry, globalName) {
   // Save the require from previous bundle to this closure if any
   var previousRequire = typeof parcelRequire === 'function' && parcelRequire;
@@ -77,8 +75,16 @@ parcelRequire = (function (modules, cache, entry, globalName) {
     }, {}];
   };
 
+  var error;
   for (var i = 0; i < entry.length; i++) {
-    newRequire(entry[i]);
+    try {
+      newRequire(entry[i]);
+    } catch (e) {
+      // Save first error but execute all entries
+      if (!error) {
+        error = e;
+      }
+    }
   }
 
   if (entry.length) {
@@ -103,6 +109,13 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   // Override the current require with this new one
+  parcelRequire = newRequire;
+
+  if (error) {
+    // throw error from earlier, _after updating parcelRequire_
+    throw error;
+  }
+
   return newRequire;
 })({"deparam.ts":[function(require,module,exports) {
 "use strict";
@@ -1251,7 +1264,7 @@ function getReactionsMenuHtml(url, align) {
     return getReactionHtml(url, id, false, 0) + ("<span class=\"reaction-name\" aria-hidden=\"true\">" + reactionNames[id] + "</span>");
   };
 
-  return "\n  <details class=\"details-overlay details-popover reactions-popover\">\n    <summary>" + addReactionSvgs + "</summary>\n    <div class=\"Popover\" style=\"" + position + "\">\n      <form class=\"Popover-message " + alignmentClass + " box-shadow-large\" action=\"javascript:\">\n        <span class=\"reaction-name\">Pick your reaction</span>\n        <div class=\"BtnGroup\">\n          " + _github.reactionTypes.slice(0, 4).map(getButtonAndSpan).join('') + "\n        </div>\n        <div class=\"BtnGroup\">\n          " + _github.reactionTypes.slice(4).map(getButtonAndSpan).join('') + "\n        </div>\n      </form>\n    </div>\n  </details>";
+  return "\n  <details class=\"details-overlay details-popover reactions-popover\">\n    <summary " + (align == 'center' ? 'tabindex="-1"' : '') + ">" + addReactionSvgs + "</summary>\n    <div class=\"Popover\" style=\"" + position + "\">\n      <form class=\"Popover-message " + alignmentClass + " box-shadow-large\" action=\"javascript:\">\n        <span class=\"reaction-name\">Pick your reaction</span>\n        <div class=\"BtnGroup\">\n          " + _github.reactionTypes.slice(0, 4).map(getButtonAndSpan).join('') + "\n        </div>\n        <div class=\"BtnGroup\">\n          " + _github.reactionTypes.slice(4).map(getButtonAndSpan).join('') + "\n        </div>\n      </form>\n    </div>\n  </details>";
 }
 
 function getSignInToReactMenuHtml(align) {
@@ -2204,4 +2217,4 @@ function assertOrigin() {
   });
 }
 },{"./page-attributes":"page-attributes.ts","./github":"github.ts","./timeline-component":"timeline-component.ts","./new-comment-component":"new-comment-component.ts","./measure":"measure.ts","./theme":"theme.ts","./repo-config":"repo-config.ts","./oauth":"oauth.ts","./reactions":"reactions.ts"}]},{},["utterances.ts"], null)
-//# sourceMappingURL=/utterances.74a2fd99.map
+//# sourceMappingURL=/utterances.74a2fd99.js.map

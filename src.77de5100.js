@@ -5,8 +5,6 @@
 //
 // anything defined in a previous bundle is accessed via the
 // orig method which is the require for previous bundles
-
-// eslint-disable-next-line no-global-assign
 parcelRequire = (function (modules, cache, entry, globalName) {
   // Save the require from previous bundle to this closure if any
   var previousRequire = typeof parcelRequire === 'function' && parcelRequire;
@@ -77,8 +75,16 @@ parcelRequire = (function (modules, cache, entry, globalName) {
     }, {}];
   };
 
+  var error;
   for (var i = 0; i < entry.length; i++) {
-    newRequire(entry[i]);
+    try {
+      newRequire(entry[i]);
+    } catch (e) {
+      // Save first error but execute all entries
+      if (!error) {
+        error = e;
+      }
+    }
   }
 
   if (entry.length) {
@@ -103,6 +109,13 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   // Override the current require with this new one
+  parcelRequire = newRequire;
+
+  if (error) {
+    // throw error from earlier, _after updating parcelRequire_
+    throw error;
+  }
+
   return newRequire;
 })({"configuration-component.ts":[function(require,module,exports) {
 "use strict";
@@ -197,4 +210,4 @@ var _configurationComponent = require("./configuration-component");
 
 document.querySelector('h2#configuration').insertAdjacentElement('afterend', new _configurationComponent.ConfigurationComponent().element);
 },{"./configuration-component":"configuration-component.ts"}]},{},["index.ts"], null)
-//# sourceMappingURL=/src.77de5100.map
+//# sourceMappingURL=/src.77de5100.js.map
