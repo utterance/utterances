@@ -24,6 +24,7 @@
     "deploy": "gh-pages --dist dist"
   },
   "devDependencies": {
+    "@primer/css": "^12.1.1",
     "autoprefixer": "^9.4.7",
     "gh-pages": "^2.0.1",
     "github-syntax-dark": "^0.5.0",
@@ -33,7 +34,6 @@
     "posthtml-expressions": "^1.1.0",
     "posthtml-include": "^1.2.0",
     "posthtml-md": "^1.1.0",
-    "@primer/css": "^12.1.1",
     "sass": "^1.16.1",
     "tslint": "^5.12.1",
     "typescript": "^3.3.1"
