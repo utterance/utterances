@@ -1,6 +1,7 @@
 import { toggleReaction, ReactionID, reactionTypes } from './github';
 import { getLoginUrl } from './oauth';
 import { pageAttributes } from './page-attributes';
+import { scheduleMeasure } from './measure';
 
 export const reactionNames: { [key in ReactionID]: string; } = {
   '+1': 'Thumbs Up',
@@ -70,6 +71,7 @@ export function enableReactions(authenticated: boolean) {
         (parseInt(element.getAttribute('reaction-count')!, 10) + delta).toString());
     }
     button.disabled = false;
+    scheduleMeasure();
   };
   addEventListener('click', submitReaction, true);
 }
