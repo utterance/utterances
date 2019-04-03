@@ -41,4 +41,6 @@
 * [Geoff Viola](https://geoffviola.github.io)
 * [思圆笔记](https://hintsnet.com/pimgeek/)
 * [./kiedtl](https://kiedtl.surge.sh/)
-* [heha37] (https://blog.jjeyond.com)
+* [heha37](https://blog.jjeyond.com)
+* [mutoe 木头的博客](https://blog.mutoe.com/)
+
