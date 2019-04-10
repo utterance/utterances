@@ -132,6 +132,7 @@ export class ConfigurationComponent {
         <option value="github-dark-orange">GitHub Dark Orange</option>
         <option value="icy-dark">Icy Dark</option>
         <option value="dark-blue">Dark Blue</option>
+        <option value="photon-dark">Photon Dark</option>
       </select>
 
       <h3 id="heading-enable">Enable Utterances</h3>
