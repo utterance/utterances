@@ -48,4 +48,5 @@
 * [Sample Space](https://space.lahvak.space)
 * [CRIMX 前端博客](https://blog.crimx.com)
 * [bios-marcels blog](https://marcelschr.me)
+* [Steve Xu's Blog](https://nusr.github.io/)
 
