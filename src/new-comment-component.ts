@@ -147,7 +147,7 @@ export class NewCommentComponent {
     this.textarea.disabled = !this.user;
     this.textarea.value = '';
     this.submitButton.disabled = false;
-    this.handleClick({ target: this.form.querySelector('.tabnav-tab.tab-write') } as any);
+    this.handleClick({ ...event, target: this.form.querySelector('.tabnav-tab.tab-write') });
     this.preview.textContent = nothingToPreview;
   }
 

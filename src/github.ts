@@ -69,7 +69,7 @@ function processRateLimit(response: Response) {
   }
 }
 
-function readRelNext(response: Response) {
+export function readRelNext(response: Response) {
   const link = response.headers.get('link');
   if (link === null) {
     return 0;
