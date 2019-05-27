@@ -47,4 +47,5 @@
 * [bios-marcels blog](https://marcelschr.me)
 * [Steve Xu's Blog](https://nusr.github.io/)
 * [Bowinthecloud's Blog](https://bowinthecloud.github.io/)
+* [Theo Fein's Blog](https://theofein.github.io/)
 
