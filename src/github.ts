@@ -139,14 +139,12 @@ export function loadIssueByTerm(term: string) {
     }
     return response.json();
   }).then(results => {
-    if (results.total_count === 0) {
-      return null;
+    for (const item of results.items) {
+      if (item.title === term) {
+        return item;
+      }
     }
-    if (results.total_count > 1) {
-      // tslint:disable-next-line:no-console
-      console.warn(`Multiple issues match "${q}". Using earliest created.`);
-    }
-    return results.items[0];
+    return null;
   });
 }
 
