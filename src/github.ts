@@ -140,7 +140,7 @@ export function loadIssueByTerm(term: string) {
     return response.json();
   }).then(results => {
     for (const item of results.items) {
-      if (item.title === term) {
+      if (item.title.toLowerCase().indexOf(term.toLowerCase()) !== -1) {
         return item;
       }
     }
