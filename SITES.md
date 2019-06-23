@@ -49,5 +49,6 @@
 * [Bowinthecloud's Blog](https://bowinthecloud.github.io/)
 * [LaunchingDream | Seunghyun's Blog](https://seunghyun.dev/)
 * [Theo Fein's Blog](https://theofein.github.io/)
+* [LiuJiang Blog](https://github.com/xuya227939/blog)
 * [Lenix Blog](https://blog.p2hp.com/)
 * [R-hub blog](https://blog.r-hub.io/)
