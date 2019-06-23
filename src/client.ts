@@ -9,7 +9,7 @@ if (script === undefined) {
 }
 
 // gather script element's attributes
-const attrs: { [name: string]: string; } = {};
+const attrs: Record<string, string> = {};
 for (let i = 0; i < script.attributes.length; i++) {
   const attribute = script.attributes.item(i)!;
   attrs[attribute.name.replace(/^data-/, '')] = attribute.value;

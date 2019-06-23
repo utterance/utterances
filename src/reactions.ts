@@ -3,7 +3,7 @@ import { getLoginUrl } from './oauth';
 import { pageAttributes } from './page-attributes';
 import { scheduleMeasure } from './measure';
 
-export const reactionNames: { [key in ReactionID]: string; } = {
+export const reactionNames: Record<ReactionID, string> = {
   '+1': 'Thumbs Up',
   '-1': 'Thumbs Down',
   'laugh': 'Laugh',
@@ -14,7 +14,7 @@ export const reactionNames: { [key in ReactionID]: string; } = {
   'eyes': 'Eyes'
 };
 
-export const reactionEmoji: { [key in ReactionID]: string; } = {
+export const reactionEmoji: Record<ReactionID, string> = {
   '+1': '👍',
   '-1': '👎',
   'laugh': '️😂',

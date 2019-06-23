@@ -1,14 +1,17 @@
-import { IssueComment, reactionTypes } from './github';
+import { CommentAuthorAssociation, IssueComment, reactionTypes } from './github';
 import { timeAgo } from './time-ago';
 import { scheduleMeasure } from './measure';
 import { getReactionsMenuHtml, getReactionHtml, getSignInToReactMenuHtml } from './reactions';
 
 const avatarArgs = '?v=3&s=88';
-const displayAssociations: { [association: string]: string; } = {
+const displayAssociations: Record<CommentAuthorAssociation, string> = {
   COLLABORATOR: 'Collaborator',
   CONTRIBUTOR: 'Contributor',
   MEMBER: 'Member',
-  OWNER: 'Owner'
+  OWNER: 'Owner',
+  FIRST_TIME_CONTRIBUTOR: 'First time contributor',
+  FIRST_TIMER: 'First timer',
+  NONE: ''
 };
 
 export class CommentComponent {
