@@ -1,5 +1,6 @@
 import { param } from './deparam';
 import { ResizeMessage } from './measure';
+import { getLoginUrl, SignInMessage } from './oauth';
 
 let script = document.currentScript as HTMLScriptElement;
 if (script === undefined) {
@@ -68,8 +69,10 @@ addEventListener('message', event => {
   if (event.origin !== utterancesOrigin) {
     return;
   }
-  const data = event.data as ResizeMessage;
+  const data = event.data as ResizeMessage | SignInMessage;
   if (data && data.type === 'resize' && data.height) {
     container.style.height = `${data.height}px`;
+  } else if (data && data.type === 'sign-in') {
+    location.href = getLoginUrl(location.href);
   }
 });

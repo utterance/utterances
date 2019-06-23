@@ -69,7 +69,7 @@ export class NewCommentComponent {
             Styling with Markdown is supported
           </a>
           <button class="btn btn-primary" type="submit">Comment</button>
-          <a class="btn btn-primary" href="${getLoginUrl(page.url)}" target="_top">Sign in to comment</a>
+          <a class="btn btn-primary" sign-in href="${getLoginUrl(page.url)}" target="_top">Sign in to comment</a>
         </footer>
       </form>`;
 

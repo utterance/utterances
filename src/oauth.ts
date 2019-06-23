@@ -18,3 +18,17 @@ export async function loadToken(): Promise<string | null> {
   }
   return null;
 }
+
+export interface SignInMessage {
+  type: 'sign-in';
+}
+
+export function listenForSignIn(origin: string) {
+  addEventListener('click', event => {
+    if (event.target instanceof Element && event.target.closest('[sign-in]')) {
+      event.preventDefault();
+      const message: SignInMessage = { type: 'sign-in' };
+      parent.postMessage(message, origin);
+    }
+  });
+}
