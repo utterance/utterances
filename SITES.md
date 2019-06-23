@@ -49,3 +49,4 @@
 * [Bowinthecloud's Blog](https://bowinthecloud.github.io/)
 * [LaunchingDream | Seunghyun's Blog](https://seunghyun.dev/)
 * [Theo Fein's Blog](https://theofein.github.io/)
+* [R-hub blog](https://blog.r-hub.io/)
