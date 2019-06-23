@@ -144,8 +144,16 @@ export function loadIssueByTerm(term: string) {
     }
     if (results.total_count > 1) {
       // tslint:disable-next-line:no-console
-      console.warn(`Multiple issues match "${q}". Using earliest created.`);
+      console.warn(`Multiple issues match "${q}".`);
     }
+    term = term.toLowerCase();
+    for (const result of results.items) {
+      if (result.title.toLowerCase().indexOf(term) !== -1) {
+        return result;
+      }
+    }
+    // tslint:disable-next-line:no-console
+    console.warn(`Issue search results do not contain an issue with title matching "${term}". Using first result.`);
     return results.items[0];
   });
 }
