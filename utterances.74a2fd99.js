@@ -164,82 +164,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var _default = /^([\w-_]+)\/([\w-_.]+)$/i;
 exports.default = _default;
-},{}],"page-attributes.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.pageAttributes = void 0;
-
-var _deparam = require("./deparam");
-
-var _repoRegex = _interopRequireDefault(require("./repo-regex"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function readPageAttributes() {
-  var params = (0, _deparam.deparam)(location.search.substr(1));
-  var issueTerm = null;
-  var issueNumber = null;
-
-  if ('issue-term' in params) {
-    issueTerm = params['issue-term'];
-
-    if (issueTerm !== undefined) {
-      if (issueTerm === '') {
-        throw new Error('When issue-term is specified, it cannot be blank.');
-      }
-
-      if (['title', 'url', 'pathname', 'og:title'].indexOf(issueTerm) !== -1) {
-        if (!params[issueTerm]) {
-          throw new Error("Unable to find \"" + issueTerm + "\" metadata.");
-        }
-
-        issueTerm = params[issueTerm];
-      }
-    }
-  } else if ('issue-number' in params) {
-    issueNumber = +params['issue-number'];
-
-    if (issueNumber.toString(10) !== params['issue-number']) {
-      throw new Error("issue-number is invalid. \"" + params['issue-number']);
-    }
-  } else {
-    throw new Error('"issue-term" or "issue-number" must be specified.');
-  }
-
-  if (!('repo' in params)) {
-    throw new Error('"repo" is required.');
-  }
-
-  if (!('origin' in params)) {
-    throw new Error('"origin" is required.');
-  }
-
-  var matches = _repoRegex.default.exec(params.repo);
-
-  if (matches === null) {
-    throw new Error("Invalid repo: \"" + params.repo + "\"");
-  }
-
-  return {
-    owner: matches[1],
-    repo: matches[2],
-    issueTerm: issueTerm,
-    issueNumber: issueNumber,
-    origin: params.origin,
-    url: params.url,
-    title: params.title,
-    description: params.description,
-    label: params.label,
-    theme: params.theme || 'github-light'
-  };
-}
-
-var pageAttributes = readPageAttributes();
-exports.pageAttributes = pageAttributes;
-},{"./deparam":"deparam.ts","./repo-regex":"repo-regex.ts"}],"utterances-api.ts":[function(require,module,exports) {
+},{}],"utterances-api.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -418,6 +343,10 @@ function loadToken() {
     return __generator(this, function (_a) {
       switch (_a.label) {
         case 0:
+          if (token.value) {
+            return [2, token.value];
+          }
+
           url = _utterancesApi.UTTERANCES_API + "/token";
           return [4, fetch(url, {
             method: 'POST',
@@ -441,7 +370,88 @@ function loadToken() {
     });
   });
 }
-},{"./utterances-api":"utterances-api.ts","./deparam":"deparam.ts"}],"encoding.ts":[function(require,module,exports) {
+},{"./utterances-api":"utterances-api.ts","./deparam":"deparam.ts"}],"page-attributes.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.pageAttributes = void 0;
+
+var _deparam = require("./deparam");
+
+var _repoRegex = _interopRequireDefault(require("./repo-regex"));
+
+var _oauth = require("./oauth");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function readPageAttributes() {
+  var params = (0, _deparam.deparam)(location.search.substr(1));
+  var issueTerm = null;
+  var issueNumber = null;
+
+  if ('issue-term' in params) {
+    issueTerm = params['issue-term'];
+
+    if (issueTerm !== undefined) {
+      if (issueTerm === '') {
+        throw new Error('When issue-term is specified, it cannot be blank.');
+      }
+
+      if (['title', 'url', 'pathname', 'og:title'].indexOf(issueTerm) !== -1) {
+        if (!params[issueTerm]) {
+          throw new Error("Unable to find \"" + issueTerm + "\" metadata.");
+        }
+
+        issueTerm = params[issueTerm];
+      }
+    }
+  } else if ('issue-number' in params) {
+    issueNumber = +params['issue-number'];
+
+    if (issueNumber.toString(10) !== params['issue-number']) {
+      throw new Error("issue-number is invalid. \"" + params['issue-number']);
+    }
+  } else {
+    throw new Error('"issue-term" or "issue-number" must be specified.');
+  }
+
+  if (!('repo' in params)) {
+    throw new Error('"repo" is required.');
+  }
+
+  if (!('origin' in params)) {
+    throw new Error('"origin" is required.');
+  }
+
+  var matches = _repoRegex.default.exec(params.repo);
+
+  if (matches === null) {
+    throw new Error("Invalid repo: \"" + params.repo + "\"");
+  }
+
+  if (params.token) {
+    _oauth.token.value = params.token;
+  }
+
+  return {
+    owner: matches[1],
+    repo: matches[2],
+    issueTerm: issueTerm,
+    issueNumber: issueNumber,
+    origin: params.origin,
+    url: params.url,
+    title: params.title,
+    description: params.description,
+    label: params.label,
+    theme: params.theme || 'github-light'
+  };
+}
+
+var pageAttributes = readPageAttributes();
+exports.pageAttributes = pageAttributes;
+},{"./deparam":"deparam.ts","./repo-regex":"repo-regex.ts","./oauth":"oauth.ts"}],"encoding.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -460,6 +470,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.setRepoContext = setRepoContext;
+exports.readRelNext = readRelNext;
 exports.loadJsonFile = loadJsonFile;
 exports.loadIssueByTerm = loadIssueByTerm;
 exports.loadIssueByNumber = loadIssueByNumber;
@@ -767,9 +778,20 @@ function loadIssueByTerm(term) {
     }
 
     if (results.total_count > 1) {
-      console.warn("Multiple issues match \"" + q + "\". Using earliest created.");
+      console.warn("Multiple issues match \"" + q + "\".");
     }
 
+    term = term.toLowerCase();
+
+    for (var _i = 0, _a = results.items; _i < _a.length; _i++) {
+      var result = _a[_i];
+
+      if (result.title.toLowerCase().indexOf(term) !== -1) {
+        return result;
+      }
+    }
+
+    console.warn("Issue search results do not contain an issue with title matching \"" + term + "\". Using first result.");
     return results.items[0];
   });
 }
@@ -1299,7 +1321,10 @@ var displayAssociations = {
   COLLABORATOR: 'Collaborator',
   CONTRIBUTOR: 'Contributor',
   MEMBER: 'Member',
-  OWNER: 'Owner'
+  OWNER: 'Owner',
+  FIRST_TIME_CONTRIBUTOR: 'First time contributor',
+  FIRST_TIMER: 'First timer',
+  NONE: ''
 };
 
 var CommentComponent = function () {
@@ -1533,6 +1558,22 @@ var _repoConfig = require("./repo-config");
 
 var _oauth = require("./oauth");
 
+var __assign = void 0 && (void 0).__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
 var __awaiter = void 0 && (void 0).__awaiter || function (thisArg, _arguments, P, generator) {
   return new (P || (P = Promise))(function (resolve, reject) {
     function fulfilled(value) {
@@ -1737,9 +1778,9 @@ var NewCommentComponent = function () {
               this.textarea.disabled = !this.user;
               this.textarea.value = '';
               this.submitButton.disabled = false;
-              this.handleClick({
+              this.handleClick(__assign({}, event, {
                 target: this.form.querySelector('.tabnav-tab.tab-write')
-              });
+              }));
               this.preview.textContent = nothingToPreview;
               return [2];
           }
