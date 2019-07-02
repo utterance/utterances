@@ -148,7 +148,7 @@ function param(obj) {
   var parts = [];
 
   for (var name in obj) {
-    if (obj.hasOwnProperty(name)) {
+    if (obj.hasOwnProperty(name) && obj[name]) {
       parts.push(encodeURIComponent(name) + "=" + encodeURIComponent(obj[name]));
     }
   }
