@@ -1,5 +1,17 @@
-import { param } from './deparam';
+import { param, deparam } from './deparam';
 import { ResizeMessage } from './measure';
+
+// slice access token from query string
+const params = deparam(location.search.substr(1));
+const token = params.utterances;
+if (token) {
+  delete params.utterances;
+  let search = param(params);
+  if (search.length) {
+    search = '?' + search;
+  }
+  history.replaceState(undefined, document.title, location.pathname + search + location.hash);
+}
 
 let script = document.currentScript as HTMLScriptElement;
 if (script === undefined) {
@@ -12,7 +24,7 @@ if (script === undefined) {
 const attrs: Record<string, string> = {};
 for (let i = 0; i < script.attributes.length; i++) {
   const attribute = script.attributes.item(i)!;
-  attrs[attribute.name.replace(/^data-/, '')] = attribute.value;
+  attrs[attribute.name] = attribute.value;
 }
 
 // gather page attributes
@@ -25,6 +37,7 @@ const descriptionMeta = document.querySelector(`meta[name='description']`) as HT
 attrs.description = descriptionMeta ? descriptionMeta.content : '';
 const ogtitleMeta = document.querySelector(`meta[property='og:title'],meta[name='og:title']`) as HTMLMetaElement;
 attrs['og:title'] = ogtitleMeta ? ogtitleMeta.content : '';
+attrs.token = token;
 
 // create the standard utterances styles and insert them at the beginning of the
 // <head> for easy overriding.

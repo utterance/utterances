@@ -9,6 +9,9 @@ export function getLoginUrl(redirect_uri: string) {
 }
 
 export async function loadToken(): Promise<string | null> {
+  if (token.value) {
+    return token.value;
+  }
   const url = `${UTTERANCES_API}/token`;
   const response = await fetch(url, { method: 'POST', mode: 'cors', credentials: 'include' });
   if (response.ok) {

@@ -1,5 +1,6 @@
 import { deparam } from './deparam';
 import repoRegex from './repo-regex';
+import { token } from './oauth';
 
 function readPageAttributes() {
   const params = deparam(location.search.substr(1));
@@ -39,6 +40,10 @@ function readPageAttributes() {
   const matches = repoRegex.exec(params.repo);
   if (matches === null) {
     throw new Error(`Invalid repo: "${params.repo}"`);
+  }
+
+  if (params.token) {
+    token.value = params.token;
   }
 
   return {
