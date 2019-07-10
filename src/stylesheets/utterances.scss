@@ -32,3 +32,7 @@ body {
 .flash-not-installed {
   margin-bottom: $spacer-3;
 }
+
+textarea[disabled] {
+  cursor: not-allowed;
+}

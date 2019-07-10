@@ -99,11 +99,14 @@ export class NewCommentComponent {
       this.avatarAnchor.href = user.html_url;
       this.avatar.alt = '@' + user.login;
       this.avatar.src = user.avatar_url + '?v=3&s=88';
+      this.textarea.disabled = false;
+      this.textarea.placeholder = 'Leave a comment';
     } else {
       this.avatarAnchor.removeAttribute('href');
       this.avatar.alt = '@anonymous';
       this.avatar.src = anonymousAvatarUrl;
       this.textarea.disabled = true;
+      this.textarea.placeholder = 'Sign in to comment';
     }
   }
 
