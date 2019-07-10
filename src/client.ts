@@ -24,7 +24,7 @@ if (script === undefined) {
 const attrs: Record<string, string> = {};
 for (let i = 0; i < script.attributes.length; i++) {
   const attribute = script.attributes.item(i)!;
-  attrs[attribute.name] = attribute.value;
+  attrs[attribute.name.replace(/^data-/, '')] = attribute.value; // permit using data-theme instead of theme.
 }
 
 // gather page attributes
