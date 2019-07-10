@@ -38,9 +38,9 @@ export class NewCommentComponent {
         <img height="44" width="44">
       </a>
       <form class="comment" accept-charset="UTF-8" action="javascript:">
-        <header class="new-comment-header">
+        <header class="new-comment-header tabnav">
           <nav class="tabnav-tabs" role="tablist">
-            <button type="button" class="tabnav-tab tab-write selected"
+            <button type="button" class="tabnav-tab tab-write"
                     role="tab" aria-selected="true">
               Write
             </button>
@@ -155,11 +155,11 @@ export class NewCommentComponent {
     if (!(target instanceof HTMLButtonElement) || !target.classList.contains('tabnav-tab')) {
       return;
     }
-    if (target.classList.contains('selected')) {
+    if (target.getAttribute('aria-selected') === 'true') {
       return;
     }
-    this.form.querySelector('.tabnav-tab.selected')!.classList.remove('selected');
-    target.classList.add('selected');
+    this.form.querySelector('.tabnav-tab[aria-selected="true"]')!.setAttribute('aria-selected', 'false');
+    target.setAttribute('aria-selected', 'true');
     const isPreview = target.classList.contains('tab-preview');
     this.textarea.style.display = isPreview ? 'none' : '';
     this.preview.style.display = isPreview ? '' : 'none';

@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@primer/css": "^12.4.1",
-    "autoprefixer": "^9.6.0",
+    "autoprefixer": "^9.6.1",
     "gh-pages": "^2.0.1",
     "github-syntax-dark": "^0.5.0",
     "github-syntax-light": "^0.5.0",
@@ -34,8 +34,8 @@
     "posthtml-expressions": "^1.1.1",
     "posthtml-include": "^1.2.0",
     "posthtml-md": "^1.1.0",
-    "sass": "^1.22.2",
+    "sass": "^1.22.3",
     "tslint": "^5.18.0",
-    "typescript": "^3.5.2"
+    "typescript": "^3.5.3"
   }
 }
