@@ -14,7 +14,7 @@ export function deparam(query: string): Record<string, string> {
 export function param(obj: Record<string, string>) {
   const parts = [];
   for (const name in obj) {
-    if (obj.hasOwnProperty(name)) {
+    if (obj.hasOwnProperty(name) && obj[name]) {
       parts.push(`${encodeURIComponent(name)}=${encodeURIComponent(obj[name])}`);
     }
   }
