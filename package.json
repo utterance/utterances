@@ -34,7 +34,7 @@
     "posthtml-expressions": "^1.1.1",
     "posthtml-include": "^1.2.0",
     "posthtml-md": "^1.1.0",
-    "sass": "^1.22.3",
+    "sass": "^1.22.7",
     "tslint": "^5.18.0",
     "typescript": "^3.5.3"
   }
