@@ -2,6 +2,7 @@
 
 * [danyow.net](https://danyow.net)
 * [Den by Default](https://dennisdel.com)
+* [Hefnawi.me Weblog](https://hefnawi.me)
 * [os.phil-opp.com](https://os.phil-opp.com/second-edition)
 * [winterland.me](http://winterland.me/)
 * [davidbaker.is/scribbling](https://davidbaker.is/scribbling)
