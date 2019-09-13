@@ -1,7 +1,6 @@
 # Sites using Utterances
 
 * [danyow.net](https://danyow.net)
-* [Den by Default](https://dennisdel.com)
 * [os.phil-opp.com](https://os.phil-opp.com/second-edition)
 * [winterland.me](http://winterland.me/)
 * [davidbaker.is/scribbling](https://davidbaker.is/scribbling)
@@ -55,3 +54,4 @@
 * [feng.si](https://feng.si)
 * [doinote.cn](https://www.doinote.cn)
 * [Jenkins 中文社区](https://jenkins-zh.cn/)
+* [Hefnawi.me Weblog](https://hefnawi.me)
