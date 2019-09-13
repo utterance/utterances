@@ -55,3 +55,4 @@
 * [doinote.cn](https://www.doinote.cn)
 * [Jenkins 中文社区](https://jenkins-zh.cn/)
 * [Hefnawi.me Weblog](https://hefnawi.me)
+* [xindubawukong's blog](https://xindubawukong.github.io/)
