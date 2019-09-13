@@ -59,3 +59,4 @@
 * [Mohammad Mustakim Ali's Site](https://mustak.im)
 * [James Strong Blog](https://jamesstrong.dev)
 * [note4lin](http://note4lin.top/)
+* [nofwl](https://nofwl.com)
