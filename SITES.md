@@ -53,4 +53,5 @@
 * [Lenix Blog](https://blog.p2hp.com/)
 * [R-hub blog](https://blog.r-hub.io/)
 * [feng.si](https://feng.si)
+* [doinote.cn](https://www.doinote.cn)
 * [Jenkins 中文社区](https://jenkins-zh.cn/)
