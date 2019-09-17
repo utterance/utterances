@@ -106,7 +106,7 @@ export function getSignInToReactMenuHtml(align: 'center' | 'right') {
     <summary aria-label="Reactions Menu">${addReactionSvgs}</summary>
     <div class="Popover" style="${position}">
       <div class="Popover-message ${alignmentClass} box-shadow-large" style="padding: 16px">
-        <span><a href="${getLoginUrl(pageAttributes.url)}">Sign in</a> to add your reaction.</span>
+        <span><a href="${getLoginUrl(pageAttributes.url)}" target="_top">Sign in</a> to add your reaction.</span>
       </div>
     </div>
   </details>`;
