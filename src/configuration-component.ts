@@ -140,8 +140,14 @@ export class ConfigurationComponent {
         Choose if you want the order of comments to be reversed and put
         the input form on top.
       </p>
-      <input type="checkbox" id="reverse-order" />
-      Reverse order, input form on top
+      <p>
+        Related parameters ("reverse-order" and "input-position-top") accept
+        both boolean primitives and strings (both true and "true" are valid).
+      </p>
+      <label>
+        <input type="checkbox" id="reverse-order" />
+        Reverse order, input form on top
+      </label>
 
       <h3 id="heading-enable">Enable Utterances</h3>
 
@@ -201,9 +207,9 @@ export class ConfigurationComponent {
     }
     let orderConfig : string = '';
     if (this.reverseOrder.checked) {
-      console.log(this.reverseOrder);
-      orderConfig = this.makeConfigScriptFlag('reverse-order', true) + '\n' +
-                    this.makeConfigScriptFlag('input-position-top', true) + '\n';
+      // using strings to encode booleans - because `deparam` uses only strings
+      orderConfig = this.makeConfigScriptAttribute('reverse-order', 'true') + '\n' +
+                    this.makeConfigScriptAttribute('input-position-top', 'true') + '\n';
     }
     this.script.innerHTML = this.makeConfigScript(
       this.makeConfigScriptAttribute('repo', this.repo.value === '' ? '[ENTER REPO HERE]' : this.repo.value) + '\n' +
@@ -217,11 +223,6 @@ export class ConfigurationComponent {
   private makeConfigScriptAttribute(name: string, value: string) {
     // tslint:disable-next-line:max-line-length
     return `<span class="pl-s1">        <span class="pl-e">${name}</span>=<span class="pl-s"><span class="pl-pds">"</span>${value}<span class="pl-pds">"</span></span></span>`;
-  }
-
-  private makeConfigScriptFlag(name: string, value: boolean) {
-    // tslint:disable-next-line:max-line-length
-    return `<span class="pl-s1">        <span class="pl-e">${name}</span>=<span class="pl-s">${value}</span></span>`;
   }
 
   private makeConfigScript(attrs: string) {
