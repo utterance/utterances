@@ -47,6 +47,7 @@ function readPageAttributes() {
   }
 
   let inputPositionTop : bool = params['input-position-top'] == "true";
+  let reverseOrder : bool = params['reverse-order'] == "true";
 
   return {
     owner: matches[1],
@@ -59,7 +60,8 @@ function readPageAttributes() {
     description: params.description,
     label: params.label,
     theme: params.theme || 'github-light',
-    inputPositionTop: inputPositionTop
+    inputPositionTop: inputPositionTop,
+    reverseOrder: reverseOrder
   };
 }
 

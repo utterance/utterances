@@ -1,6 +1,8 @@
 import { User, Issue, IssueComment } from './github';
 import { CommentComponent } from './comment-component';
 import { scheduleMeasure } from './measure';
+import { pageAttributes as page } from './page-attributes';
+
 
 export class TimelineComponent {
   public readonly element: HTMLElement;
@@ -55,7 +57,13 @@ export class TimelineComponent {
       comment,
       this.user ? this.user.login : null);
 
-    const index = this.timeline.findIndex(x => x.comment.id >= comment.id);
+    if (page.reverseOrder) {
+      const indexSearchCondition = (x => x.comment.id <= comment.id);
+    } else {
+      const indexSearchCondition = (x => x.comment.id >= comment.id);
+    }
+
+    const index = this.timeline.findIndex(indexSearchCondition);
     if (index === -1) {
       this.timeline.push(component);
       this.element.insertBefore(component.element, this.marker);
