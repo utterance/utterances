@@ -46,6 +46,8 @@ function readPageAttributes() {
     token.value = params.token;
   }
 
+  let inputPositionTop : bool = params['input-position-top'] == "true";
+
   return {
     owner: matches[1],
     repo: matches[2],
@@ -56,7 +58,8 @@ function readPageAttributes() {
     title: params.title,
     description: params.description,
     label: params.label,
-    theme: params.theme || 'github-light'
+    theme: params.theme || 'github-light',
+    inputPositionTop: inputPositionTop
   };
 }
 
