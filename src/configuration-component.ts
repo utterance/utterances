@@ -135,6 +135,14 @@ export class ConfigurationComponent {
         <option value="photon-dark">Photon Dark</option>
       </select>
 
+      <h3 id="heading-reverse-order">Reverse Order</h3>
+      <p>
+        Choose if you want the order of comments to be reversed and put
+        the input form on top.
+      </p>
+      <input type="checkbox" id="reverse-order" />
+      Reverse order, input form on top
+
       <h3 id="heading-enable">Enable Utterances</h3>
 
       <p>Add the following script tag to your blog's template. Position it where you want the
@@ -156,6 +164,8 @@ export class ConfigurationComponent {
     this.label = this.element.querySelector('#label') as HTMLInputElement;
 
     this.theme = this.element.querySelector('#theme') as HTMLSelectElement;
+
+    this.reverseOrder = this.element.querySelector('#reverse-order')  as HTMLInputElement;
 
     const themeStylesheet = document.getElementById('theme-stylesheet') as HTMLLinkElement;
     this.theme.addEventListener('change', () => {
@@ -189,17 +199,29 @@ export class ConfigurationComponent {
     } else {
       mappingAttr = this.makeConfigScriptAttribute('issue-term', mapping.value);
     }
+    let orderConfig : string = '';
+    if (this.reverseOrder.checked) {
+      console.log(this.reverseOrder);
+      orderConfig = this.makeConfigScriptFlag('reverse-order', true) + '\n' +
+                    this.makeConfigScriptFlag('input-position-top', true) + '\n';
+    }
     this.script.innerHTML = this.makeConfigScript(
       this.makeConfigScriptAttribute('repo', this.repo.value === '' ? '[ENTER REPO HERE]' : this.repo.value) + '\n' +
       mappingAttr + '\n' +
       (this.label.value ? this.makeConfigScriptAttribute('label', this.label.value) + '\n' : '') +
       this.makeConfigScriptAttribute('theme', this.theme.value) + '\n' +
+      orderConfig +
       this.makeConfigScriptAttribute('crossorigin', 'anonymous'));
   }
 
   private makeConfigScriptAttribute(name: string, value: string) {
     // tslint:disable-next-line:max-line-length
     return `<span class="pl-s1">        <span class="pl-e">${name}</span>=<span class="pl-s"><span class="pl-pds">"</span>${value}<span class="pl-pds">"</span></span></span>`;
+  }
+
+  private makeConfigScriptFlag(name: string, value: boolean) {
+    // tslint:disable-next-line:max-line-length
+    return `<span class="pl-s1">        <span class="pl-e">${name}</span>=<span class="pl-s">${value}</span></span>`;
   }
 
   private makeConfigScript(attrs: string) {
