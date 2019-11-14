@@ -62,6 +62,7 @@
 * [nofwl](https://nofwl.com)
 * [The Programmer's Chest](https://elbauldelprogramador.com/en/)
 * [code004's Blog](https://code004accepted.github.io)
+* [Eick'blog](https://eick.blog/)
 * [Stupid Machine](https://niemannross.com/link/stupidmachine)
 * [Forest Hex](https://foresthex.com)
 * [Software Testing With Fun!](https://sathnaga86.com/)
