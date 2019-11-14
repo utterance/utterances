@@ -62,4 +62,5 @@
 * [nofwl](https://nofwl.com)
 * [The Programmer's Chest](https://elbauldelprogramador.com/en/)
 * [code004's Blog](https://code004accepted.github.io)
+* [Maëlle Salmon's R blog](https://masalmon.eu/)
 * [CoTutorial](https://cotutorial.github.io)
