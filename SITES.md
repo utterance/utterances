@@ -63,3 +63,6 @@
 * [The Programmer's Chest](https://elbauldelprogramador.com/en/)
 * [code004's Blog](https://code004accepted.github.io)
 * [Forest Hex](https://foresthex.com)
+* [Software Testing With Fun!](https://sathnaga86.com/)
+* [Maëlle Salmon's R blog](https://masalmon.eu/)
+* [CoTutorial](https://cotutorial.github.io)
