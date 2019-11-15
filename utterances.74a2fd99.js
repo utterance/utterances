@@ -354,7 +354,6 @@ function loadToken() {
           url = _utterancesApi.UTTERANCES_API + "/token";
           return [4, fetch(url, {
             method: 'POST',
-            mode: 'cors',
             credentials: 'include'
           })];
 
@@ -2142,7 +2141,7 @@ function bootstrap() {
                     _a.sent();
 
                     if (!!issue) return [3, 3];
-                    return [4, (0, _github.createIssue)(_pageAttributes.pageAttributes.issueTerm, _pageAttributes.pageAttributes.url, _pageAttributes.pageAttributes.title, _pageAttributes.pageAttributes.description, _pageAttributes.pageAttributes.label)];
+                    return [4, (0, _github.createIssue)(_pageAttributes.pageAttributes.issueTerm, _pageAttributes.pageAttributes.url, _pageAttributes.pageAttributes.title, _pageAttributes.pageAttributes.description || '', _pageAttributes.pageAttributes.label)];
 
                   case 2:
                     issue = _a.sent();
