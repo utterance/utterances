@@ -61,7 +61,7 @@ async function bootstrap() {
         page.issueTerm as string,
         page.url,
         page.title,
-        page.description,
+        page.description || '',
         page.label
       );
       timeline.setIssue(issue);
