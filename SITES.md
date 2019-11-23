@@ -73,3 +73,4 @@
 * [Maëlle Salmon's R blog](https://masalmon.eu/)
 * [CoTutorial](https://cotutorial.github.io)
 * [Synesthesia](https://www.synesthesia.co.uk)
+* [blog.geunho.dev](https://blog.geunho.dev/)
