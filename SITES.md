@@ -76,3 +76,4 @@
 * [blog.geunho.dev](https://blog.geunho.dev/)
 * [PubliusLogic](https://publiuslogic.com/blog)
 * [EasiestSoft.com](https://easiestsoft.com)
+* [at7h's blog](https://at7h.com)
