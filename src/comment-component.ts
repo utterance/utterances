@@ -19,7 +19,8 @@ export class CommentComponent {
 
   constructor(
     public comment: IssueComment,
-    private currentUser: string | null
+    private currentUser: string | null,
+    locked: boolean
   ) {
     const { user, html_url, created_at, body_html, author_association, reactions } = comment;
     this.element = document.createElement('article');
@@ -29,6 +30,17 @@ export class CommentComponent {
     }
     const association = displayAssociations[author_association];
     const reactionCount = reactionTypes.reduce((sum, id) => sum + reactions[id], 0);
+    let headerReactionsMenu = '';
+    let footerReactionsMenu = '';
+    if (!locked) {
+      if (currentUser) {
+        headerReactionsMenu = getReactionsMenuHtml(comment.reactions.url, 'right');
+        footerReactionsMenu = getReactionsMenuHtml(comment.reactions.url, 'center');
+      } else {
+        headerReactionsMenu = getSignInToReactMenuHtml('right');
+        footerReactionsMenu = getSignInToReactMenuHtml('center');
+      }
+    }
     this.element.innerHTML = `
       <a class="avatar" href="${user.html_url}" target="_blank" tabindex="-1">
         <img alt="@${user.login}" height="44" width="44"
@@ -43,7 +55,7 @@ export class CommentComponent {
           </span>
           <div class="comment-actions">
             ${association ? `<span class="author-association-badge">${association}</span>` : ''}
-            ${currentUser ? getReactionsMenuHtml(comment.reactions.url, 'right') : getSignInToReactMenuHtml('right')}
+            ${headerReactionsMenu}
           </div>
         </header>
         <div class="markdown-body markdown-body-scrollable">
@@ -51,9 +63,9 @@ export class CommentComponent {
         </div>
         <div class="comment-footer" reaction-count="${reactionCount}" reaction-url="${reactions.url}">
           <form class="reaction-list BtnGroup" action="javascript:">
-            ${reactionTypes.map(id => getReactionHtml(reactions.url, id, !currentUser, reactions[id])).join('')}
+            ${reactionTypes.map(id => getReactionHtml(reactions.url, id, !currentUser || locked, reactions[id])).join('')}
           </form>
-          ${currentUser ? getReactionsMenuHtml(comment.reactions.url, 'center') : getSignInToReactMenuHtml('center')}
+          ${footerReactionsMenu}
         </div>
       </div>`;
 
