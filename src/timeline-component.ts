@@ -53,7 +53,8 @@ export class TimelineComponent {
   public insertComment(comment: IssueComment, incrementCount: boolean) {
     const component = new CommentComponent(
       comment,
-      this.user ? this.user.login : null);
+      this.user ? this.user.login : null,
+      this.issue!.locked);
 
     const index = this.timeline.findIndex(x => x.comment.id >= comment.id);
     if (index === -1) {
