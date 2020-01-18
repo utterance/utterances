@@ -354,6 +354,7 @@ function loadToken() {
           url = _utterancesApi.UTTERANCES_API + "/token";
           return [4, fetch(url, {
             method: 'POST',
+            mode: 'cors',
             credentials: 'include'
           })];
 
@@ -1339,7 +1340,7 @@ var displayAssociations = {
 };
 
 var CommentComponent = function () {
-  function CommentComponent(comment, currentUser) {
+  function CommentComponent(comment, currentUser, locked) {
     this.comment = comment;
     this.currentUser = currentUser;
     var user = comment.user,
@@ -1361,9 +1362,22 @@ var CommentComponent = function () {
       return sum + reactions[id];
     }, 0);
 
-    this.element.innerHTML = "\n      <a class=\"avatar\" href=\"" + user.html_url + "\" target=\"_blank\" tabindex=\"-1\">\n        <img alt=\"@" + user.login + "\" height=\"44\" width=\"44\"\n              src=\"" + user.avatar_url + avatarArgs + "\">\n      </a>\n      <div class=\"comment\">\n        <header class=\"comment-header\">\n          <span class=\"comment-meta\">\n            <a class=\"text-link\" href=\"" + user.html_url + "\" target=\"_blank\"><strong>" + user.login + "</strong></a>\n            commented\n            <a class=\"text-link\" href=\"" + html_url + "\" target=\"_blank\">" + (0, _timeAgo.timeAgo)(Date.now(), new Date(created_at)) + "</a>\n          </span>\n          <div class=\"comment-actions\">\n            " + (association ? "<span class=\"author-association-badge\">" + association + "</span>" : '') + "\n            " + (currentUser ? (0, _reactions.getReactionsMenuHtml)(comment.reactions.url, 'right') : (0, _reactions.getSignInToReactMenuHtml)('right')) + "\n          </div>\n        </header>\n        <div class=\"markdown-body markdown-body-scrollable\">\n          " + body_html + "\n        </div>\n        <div class=\"comment-footer\" reaction-count=\"" + reactionCount + "\" reaction-url=\"" + reactions.url + "\">\n          <form class=\"reaction-list BtnGroup\" action=\"javascript:\">\n            " + _github.reactionTypes.map(function (id) {
-      return (0, _reactions.getReactionHtml)(reactions.url, id, !currentUser, reactions[id]);
-    }).join('') + "\n          </form>\n          " + (currentUser ? (0, _reactions.getReactionsMenuHtml)(comment.reactions.url, 'center') : (0, _reactions.getSignInToReactMenuHtml)('center')) + "\n        </div>\n      </div>";
+    var headerReactionsMenu = '';
+    var footerReactionsMenu = '';
+
+    if (!locked) {
+      if (currentUser) {
+        headerReactionsMenu = (0, _reactions.getReactionsMenuHtml)(comment.reactions.url, 'right');
+        footerReactionsMenu = (0, _reactions.getReactionsMenuHtml)(comment.reactions.url, 'center');
+      } else {
+        headerReactionsMenu = (0, _reactions.getSignInToReactMenuHtml)('right');
+        footerReactionsMenu = (0, _reactions.getSignInToReactMenuHtml)('center');
+      }
+    }
+
+    this.element.innerHTML = "\n      <a class=\"avatar\" href=\"" + user.html_url + "\" target=\"_blank\" tabindex=\"-1\">\n        <img alt=\"@" + user.login + "\" height=\"44\" width=\"44\"\n              src=\"" + user.avatar_url + avatarArgs + "\">\n      </a>\n      <div class=\"comment\">\n        <header class=\"comment-header\">\n          <span class=\"comment-meta\">\n            <a class=\"text-link\" href=\"" + user.html_url + "\" target=\"_blank\"><strong>" + user.login + "</strong></a>\n            commented\n            <a class=\"text-link\" href=\"" + html_url + "\" target=\"_blank\">" + (0, _timeAgo.timeAgo)(Date.now(), new Date(created_at)) + "</a>\n          </span>\n          <div class=\"comment-actions\">\n            " + (association ? "<span class=\"author-association-badge\">" + association + "</span>" : '') + "\n            " + headerReactionsMenu + "\n          </div>\n        </header>\n        <div class=\"markdown-body markdown-body-scrollable\">\n          " + body_html + "\n        </div>\n        <div class=\"comment-footer\" reaction-count=\"" + reactionCount + "\" reaction-url=\"" + reactions.url + "\">\n          <form class=\"reaction-list BtnGroup\" action=\"javascript:\">\n            " + _github.reactionTypes.map(function (id) {
+      return (0, _reactions.getReactionHtml)(reactions.url, id, !currentUser || locked, reactions[id]);
+    }).join('') + "\n          </form>\n          " + footerReactionsMenu + "\n        </div>\n      </div>";
     var markdownBody = this.element.querySelector('.markdown-body');
     var emailToggle = markdownBody.querySelector('.email-hidden-toggle a');
 
@@ -1462,7 +1476,7 @@ var TimelineComponent = function () {
   };
 
   TimelineComponent.prototype.insertComment = function (comment, incrementCount) {
-    var component = new _commentComponent.CommentComponent(comment, this.user ? this.user.login : null);
+    var component = new _commentComponent.CommentComponent(comment, this.user ? this.user.login : null, this.issue.locked);
     var index = this.timeline.findIndex(function (x) {
       return x.comment.id >= comment.id;
     });
