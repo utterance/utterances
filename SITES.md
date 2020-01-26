@@ -81,3 +81,4 @@
 * [ChristianFei.com](https://christianfei.com)
 * [Alain.xyz Blog](https://alain.xyz/blog)
 * [davidosomething.com](https://www.davidosomething.com)
+* [lemondeestunecamera.fr](https://www.lemondeestunecamera.fr)
