@@ -81,3 +81,4 @@
 * [ChristianFei.com](https://christianfei.com)
 * [Alain.xyz Blog](https://alain.xyz/blog)
 * [davidosomething.com](https://www.davidosomething.com)
+* [Salar Rahmanian Blog](https://www.softinio.com/)
