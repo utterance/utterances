@@ -85,4 +85,5 @@
 * [Salar Rahmanian Blog](https://www.softinio.com/)
 * [lemondeestunecamera.fr](https://www.lemondeestunecamera.fr)
 * [prove blog](https://prove.netlify.com/)
+* [pragmatic-coder.net](https://pragmatic-coder.net)
 * [Tanel Poder's performance & troubleshooting blog](https://tanelpoder.com)
