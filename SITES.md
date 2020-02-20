@@ -89,3 +89,5 @@
 * [Tanel Poder's performance & troubleshooting blog](https://tanelpoder.com)
 * [rgoswami.me](https://rgoswami.me)
 * [Ceso Adventures](https://ceso.github.io/)
+* [Mr Yao 的博客](https://yaojusheng.github.io/)
+* [Mr Yao 的博客](https://yaojusheng.gitee.io/)
