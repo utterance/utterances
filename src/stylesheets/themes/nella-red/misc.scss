@@ -1,0 +1,33 @@
+.timeline summary:hover {
+    color: $red-light;
+}
+
+.timeline a {
+    text-decoration: none;
+}
+
+.markdown-body a {
+    color: $red-light;
+}
+
+.timeline-comment button {
+    font-size: 14px;
+}
+
+.timeline-comment textarea {
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.comment-footer {
+    border: 1px solid $gray!important;
+    line-height: 25px;
+}
+
+.timeline-header em {
+    display: none;
+}
+
+.timeline-header .text-link {
+    font-style: italic;
+}

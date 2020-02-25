@@ -1,0 +1,85 @@
+.btn-primary {
+  display: inline-block;
+  padding: 5px 8px;
+  background: $red-normal;
+  border-bottom: 4px solid $red-dark;
+  border-right: 4px solid $red-dark;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  font-weight: 600;
+  font-size: 16px;
+  position: relative;
+  height: 34px;
+  line-height: 20px;
+  outline-width: 0px;
+  vertical-align: middle;
+  color: $white;
+}
+
+.btn-primary:hover {
+  display: inline-block;
+  padding: 5px 8px;
+  background: $red-light;
+  border-bottom: 4px solid $red-dark;
+  border-right: 4px solid $red-dark;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  font-weight: 600;
+  font-size: 16px;
+  position: relative;
+  height: 34px;
+  line-height: 20px;
+  outline-width: 0px;
+  vertical-align: middle;
+  color: $white;
+}
+
+.btn-primary:active {
+  display: inline-block;
+  padding: 5px 8px;
+  background: $red-dark2;
+  border-bottom: 4px solid $red-dark;
+  border-right: 4px solid $red-dark;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  font-weight: 600;
+  font-size: 16px;
+  position: relative;
+  height: 34px;
+  line-height: 20px;
+  outline-width: 0px;
+  vertical-align: middle;
+  color: $white;
+}
+
+.btn-primary:disabled {
+  background: $red-normal;
+  opacity: 0.4;
+}
+
+.btn-outline {
+    color: $gray-dark;
+    background: none;
+    line-height: 24px;
+    vertical-align: middle;
+    border-width: 0px;
+}
+
+.btn-outline:hover {
+    color: $white;
+    background-color: $red-normal;
+    transform: none;
+    border-width: 0px;
+}
+
+.btn-outline:disabled {
+    color: $gray-dark;
+    background: none;
+    border-width: 0px;
+}
