@@ -89,3 +89,4 @@
 * [Tanel Poder's performance & troubleshooting blog](https://tanelpoder.com)
 * [rgoswami.me](https://rgoswami.me)
 * [Ceso Adventures](https://ceso.github.io/)
+* [Efe Öge's Blog](https://efe.me)
