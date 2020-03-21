@@ -1,0 +1,25 @@
+$orange: rgb(255,168,106);
+$orange-200: #ffd1ac;
+$gray-000: #181818;
+$gray-100: #2B303B;/*comment header bg*/
+$gray-200: #24292e;
+$gray-300: #4e4c4b;
+$gray-400: #586069;
+$gray-600: #bbbbbb;
+$gray-700: #959da5;
+$gray-900: #24292e;
+$bg-white: #222129; /*commnet bg*/
+$bg-gray: $gray-100; /*source code bg*/
+$bg-gray-light: darken($bg-gray, 5%);
+$border-gray: $gray-300; /*comment*/
+$border-gray-dark: $border-gray;
+$black-fade-15: rgba(#fff, 0.15);
+$black-fade-30: rgba(#fff, 0.3);
+$text-gray: #c9c9c9;
+$text-gray-dark: #f7f7f7;
+$text-blue: $orange;
+$bg-blue-light: #212021;
+$bg-page: #222129;
+
+$highlight: $orange;
+$line: #6f6e6e;
