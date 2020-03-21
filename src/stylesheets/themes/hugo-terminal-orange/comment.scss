@@ -1,0 +1,11 @@
+@import "./variables";
+
+.form-select {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAUAgMAAAD5DFXkAAAACVBMVEXMzMzMzMzMzMzgWE1NAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfiCwMFBDi4mDGnAAAAR0lEQVQI123JIRUAIQAE0eUEgghEIAV5SEEEIiAQMCnZh74RX+xKr6+bNE3ZBjxBV4KpAlt/NTjKsBRhKED1ePzkZeIwoeoCtokT7bjAVYwAAAAASUVORK5CYII=) no-repeat right 8px center;
+  background-size: 8px 10px;
+}
+
+.markdown-body kbd {
+  background-color: transparent;
+  color: $text-gray-dark;
+}

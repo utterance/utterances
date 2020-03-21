@@ -133,6 +133,7 @@ export class ConfigurationComponent {
         <option value="icy-dark">Icy Dark</option>
         <option value="dark-blue">Dark Blue</option>
         <option value="photon-dark">Photon Dark</option>
+        <option value="hugo-terminal-orange">Hugo Terminal Orange</option>
       </select>
 
       <h3 id="heading-enable">Enable Utterances</h3>
