@@ -89,6 +89,6 @@
 * [Tanel Poder's performance & troubleshooting blog](https://tanelpoder.com)
 * [rgoswami.me](https://rgoswami.me)
 * [Ceso Adventures](https://ceso.github.io/)
-* [ThePeachTimes](https://thepeachtimes.js.org/)
 * [Efe Öge's Blog](https://efe.me)
 * [garrigos.cat Blog](https://garrigos.cat)
+* [ThePeachTimes](https://thepeachtimes.js.org/)
