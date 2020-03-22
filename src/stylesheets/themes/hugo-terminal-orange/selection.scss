@@ -1,7 +1,6 @@
 @import "./variables";
 
 @mixin selection($element) {
-  #{$element}::-moz-selection { @content; }
   #{$element}::selection { @content; }
 }
 
