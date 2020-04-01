@@ -92,3 +92,4 @@
 * [Efe Öge's Blog](https://efe.me)
 * [garrigos.cat Blog](https://garrigos.cat)
 * [ThePeachTimes](https://thepeachtimes.js.org/)
+* [执手对影成双](https://zsdycs.cn/)
