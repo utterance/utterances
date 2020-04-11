@@ -92,3 +92,4 @@
 * [Efe Öge's Blog](https://efe.me)
 * [garrigos.cat Blog](https://garrigos.cat)
 * [ThePeachTimes](https://thepeachtimes.js.org/)
+* [From Stata to R](https://from-stata-to-r.netlify.com/)
