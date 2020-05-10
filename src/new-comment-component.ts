@@ -39,7 +39,7 @@ export class NewCommentComponent {
       </a>
       <form class="comment" accept-charset="UTF-8" action="javascript:">
         <header class="new-comment-header tabnav">
-          <nav class="tabnav-tabs" role="tablist">
+          <div class="tabnav-tabs" role="tablist">
             <button type="button" class="tabnav-tab tab-write"
                     role="tab" aria-selected="true">
               Write
@@ -48,7 +48,7 @@ export class NewCommentComponent {
                     role="tab">
               Preview
             </button>
-          </nav>
+          </div>
         </header>
         <div class="comment-body">
           <textarea class="form-control" placeholder="Leave a comment" aria-label="comment"></textarea>

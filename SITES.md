@@ -92,4 +92,5 @@
 * [Efe Öge's Blog](https://efe.me)
 * [garrigos.cat Blog](https://garrigos.cat)
 * [ThePeachTimes](https://thepeachtimes.js.org/)
+* [LordAmit's Blog](https://lordamit.github.io/)
 * [weien.io](https://weien.io/)
