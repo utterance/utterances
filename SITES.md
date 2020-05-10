@@ -98,3 +98,4 @@
 * [ashish.one](https://ashish.one)
 * [Guanzhou's Page](https://josehu.com)
 * [DC Blog](https://dcblog.dev)
+* [From Stata to R](https://from-stata-to-r.netlify.com/)
