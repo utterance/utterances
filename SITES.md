@@ -1,6 +1,5 @@
 # Sites using Utterances
 
-* [ashish.one](https://ashish.one)
 * [danyow.net](https://danyow.net)
 * [os.phil-opp.com](https://os.phil-opp.com/second-edition)
 * [winterland.me](http://winterland.me/)
@@ -93,3 +92,4 @@
 * [Efe Öge's Blog](https://efe.me)
 * [garrigos.cat Blog](https://garrigos.cat)
 * [ThePeachTimes](https://thepeachtimes.js.org/)
+* [ashish.one](https://ashish.one)
