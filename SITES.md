@@ -102,3 +102,4 @@
 * [François LASSERRE's Blog (ChoiZ's Blog)](https://www.choiz.fr)
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
+* [IcePlugins](https://iceplugins.xyz)
