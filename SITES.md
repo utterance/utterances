@@ -101,3 +101,4 @@
 * [From Stata to R](https://from-stata-to-r.netlify.com/)
 * [François LASSERRE's Blog (ChoiZ's Blog)](https://www.choiz.fr)
 * [Smoothlog](https://smoothlog.com/)
+* [shiveenp.com](https://shiveenp.com)
