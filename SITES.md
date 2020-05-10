@@ -96,3 +96,4 @@
 * [weien.io](https://weien.io/)
 * [刘园-Colynn's Blog](https://colynn.github.io)
 * [ashish.one](https://ashish.one)
+* [Guanzhou's Page](https://josehu.com)
