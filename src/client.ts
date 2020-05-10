@@ -35,6 +35,11 @@ attrs.pathname = location.pathname.length < 2 ? 'index' : location.pathname.subs
 attrs.title = document.title;
 const descriptionMeta = document.querySelector(`meta[name='description']`) as HTMLMetaElement;
 attrs.description = descriptionMeta ? descriptionMeta.content : '';
+// truncate descriptions that would trigger 414 "URI Too Long"
+const len = encodeURIComponent(attrs.description).length;
+if (len > 1000) {
+  attrs.description = attrs.description.substr(0, Math.floor(attrs.description.length * 1000 / len));
+}
 const ogtitleMeta = document.querySelector(`meta[property='og:title'],meta[name='og:title']`) as HTMLMetaElement;
 attrs['og:title'] = ogtitleMeta ? ogtitleMeta.content : '';
 attrs.token = token;
