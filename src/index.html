@@ -68,20 +68,20 @@
 
     <if condition="NODE_ENV === 'production'">
       <script src="https://utteranc.es/client.js"
-              repo="utterance/utterances"
-              issue-term="homepage"
+              data-repo="utterance/utterances"
+              data-issue-term="homepage"
+              data-theme="github-light"
               crossorigin="anonymous"
-              theme="github-light"
               async>
       </script>
     </if>
     <else>
       <script src="http://localhost:4000/client.js"
-              repo="jdanyow/utterances-demo"
-              issue-term="pathname"
-              label="💬 comment"
+              data-repo="jdanyow/utterances-demo"
+              data-issue-term="pathname"
+              data-label="💬 comment"
+              data-theme="github-light"
               crossorigin="anonymous"
-              theme="github-light"
               async>
       </script>
     </else>
