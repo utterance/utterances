@@ -29,6 +29,9 @@ function loadIssue(): Promise<Issue | null> {
 }
 
 async function bootstrap() {
+  const main = document.createElement('main');
+  document.body.appendChild(main);
+
   await loadToken();
   // tslint:disable-next-line:prefer-const
   let [issue, user] = await Promise.all([
@@ -40,7 +43,7 @@ async function bootstrap() {
   startMeasuring(page.origin);
 
   const timeline = new TimelineComponent(user, issue);
-  document.body.appendChild(timeline.element);
+  main.appendChild(timeline.element);
 
   if (issue && issue.comments > 0) {
     renderComments(issue, timeline);
