@@ -45,13 +45,14 @@ async function bootstrap() {
 
   const timeline = new TimelineComponent(user, issue);
   const createIssue = async () => {
-    issue = await createGitHubIssue(
+    const newIssue = await createGitHubIssue(
       page.issueTerm as string,
       page.url,
       page.title,
       page.description || '',
       page.label
     )
+    issue = await loadIssueByNumber(newIssue.number)
     timeline.setIssue(issue);
     postReactionComponent.setIssue(issue);
   }
@@ -74,15 +75,7 @@ async function bootstrap() {
   const submit = async (markdown: string) => {
     await assertOrigin();
     if (!issue) {
-      issue = await createGitHubIssue(
-        page.issueTerm as string,
-        page.url,
-        page.title,
-        page.description || '',
-        page.label
-      );
-      timeline.setIssue(issue);
-      postReactionComponent.setIssue(issue)
+      await createIssue();
     }
     const comment = await postComment(issue.number, markdown);
     timeline.insertComment(comment, true);

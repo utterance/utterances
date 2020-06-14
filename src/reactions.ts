@@ -1,4 +1,4 @@
-import { toggleReaction, ReactionID, reactionTypes } from './github';
+import { ReactionID, Reactions, reactionTypes, toggleReaction } from './github';
 import { getLoginUrl } from './oauth';
 import { pageAttributes } from './page-attributes';
 import { scheduleMeasure } from './measure';
@@ -24,6 +24,20 @@ export const reactionEmoji: Record<ReactionID, string> = {
   'rocket': '🚀',
   'eyes': '👀'
 };
+
+export class EmptyReactions implements Reactions {
+  '+1' = 0;
+  '-1' = 0;
+  confused = 0;
+  eyes = 0;
+  heart = 0;
+  hooray = 0;
+  laugh = 0;
+  rocket = 0;
+  // tslint:disable-next-line:variable-name
+  total_count = 0;
+  url = '';
+}
 
 export function getReactionHtml(url: string, reaction: ReactionID, disabled: boolean, count: number) {
   return `

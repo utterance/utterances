@@ -1,19 +1,5 @@
 import { Issue, ReactionID, Reactions, reactionTypes, toggleReaction } from './github';
-import { reactionEmoji, reactionNames } from './reactions';
-
-class EmptyReactions implements Reactions {
-  '+1' = 0;
-  '-1' = 0;
-  confused = 0;
-  eyes = 0;
-  heart = 0;
-  hooray = 0;
-  laugh = 0;
-  rocket = 0;
-  // tslint:disable-next-line:variable-name
-  total_count = 0;
-  url = '';
-}
+import { EmptyReactions, reactionEmoji, reactionNames } from './reactions';
 
 export class PostReactionComponent {
   public readonly element: HTMLElement;
@@ -39,7 +25,6 @@ export class PostReactionComponent {
     this.reactionListContainer = this.element.querySelector('.post-reaction-list') as HTMLFormElement;
     this.setIssue(this.issue)
     this.render();
-    this.setupSubmitHandler();
   }
 
   public setIssue(issue: Issue | null) {
@@ -111,5 +96,6 @@ export class PostReactionComponent {
     }
     this.countAnchor.textContent = `${this.reactionsCount} Reaction${this.reactionsCount === 1 ? '' : 's'}`;
     this.reactionListContainer.innerHTML = this.getSubmitButtons();
+    this.setupSubmitHandler();
   }
 }
