@@ -51,14 +51,11 @@ export class PostReactionComponent {
       const url = button.formAction;
       const id = button.value as ReactionID;
       const {deleted} = await toggleReaction(url, id);
-      const selector = `button[post-reaction][formaction="${url}"][value="${id}"],[reaction-count][reaction-url="${url}"]`;
-      const elements = Array.from(this.element.querySelectorAll(selector));
       const delta = deleted ? -1 : 1;
-      for (const element of elements) {
-        element.setAttribute(
-          'reaction-count',
-          (parseInt(element.getAttribute('reaction-count')!, 10) + delta).toString());
-      }
+      this.reactions[id] += delta;
+      this.reactions.total_count += delta;
+      this.issue!.reactions = this.reactions;
+      this.setIssue(this.issue);
       button.disabled = false;
     }
 
