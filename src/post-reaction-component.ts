@@ -46,11 +46,17 @@ export class PostReactionComponent {
   }
 
   private setupSubmitHandler() {
+    const buttons = this.reactionListContainer.querySelectorAll('button');
+
+    function toggleButtons(disabled: boolean) {
+      buttons.forEach(b => b.disabled = disabled);
+    }
+
     const handler = async (event: Event) => {
       event.preventDefault();
 
       const button = event.target as HTMLButtonElement;
-      button.disabled = true;
+      toggleButtons(true);
       const id = button.value as ReactionID;
       const issueExists = !!this.issue;
 
@@ -74,19 +80,17 @@ export class PostReactionComponent {
       this.reactions[id] += delta;
       this.reactions.total_count += delta;
       this.issue!.reactions = this.reactions;
-      button.disabled = false;
+      toggleButtons(false);
       this.setIssue(this.issue);
     }
 
-    const buttons = this.element.querySelectorAll('button[post-reaction]');
-    buttons.forEach(button => button.addEventListener('click', handler, true))
+    buttons.forEach(b => b.addEventListener('click', handler, true))
   }
 
   private getSubmitButtons(): string {
     function buttonFor(url: string, reaction: ReactionID, disabled: boolean, count: number): string {
       return `
         <button
-          post-reaction
           type="submit"
           action="javascript:"
           formaction="${url}"
