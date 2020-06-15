@@ -1,10 +1,12 @@
 import {
   createIssue as createGitHubIssue,
-  Issue, loadIssueByNumber,
+  Issue,
+  loadIssueByNumber,
   ReactionID,
   Reactions,
   reactionTypes,
-  toggleReaction
+  toggleReaction,
+  User
 } from './github';
 import { EmptyReactions, reactionEmoji, reactionNames } from './reactions';
 import { pageAttributes as page } from './page-attributes';
@@ -18,6 +20,7 @@ export class PostReactionComponent {
   private issueURL: string = '';
 
   constructor(
+    private user: User | null,
     private issue: Issue | null,
     private createIssueCallback: (issue: Issue) => Promise<null>
   ) {
@@ -103,8 +106,9 @@ export class PostReactionComponent {
         </button>`;
     }
 
+    const issueLocked = this.issue ? this.issue.locked : false;
     return reactionTypes
-      .map(id => buttonFor(this.reactions.url, id, false, this.reactions[id]))
+      .map(id => buttonFor(this.reactions.url, id, !this.user || issueLocked, this.reactions[id]))
       .join('')
   }
 

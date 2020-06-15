@@ -48,7 +48,7 @@ async function bootstrap() {
     issue = newIssue;
     timeline.setIssue(issue);
   }
-  const postReactionComponent = new PostReactionComponent(issue, createIssueCallback);
+  const postReactionComponent = new PostReactionComponent(user, issue, createIssueCallback);
   main.appendChild(postReactionComponent.element);
   main.appendChild(timeline.element);
 
