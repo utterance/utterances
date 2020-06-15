@@ -44,19 +44,11 @@ async function bootstrap() {
   startMeasuring(page.origin);
 
   const timeline = new TimelineComponent(user, issue);
-  const createIssue = async () => {
-    const newIssue = await createGitHubIssue(
-      page.issueTerm as string,
-      page.url,
-      page.title,
-      page.description || '',
-      page.label
-    )
-    issue = await loadIssueByNumber(newIssue.number)
+  const createIssueCallback = async (newIssue: Issue) => {
+    issue = newIssue;
     timeline.setIssue(issue);
-    postReactionComponent.setIssue(issue);
   }
-  const postReactionComponent = new PostReactionComponent(issue, createIssue);
+  const postReactionComponent = new PostReactionComponent(issue, createIssueCallback);
   main.appendChild(postReactionComponent.element);
   main.appendChild(timeline.element);
 
@@ -75,7 +67,16 @@ async function bootstrap() {
   const submit = async (markdown: string) => {
     await assertOrigin();
     if (!issue) {
-      await createIssue();
+      const newIssue = await createGitHubIssue(
+        page.issueTerm as string,
+        page.url,
+        page.title,
+        page.description || '',
+        page.label
+      );
+      issue = await loadIssueByNumber(newIssue.number);
+      timeline.setIssue(issue);
+      postReactionComponent.setIssue(issue);
     }
     const comment = await postComment(issue.number, markdown);
     timeline.insertComment(comment, true);

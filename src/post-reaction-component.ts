@@ -1,5 +1,13 @@
-import { Issue, ReactionID, Reactions, reactionTypes, toggleReaction } from './github';
+import {
+  createIssue as createGitHubIssue,
+  Issue, loadIssueByNumber,
+  ReactionID,
+  Reactions,
+  reactionTypes,
+  toggleReaction
+} from './github';
 import { EmptyReactions, reactionEmoji, reactionNames } from './reactions';
+import { pageAttributes as page } from './page-attributes';
 
 export class PostReactionComponent {
   public readonly element: HTMLElement;
@@ -11,7 +19,7 @@ export class PostReactionComponent {
 
   constructor(
     private issue: Issue | null,
-    private createIssue: () => Promise<null>
+    private createIssueCallback: (issue: Issue) => Promise<null>
   ) {
     this.element = document.createElement('section');
     this.element.classList.add('post-reactions');
@@ -41,22 +49,33 @@ export class PostReactionComponent {
     const handler = async (event: Event) => {
       event.preventDefault();
 
-      const issueExists = !!this.issue;
-      if (!issueExists) {
-        await this.createIssue();
-      }
-
       const button = event.target as HTMLButtonElement;
       button.disabled = true;
-      const url = button.formAction;
       const id = button.value as ReactionID;
+      const issueExists = !!this.issue;
+
+      if (!issueExists) {
+        const newIssue = await createGitHubIssue(
+          page.issueTerm as string,
+          page.url,
+          page.title,
+          page.description || '',
+          page.label
+        );
+        const issue = await loadIssueByNumber(newIssue.number);
+        this.issue = issue;
+        this.reactions = issue.reactions;
+        await this.createIssueCallback(issue);
+      }
+
+      const url = this.reactions.url;
       const {deleted} = await toggleReaction(url, id);
       const delta = deleted ? -1 : 1;
       this.reactions[id] += delta;
       this.reactions.total_count += delta;
       this.issue!.reactions = this.reactions;
-      this.setIssue(this.issue);
       button.disabled = false;
+      this.setIssue(this.issue);
     }
 
     const buttons = this.element.querySelectorAll('button[post-reaction]');
