@@ -13,6 +13,7 @@ import {
 } from './github';
 import { TimelineComponent } from './timeline-component';
 import { NewCommentComponent } from './new-comment-component';
+import { NewCommentLink } from './new-comment-link';
 import { startMeasuring, scheduleMeasure } from './measure';
 import { loadTheme } from './theme';
 import { getRepoConfig } from './repo-config';
@@ -54,25 +55,33 @@ async function bootstrap() {
 
   enableReactions(!!user);
 
-  const submit = async (markdown: string) => {
-    await assertOrigin();
-    if (!issue) {
-      issue = await createIssue(
-        page.issueTerm as string,
-        page.url,
-        page.title,
-        page.description || '',
-        page.label
-      );
-      timeline.setIssue(issue);
+  if (page.form === 'false') {
+    const jump = () => {
+      assertIssueContainer(issue);
+      window.open(issue.html_url);
     }
-    const comment = await postComment(issue.number, markdown);
-    timeline.insertComment(comment, true);
-    newCommentComponent.clear();
+    const newCommentLink = new NewCommentLink(jump);
+    timeline.element.appendChild(newCommentLink.element);
+  } else {
+    const submit = async (markdown: string) => {
+      await assertOrigin();
+      if (!issue) {
+        issue = await createIssue(
+          page.issueTerm as string,
+          page.url,
+          page.title,
+          page.description || '',
+          page.label
+        );
+        timeline.setIssue(issue);
+      }
+      const comment = await postComment(issue.number, markdown);
+      timeline.insertComment(comment, true);
+      newCommentComponent.clear();
+    };
+    const newCommentComponent = new NewCommentComponent(user, submit);
+    timeline.element.appendChild(newCommentComponent.element);
   };
-
-  const newCommentComponent = new NewCommentComponent(user, submit);
-  timeline.element.appendChild(newCommentComponent.element);
 }
 
 bootstrap();
@@ -155,4 +164,23 @@ export async function assertOrigin() {
   </div>`);
   scheduleMeasure();
   throw new Error('Origin not permitted.');
+}
+
+function assertIssueContainer(issue: Issue | null) {
+  const { owner, repo, issueTerm } = page;
+  if (issue) {
+    return;
+  }
+
+  document.querySelector('.timeline')!.lastElementChild!.insertAdjacentHTML('beforebegin', `
+  <div class="flash flash-error flash-not-installed">
+    Error: No issue container found at <code>${owner}/${repo}</code>,
+    <a href="https://github.com/${owner}/${repo}/issues" target="_blank">
+      <strong>create an issue on GitHub</strong>
+    </a>
+    with title: <strong><code>${issueTerm}</code></strong>, the issue body is not important
+    and is ignored. Please add your comment as a comment under the newly created issue.
+  </div>`);
+  scheduleMeasure();
+  throw new Error('No issue container.');
 }
