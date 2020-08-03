@@ -146,6 +146,11 @@ export class ConfigurationComponent {
       </p>
       <div class="config-field" id="script" class="highlight highlight-text-html-basic"></div>
       <button id="copy-button" type="button" class="btn btn-blue code-action">Copy</button>
+
+      <p>There is an <em>optional</em> argument <code>size</code> that specifies the number of comments to be displayed before the
+      rest are folded. The default value is 25. For example, <code>size=2</code> will format the timeline as two comments,
+      expand button, then at most three other comments.
+      </p>
       <br/>
       <br/>`;
 
