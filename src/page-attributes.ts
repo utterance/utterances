@@ -56,7 +56,8 @@ function readPageAttributes() {
     title: params.title,
     description: params.description,
     label: params.label,
-    theme: params.theme || 'github-light'
+    theme: params.theme || 'github-light',
+    size: Math.round(Math.abs(+params.size)) || 25
   };
 }
 
