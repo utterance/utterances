@@ -103,3 +103,5 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [psycopg.org](https://www.psycopg.org)
+* [varrazzo.com](https://www.varrazzo.com)
