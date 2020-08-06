@@ -103,4 +103,4 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
-* [jackdolgin.org](http://jackdolgin.org)
+* [jackdolgin.org](https://jackdolgin.org)
