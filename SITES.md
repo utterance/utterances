@@ -103,3 +103,4 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [pi-dal-blog](https://blog.pi-dal.com)
