@@ -103,3 +103,4 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [dna049-记录数学和程序的点滴](https:/dna049.com)
