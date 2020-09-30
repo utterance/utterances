@@ -83,7 +83,7 @@ script.insertAdjacentHTML(
     <iframe class="utterances-frame" title="Comments" scrolling="no" src="${url}?${param(attrs)}"></iframe>
   </div>`);
 const container = script.nextElementSibling as HTMLDivElement;
-script.parentElement!.removeChild(script);
+script.remove();
 
 // adjust the iframe's height when the height of it's content changes
 addEventListener('message', event => {
