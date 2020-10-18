@@ -26,4 +26,11 @@ To comment, users must authorize the utterances app to post on their behalf usin
 
 Are you using utterances? [Add your site](https://github.com/utterance/utterances/edit/master/SITES.md) to the list!
 
+## Translation
+
+This is also available in other languages:
+
+- ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **Simplified Chinese**: [Beaudar - 表达
+](https://beaudar.lipk.org)
+
 # try it out 👇👇👇
