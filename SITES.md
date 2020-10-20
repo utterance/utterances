@@ -103,3 +103,4 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [Soumya's blog (@geekysrm's blog)](https://soumya.dev/blog)
