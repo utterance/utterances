@@ -1,5 +1,6 @@
 # Sites using Utterances
 
+* [devliusir.github.io](https://devliusir.github.io)
 * [danyow.net](https://danyow.net)
 * [os.phil-opp.com](https://os.phil-opp.com/second-edition)
 * [winterland.me](http://winterland.me/)
