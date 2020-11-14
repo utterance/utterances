@@ -103,6 +103,8 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [psycopg.org](https://www.psycopg.org)
+* [varrazzo.com](https://www.varrazzo.com)
 * [jackdolgin.org](https://jackdolgin.org)
 * [techboyg5 Web Development Tutorial](https://projects.techboyg5blog.com/web-development-tutorial/chapter1/page1.html)
 * [blog.donghoonyoo.com](https://blog.donghoonyoo.com)
