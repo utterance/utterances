@@ -1,3 +1,5 @@
+import { preferredThemeId, preferredTheme } from './preferred-theme';
+
 export class ConfigurationComponent {
   public readonly element: HTMLFormElement;
   private readonly script: HTMLDivElement;
@@ -17,7 +19,7 @@ export class ConfigurationComponent {
         <li>Make sure the <a href="https://github.com/apps/utterances">utterances app</a>
           is installed on the repo, otherwise users will not be able to post comments.
         </li>
-        <li>If your repo is a fork, navigate to it's <em>settings</em> tab and confirm
+        <li>If your repo is a fork, navigate to its <em>settings</em> tab and confirm
           the <em>issues</em> feature is turned on. </li>
       </ol>
       <fieldset>
@@ -129,11 +131,13 @@ export class ConfigurationComponent {
       <select id="theme" class="form-select" value="github-light" aria-label="Theme">
         <option value="github-light">GitHub Light</option>
         <option value="github-dark">GitHub Dark</option>
+        <option value="preferred-color-scheme">Preferred Color Scheme</option>
         <option value="github-dark-orange">GitHub Dark Orange</option>
         <option value="icy-dark">Icy Dark</option>
         <option value="dark-blue">Dark Blue</option>
         <option value="photon-dark">Photon Dark</option>
         <option value="utopian-light">Utopian Light</option>
+        <option value="boxy-light">Boxy Light</option>
       </select>
 
       <h3 id="heading-enable">Enable Utterances</h3>
@@ -160,10 +164,14 @@ export class ConfigurationComponent {
 
     const themeStylesheet = document.getElementById('theme-stylesheet') as HTMLLinkElement;
     this.theme.addEventListener('change', () => {
-      themeStylesheet.href = `/stylesheets/themes/${this.theme.value}/index.css`;
+      let theme = this.theme.value;
+      if (theme === preferredThemeId) {
+        theme = preferredTheme
+      }
+      themeStylesheet.href = `/stylesheets/themes/${theme}/index.css`;
       const message = {
         type: 'set-theme',
-        theme: this.theme.value
+        theme
       };
       const utterances = document.querySelector('iframe')!;
       utterances.contentWindow!.postMessage(message, location.origin);

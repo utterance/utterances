@@ -1,5 +1,6 @@
 import { param, deparam } from './deparam';
 import { ResizeMessage } from './measure';
+import { preferredThemeId, preferredTheme } from './preferred-theme';
 
 // slice access token from query string
 const params = deparam(location.search.substr(1));
@@ -26,6 +27,9 @@ for (let i = 0; i < script.attributes.length; i++) {
   const attribute = script.attributes.item(i)!;
   attrs[attribute.name.replace(/^data-/, '')] = attribute.value; // permit using data-theme instead of theme.
 }
+if (attrs.theme === preferredThemeId) {
+  attrs.theme = preferredTheme;
+}
 
 // gather page attributes
 const canonicalLink = document.querySelector(`link[rel='canonical']`) as HTMLLinkElement;
@@ -35,6 +39,11 @@ attrs.pathname = location.pathname.length < 2 ? 'index' : location.pathname.subs
 attrs.title = document.title;
 const descriptionMeta = document.querySelector(`meta[name='description']`) as HTMLMetaElement;
 attrs.description = descriptionMeta ? descriptionMeta.content : '';
+// truncate descriptions that would trigger 414 "URI Too Long"
+const len = encodeURIComponent(attrs.description).length;
+if (len > 1000) {
+  attrs.description = attrs.description.substr(0, Math.floor(attrs.description.length * 1000 / len));
+}
 const ogtitleMeta = document.querySelector(`meta[property='og:title'],meta[name='og:title']`) as HTMLMetaElement;
 attrs['og:title'] = ogtitleMeta ? ogtitleMeta.content : '';
 attrs.token = token;
