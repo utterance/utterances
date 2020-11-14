@@ -104,6 +104,7 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [RickLove - Coding Blog and Playground](https://ricklove.me)
 * [MatthewSoft Developers](https://developers.matthewsoft.my.id)
 * [Tania Rascia's Blog](https://www.taniarascia.com/)
 * [Soumya's blog (@geekysrm's blog)](https://soumya.dev/blog)
