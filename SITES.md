@@ -103,6 +103,7 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [yansheng's blog](https://www.yansheng.xyz/)
 * [rxliuli blog](https://blog.rxliuli.com/)
 * [IFRONT](https://ifront.net)
 * [ThroughTintedLenses](https://harish3110.github.io/through-tinted-lenses/)
