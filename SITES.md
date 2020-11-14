@@ -66,7 +66,7 @@
 * [jacksonmooring.com](https://jacksonmooring.com)
 * [Nested Software Blog](https://blog.nestedsoftware.com)
 * [Tech Insights](https://manisuec.blog)
-* [U.Cor](https://blog.917.moe)
+* [./kwaa.dev](https://kwaa.dev)
 * [Eick'blog](https://eick.blog/)
 * [Stupid Machine](https://niemannross.com/link/stupidmachine)
 * [Forest Hex](https://foresthex.com)
