@@ -19,7 +19,7 @@ export class ConfigurationComponent {
         <li>Make sure the <a href="https://github.com/apps/utterances">utterances app</a>
           is installed on the repo, otherwise users will not be able to post comments.
         </li>
-        <li>If your repo is a fork, navigate to it's <em>settings</em> tab and confirm
+        <li>If your repo is a fork, navigate to its <em>settings</em> tab and confirm
           the <em>issues</em> feature is turned on. </li>
       </ol>
       <fieldset>
@@ -136,6 +136,7 @@ export class ConfigurationComponent {
         <option value="icy-dark">Icy Dark</option>
         <option value="dark-blue">Dark Blue</option>
         <option value="photon-dark">Photon Dark</option>
+        <option value="boxy-light">Boxy Light</option>
       </select>
 
       <h3 id="heading-enable">Enable Utterances</h3>
