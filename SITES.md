@@ -1,6 +1,5 @@
 # Sites using Utterances
 
-* [devliusir.github.io](https://devliusir.github.io)
 * [danyow.net](https://danyow.net)
 * [os.phil-opp.com](https://os.phil-opp.com/second-edition)
 * [winterland.me](http://winterland.me/)
@@ -105,6 +104,7 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [Mairo Rufus' Blog](https://rmpr.xyz)
 * [RickLove - Coding Blog and Playground](https://ricklove.me)
 * [MatthewSoft Developers](https://developers.matthewsoft.my.id)
 * [Tania Rascia's Blog](https://www.taniarascia.com/)
@@ -148,3 +148,4 @@
 * [blog.minhazav.dev](https://blog.minhazav.dev)
 * [Infinite Ink](https://www.ii.com/)
 * [tommi.space](https://tommi.space)
+* [devliusir.github.io](https://devliusir.github.io)
