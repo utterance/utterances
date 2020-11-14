@@ -46,6 +46,9 @@ function readPageAttributes() {
     token.value = params.token;
   }
 
+  let inputPositionTop : bool = params['input-position-top'] == "true";
+  let reverseOrder : bool = params['reverse-order'] == "true";
+
   return {
     owner: matches[1],
     repo: matches[2],
@@ -56,7 +59,9 @@ function readPageAttributes() {
     title: params.title,
     description: params.description,
     label: params.label,
-    theme: params.theme || 'github-light'
+    theme: params.theme || 'github-light',
+    inputPositionTop: inputPositionTop,
+    reverseOrder: reverseOrder
   };
 }
 

@@ -139,6 +139,20 @@ export class ConfigurationComponent {
         <option value="boxy-light">Boxy Light</option>
       </select>
 
+      <h3 id="heading-reverse-order">Reverse Order</h3>
+      <p>
+        Choose if you want the order of comments to be reversed and put
+        the input form on top.
+      </p>
+      <p>
+        Related parameters ("reverse-order" and "input-position-top") accept
+        both boolean primitives and strings (both true and "true" are valid).
+      </p>
+      <label>
+        <input type="checkbox" id="reverse-order" />
+        Reverse order, input form on top
+      </label>
+
       <h3 id="heading-enable">Enable Utterances</h3>
 
       <p>Add the following script tag to your blog's template. Position it where you want the
@@ -160,6 +174,8 @@ export class ConfigurationComponent {
     this.label = this.element.querySelector('#label') as HTMLInputElement;
 
     this.theme = this.element.querySelector('#theme') as HTMLSelectElement;
+
+    this.reverseOrder = this.element.querySelector('#reverse-order')  as HTMLInputElement;
 
     const themeStylesheet = document.getElementById('theme-stylesheet') as HTMLLinkElement;
     this.theme.addEventListener('change', () => {
@@ -197,11 +213,18 @@ export class ConfigurationComponent {
     } else {
       mappingAttr = this.makeConfigScriptAttribute('issue-term', mapping.value);
     }
+    let orderConfig : string = '';
+    if (this.reverseOrder.checked) {
+      // using strings to encode booleans - because `deparam` uses only strings
+      orderConfig = this.makeConfigScriptAttribute('reverse-order', 'true') + '\n' +
+                    this.makeConfigScriptAttribute('input-position-top', 'true') + '\n';
+    }
     this.script.innerHTML = this.makeConfigScript(
       this.makeConfigScriptAttribute('repo', this.repo.value === '' ? '[ENTER REPO HERE]' : this.repo.value) + '\n' +
       mappingAttr + '\n' +
       (this.label.value ? this.makeConfigScriptAttribute('label', this.label.value) + '\n' : '') +
       this.makeConfigScriptAttribute('theme', this.theme.value) + '\n' +
+      orderConfig +
       this.makeConfigScriptAttribute('crossorigin', 'anonymous'));
   }
 
