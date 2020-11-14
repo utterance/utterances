@@ -103,6 +103,7 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [Ben Mezger](https://benmezger.nl)
 * [Raptazure's Blog](https://raptazure.github.io/)
 * [pi-dal-blog](https://blog.pi-dal.com)
 * [psycopg.org](https://www.psycopg.org)
