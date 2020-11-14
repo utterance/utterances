@@ -8,7 +8,6 @@ import {
   loadUser,
   postComment,
   createIssue,
-  PAGE_SIZE,
   IssueComment
 } from './github';
 import { TimelineComponent } from './timeline-component';
@@ -97,16 +96,16 @@ async function renderComments(issue: Issue, timeline: TimelineComponent) {
     }
   };
 
-  const pageCount = Math.ceil(issue.comments / PAGE_SIZE);
+  const pageCount = Math.ceil(issue.comments / page.size);
   // always load the first page.
-  const pageLoads = [loadCommentsPage(issue.number, 1)];
+  const pageLoads = [loadCommentsPage(issue.number, 1, page.size)];
   // if there are multiple pages, load the last page.
   if (pageCount > 1) {
-    pageLoads.push(loadCommentsPage(issue.number, pageCount));
+    pageLoads.push(loadCommentsPage(issue.number, pageCount, page.size));
   }
   // if the last page is small, load the penultimate page.
-  if (pageCount > 2 && issue.comments % PAGE_SIZE < 3) {
-    pageLoads.push(loadCommentsPage(issue.number, pageCount - 1));
+  if (pageCount > 2 && issue.comments % page.size !== 0 && issue.comments % page.size <= page.size / 2) {
+    pageLoads.push(loadCommentsPage(issue.number, pageCount - 1, page.size));
   }
   // await all loads to reduce jank.
   const pages = await Promise.all(pageLoads);
@@ -114,23 +113,27 @@ async function renderComments(issue: Issue, timeline: TimelineComponent) {
     renderPage(page);
   }
   // enable loading hidden pages.
-  let hiddenPageCount = pageCount - pageLoads.length;
+  let hiddenCommentsCount = (pageCount - pageLoads.length) * page.size;
   let nextHiddenPage = 2;
+  let dynamicPageSize = page.size;
   const renderLoader = (afterPage: IssueComment[]) => {
-    if (hiddenPageCount === 0) {
+    if (hiddenCommentsCount <= 0) {
       return;
     }
     const load = async () => {
       loader.setBusy();
-      const page = await loadCommentsPage(issue.number, nextHiddenPage);
+      const page = await loadCommentsPage(issue.number, nextHiddenPage, dynamicPageSize);
       loader.remove();
       renderPage(page);
-      hiddenPageCount--;
-      nextHiddenPage++;
+      hiddenCommentsCount -= dynamicPageSize;
+      // page number stays the same if page size growing exponentially, otherwise increase by 1
+      nextHiddenPage = (dynamicPageSize < 16) ? nextHiddenPage : nextHiddenPage + 1;
+      // maximum page size of 16
+      dynamicPageSize = (dynamicPageSize < 16) ? dynamicPageSize * 2 : dynamicPageSize;
       renderLoader(page);
     };
     const afterComment = afterPage.pop()!;
-    const loader = timeline.insertPageLoader(afterComment, hiddenPageCount * PAGE_SIZE, load);
+    const loader = timeline.insertPageLoader(afterComment, hiddenCommentsCount, load);
   };
   renderLoader(pages[0]);
 }

@@ -7,8 +7,6 @@ const GITHUB_ENCODING__HTML_JSON = 'application/vnd.github.VERSION.html+json';
 const GITHUB_ENCODING__HTML = 'application/vnd.github.VERSION.html';
 const GITHUB_ENCODING__REACTIONS_PREVIEW = 'application/vnd.github.squirrel-girl-preview';
 
-export const PAGE_SIZE = 25;
-
 export type ReactionID = '+1' | '-1' | 'laugh' | 'hooray' | 'confused' | 'heart' | 'rocket' | 'eyes';
 
 export const reactionTypes: ReactionID[] = ['+1', '-1', 'laugh', 'hooray', 'confused', 'heart', 'rocket', 'eyes'];
@@ -168,16 +166,16 @@ export function loadIssueByNumber(issueNumber: number) {
   });
 }
 
-function commentsRequest(issueNumber: number, page: number) {
-  const url = `repos/${owner}/${repo}/issues/${issueNumber}/comments?page=${page}&per_page=${PAGE_SIZE}`;
+function commentsRequest(issueNumber: number, page: number, size: number) {
+  const url = `repos/${owner}/${repo}/issues/${issueNumber}/comments?page=${page}&per_page=${size}`;
   const request = githubRequest(url);
   const accept = `${GITHUB_ENCODING__HTML_JSON},${GITHUB_ENCODING__REACTIONS_PREVIEW}`;
   request.headers.set('Accept', accept);
   return request;
 }
 
-export function loadCommentsPage(issueNumber: number, page: number): Promise<IssueComment[]> {
-  const request = commentsRequest(issueNumber, page);
+export function loadCommentsPage(issueNumber: number, page: number, size: number): Promise<IssueComment[]> {
+  const request = commentsRequest(issueNumber, page, size);
   return githubFetch(request).then(response => {
     if (!response.ok) {
       throw new Error('Error fetching comments.');
