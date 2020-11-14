@@ -1,5 +1,5 @@
 # Sites using Utterances
-* [Sen-machine-learning](https://senyang-ml.github.io)
+
 * [danyow.net](https://danyow.net)
 * [os.phil-opp.com](https://os.phil-opp.com/second-edition)
 * [winterland.me](http://winterland.me/)
@@ -103,3 +103,4 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [Sen-machine-learning](https://senyang-ml.github.io)
