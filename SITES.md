@@ -103,6 +103,7 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [Nick's Blog](https://stx.ie)
 * [arunvelsriram.dev](https://arunvelsriram.dev)
 * [Vasant's Homepage] (https://vasantmarur.net)
 * [LuisCarlosPando.com](https://luiscarlospando.com)
