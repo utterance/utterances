@@ -103,6 +103,7 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [rizkhal.github.io](https://rizkhal.github.io)
 * [Gopherlabs](https://gopherlabs.kubedaily.com/)
 * [yennj12 Blog](https://yennj12.js.org/yennj12_blog_V2/)
 * [EXP2](https://exp2.uniuni.space)
