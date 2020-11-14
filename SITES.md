@@ -103,6 +103,7 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [samtay.github.io](https://samtay.github.io)
 * [Ildi Czeller's R blog and personal website](https://ildiczeller.com)
 * [blog.minhazav.dev](https://blog.minhazav.dev)
 * [Infinite Ink](https://www.ii.com/)
