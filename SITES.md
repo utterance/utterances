@@ -104,6 +104,7 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [Tania Rascia's Blog](https://www.taniarascia.com/)
 * [Soumya's blog (@geekysrm's blog)](https://soumya.dev/blog)
 * [K5TRP Blog Site](https://qsl.net/k5trp/)
 * [Natalia Morandeira's website](https://nmorandeira.netlify.app/)
