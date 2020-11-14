@@ -103,6 +103,7 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [pi-dal-blog](https://blog.pi-dal.com)
 * [psycopg.org](https://www.psycopg.org)
 * [varrazzo.com](https://www.varrazzo.com)
 * [jackdolgin.org](https://jackdolgin.org)
