@@ -1,0 +1,19 @@
+$border-radius: 0;
+
+@import "../../utterances";
+@import "./syntax";
+
+.reactions-popover {
+  summary {
+    outline: none;
+  }
+}
+
+.tabnav-tab.selected, .tabnav-tab[aria-selected=true], .tabnav-tab[aria-current], .tabnav-tab:focus {
+  outline: none;
+}
+
+.btn {
+  border-radius: $border-radius;
+  background-image: unset;
+}
