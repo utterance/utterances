@@ -104,6 +104,7 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [K5TRP Blog Site](https://qsl.net/k5trp/)
 * [Natalia Morandeira's website](https://nmorandeira.netlify.app/)
 * [Cybsecdiary](https://cybsecdiary.com)
 * [mrsauravsahu](https://mrsauravsahu.github.io/blog)
