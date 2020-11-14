@@ -104,6 +104,7 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [mrsauravsahu](https://mrsauravsahu.github.io/blog)
 * [El Baul del Programador](https://elbauldelprogramador.com/en)
 * [dna049-记录数学和程序的点滴](https:/dna049.com)
 * [Our Machinery Blog](https://ourmachinery.com/post/)
