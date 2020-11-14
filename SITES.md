@@ -1,6 +1,5 @@
 # Sites using Utterances
 
-* [tommi.space](https://tommi.space)
 * [danyow.net](https://danyow.net)
 * [os.phil-opp.com](https://os.phil-opp.com/second-edition)
 * [winterland.me](http://winterland.me/)
@@ -105,6 +104,7 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [Soumya's blog (@geekysrm's blog)](https://soumya.dev/blog)
 * [K5TRP Blog Site](https://qsl.net/k5trp/)
 * [Natalia Morandeira's website](https://nmorandeira.netlify.app/)
 * [Cybsecdiary](https://cybsecdiary.com)
@@ -143,3 +143,4 @@
 * [Ildi Czeller's R blog and personal website](https://ildiczeller.com)
 * [blog.minhazav.dev](https://blog.minhazav.dev)
 * [Infinite Ink](https://www.ii.com/)
+* [tommi.space](https://tommi.space)
