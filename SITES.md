@@ -105,3 +105,4 @@
 * [IcePlugins](https://iceplugins.xyz)
 * [Ildi Czeller's R blog and personal website](https://ildiczeller.com)
 * [blog.minhazav.dev](https://blog.minhazav.dev)
+* [Infinite Ink](https://www.ii.com/)
