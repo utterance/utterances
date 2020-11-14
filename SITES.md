@@ -1,6 +1,5 @@
 # Sites using Utterances
 
-* [rizkhal.github.io](https://rizkhal.github.io)
 * [danyow.net](https://danyow.net)
 * [os.phil-opp.com](https://os.phil-opp.com/second-edition)
 * [winterland.me](http://winterland.me/)
@@ -104,3 +103,4 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [rizkhal.github.io](https://rizkhal.github.io)
