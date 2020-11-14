@@ -103,6 +103,7 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [sidharth.dev](https://www.sidharth.dev)
 * [程序员wxianfeng](http://wxianfeng.com)
 * [Nick's Blog](https://stx.ie)
 * [arunvelsriram.dev](https://arunvelsriram.dev)
