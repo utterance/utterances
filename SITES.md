@@ -103,6 +103,7 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [techboyg5 Web Development Tutorial](https://projects.techboyg5blog.com/web-development-tutorial/chapter1/page1.html)
 * [blog.donghoonyoo.com](https://blog.donghoonyoo.com)
 * [yansheng's blog](https://www.yansheng.xyz/)
 * [rxliuli blog](https://blog.rxliuli.com/)
