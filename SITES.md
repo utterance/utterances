@@ -103,6 +103,7 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [kdheepak's blog](https://blog.kdheepak.com)
 * [GopherSnippets](https://gophersnippets.com)
 * [samtay.github.io](https://samtay.github.io)
 * [Ildi Czeller's R blog and personal website](https://ildiczeller.com)
