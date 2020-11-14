@@ -694,11 +694,11 @@ pre {
 .btn:focus {
   outline: 0;
 }
-.btn:disabled, .btn.disabled {
+.btn:disabled, .btn.disabled, .btn[aria-disabled=true] {
   cursor: default;
   background-position: 0 0;
 }
-.btn:active, .btn.selected {
+.btn:active, .btn.selected, .btn[aria-selected=true] {
   background-image: none;
 }
 
@@ -719,14 +719,14 @@ pre {
   background-position: -0.5em;
   border-color: rgba(27, 31, 35, 0.35);
 }
-.btn:active, .btn.selected, [open] > .btn {
+.btn:active, .btn.selected, .btn[aria-selected=true], [open] > .btn {
   background-color: #e9ecef;
   background-image: none;
   border-color: rgba(27, 31, 35, 0.35);
   -webkit-box-shadow: inset 0 0.15em 0.3em rgba(27, 31, 35, 0.15);
           box-shadow: inset 0 0.15em 0.3em rgba(27, 31, 35, 0.15);
 }
-.btn:disabled, .btn.disabled {
+.btn:disabled, .btn.disabled, .btn[aria-disabled=true] {
   color: rgba(36, 41, 46, 0.4);
   background-color: #eff3f6;
   background-image: none;
@@ -752,14 +752,14 @@ pre {
   background-position: -0.5em;
   border-color: rgba(27, 31, 35, 0.5);
 }
-.btn-primary:active, .btn-primary.selected, [open] > .btn-primary {
+.btn-primary:active, .btn-primary.selected, .btn-primary[aria-selected=true], [open] > .btn-primary {
   background-color: #279f43;
   background-image: none;
   border-color: rgba(27, 31, 35, 0.5);
   -webkit-box-shadow: inset 0 0.15em 0.3em rgba(27, 31, 35, 0.15);
           box-shadow: inset 0 0.15em 0.3em rgba(27, 31, 35, 0.15);
 }
-.btn-primary:disabled, .btn-primary.disabled {
+.btn-primary:disabled, .btn-primary.disabled, .btn-primary[aria-disabled=true] {
   color: rgba(255, 255, 255, 0.75);
   background-color: #94d3a2;
   background-image: none;
@@ -789,14 +789,14 @@ pre {
   background-position: -0.5em;
   border-color: rgba(27, 31, 35, 0.5);
 }
-.btn-blue:active, .btn-blue.selected, [open] > .btn-blue {
+.btn-blue:active, .btn-blue.selected, .btn-blue[aria-selected=true], [open] > .btn-blue {
   background-color: #045cc1;
   background-image: none;
   border-color: rgba(27, 31, 35, 0.5);
   -webkit-box-shadow: inset 0 0.15em 0.3em rgba(27, 31, 35, 0.15);
           box-shadow: inset 0 0.15em 0.3em rgba(27, 31, 35, 0.15);
 }
-.btn-blue:disabled, .btn-blue.disabled {
+.btn-blue:disabled, .btn-blue.disabled, .btn-blue[aria-disabled=true] {
   color: rgba(255, 255, 255, 0.75);
   background-color: #81b0e6;
   background-image: none;
@@ -829,7 +829,7 @@ pre {
 .btn-danger:hover .Counter {
   color: #fff;
 }
-.btn-danger:active, .btn-danger.selected, [open] > .btn-danger {
+.btn-danger:active, .btn-danger.selected, .btn-danger[aria-selected=true], [open] > .btn-danger {
   color: #fff;
   background-color: #b5202c;
   background-image: none;
@@ -837,7 +837,7 @@ pre {
   -webkit-box-shadow: inset 0 0.15em 0.3em rgba(27, 31, 35, 0.15);
           box-shadow: inset 0 0.15em 0.3em rgba(27, 31, 35, 0.15);
 }
-.btn-danger:disabled, .btn-danger.disabled {
+.btn-danger:disabled, .btn-danger.disabled, .btn-danger[aria-disabled=true] {
   color: rgba(203, 36, 49, 0.4);
   background-color: #eff3f6;
   background-image: none;
@@ -854,13 +854,13 @@ pre {
 .btn-outline .Counter {
   background-color: rgba(27, 31, 35, 0.07);
 }
-.btn-outline:hover, .btn-outline:active, .btn-outline.selected, [open] > .btn-outline {
+.btn-outline:hover, .btn-outline:active, .btn-outline.selected, .btn-outline[aria-selected=true], [open] > .btn-outline {
   color: #ffffff;
   background-color: #0366d6;
   background-image: none;
   border-color: #0366d6;
 }
-.btn-outline:hover .Counter, .btn-outline:active .Counter, .btn-outline.selected .Counter, [open] > .btn-outline .Counter {
+.btn-outline:hover .Counter, .btn-outline:active .Counter, .btn-outline.selected .Counter, .btn-outline[aria-selected=true] .Counter, [open] > .btn-outline .Counter {
   color: #0366d6;
   background-color: #ffffff;
 }
@@ -869,7 +869,7 @@ pre {
   -webkit-box-shadow: 0 0 0 0.2em rgba(3, 102, 214, 0.4);
           box-shadow: 0 0 0 0.2em rgba(3, 102, 214, 0.4);
 }
-.btn-outline:disabled, .btn-outline.disabled {
+.btn-outline:disabled, .btn-outline.disabled, .btn-outline[aria-disabled=true] {
   color: rgba(27, 31, 35, 0.3);
   background-color: #ffffff;
   border-color: rgba(27, 31, 35, 0.15);
@@ -922,7 +922,7 @@ pre {
 .btn-link:hover {
   text-decoration: underline;
 }
-.btn-link:disabled, .btn-link:disabled:hover {
+.btn-link:disabled, .btn-link:disabled:hover, .btn-link[aria-disabled=true], .btn-link[aria-disabled=true]:hover {
   color: rgba(88, 96, 105, 0.5);
   cursor: default;
 }
@@ -933,7 +933,7 @@ pre {
   background-image: none;
   border: 0;
 }
-.btn-invisible:hover, .btn-invisible:active, .btn-invisible:focus, .btn-invisible.selected, .btn-invisible.zeroclipboard-is-hover, .btn-invisible.zeroclipboard-is-active {
+.btn-invisible:hover, .btn-invisible:active, .btn-invisible:focus, .btn-invisible.selected, .btn-invisible[aria-selected=true], .btn-invisible.zeroclipboard-is-hover, .btn-invisible.zeroclipboard-is-active {
   color: #0366d6;
   background: none;
   outline: none;
@@ -954,11 +954,11 @@ pre {
 .btn-octicon:hover {
   color: #0366d6;
 }
-.btn-octicon.disabled {
+.btn-octicon.disabled, .btn-octicon[aria-disabled=true] {
   color: #959da5;
   cursor: default;
 }
-.btn-octicon.disabled:hover {
+.btn-octicon.disabled:hover, .btn-octicon[aria-disabled=true]:hover {
   color: #959da5;
 }
 
@@ -999,11 +999,12 @@ pre {
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
 }
-.BtnGroup-item.selected, .BtnGroup-item:focus, .BtnGroup-item:active, .BtnGroup-item:hover {
+.BtnGroup-item.selected, .BtnGroup-item[aria-selected=true], .BtnGroup-item:focus, .BtnGroup-item:active, .BtnGroup-item:hover {
   border-right-width: 1px;
 }
 .BtnGroup-item.selected + .BtnGroup-item,
-.BtnGroup-item.selected + .BtnGroup-parent .BtnGroup-item, .BtnGroup-item:focus + .BtnGroup-item,
+.BtnGroup-item.selected + .BtnGroup-parent .BtnGroup-item, .BtnGroup-item[aria-selected=true] + .BtnGroup-item,
+.BtnGroup-item[aria-selected=true] + .BtnGroup-parent .BtnGroup-item, .BtnGroup-item:focus + .BtnGroup-item,
 .BtnGroup-item:focus + .BtnGroup-parent .BtnGroup-item, .BtnGroup-item:active + .BtnGroup-item,
 .BtnGroup-item:active + .BtnGroup-parent .BtnGroup-item, .BtnGroup-item:hover + .BtnGroup-item,
 .BtnGroup-item:hover + .BtnGroup-parent .BtnGroup-item {
@@ -1026,11 +1027,12 @@ pre {
   border-right-width: 0;
   border-radius: 0;
 }
-.BtnGroup-parent.selected .BtnGroup-item, .BtnGroup-parent:focus .BtnGroup-item, .BtnGroup-parent:active .BtnGroup-item, .BtnGroup-parent:hover .BtnGroup-item {
+.BtnGroup-parent.selected .BtnGroup-item, .BtnGroup-parent[aria-selected=true] .BtnGroup-item, .BtnGroup-parent:focus .BtnGroup-item, .BtnGroup-parent:active .BtnGroup-item, .BtnGroup-parent:hover .BtnGroup-item {
   border-right-width: 1px;
 }
 .BtnGroup-parent.selected + .BtnGroup-item,
-.BtnGroup-parent.selected + .BtnGroup-parent .BtnGroup-item, .BtnGroup-parent:focus + .BtnGroup-item,
+.BtnGroup-parent.selected + .BtnGroup-parent .BtnGroup-item, .BtnGroup-parent[aria-selected=true] + .BtnGroup-item,
+.BtnGroup-parent[aria-selected=true] + .BtnGroup-parent .BtnGroup-item, .BtnGroup-parent:focus + .BtnGroup-item,
 .BtnGroup-parent:focus + .BtnGroup-parent .BtnGroup-item, .BtnGroup-parent:active + .BtnGroup-item,
 .BtnGroup-parent:active + .BtnGroup-parent .BtnGroup-item, .BtnGroup-parent:hover + .BtnGroup-item,
 .BtnGroup-parent:hover + .BtnGroup-parent .BtnGroup-item {
@@ -1607,7 +1609,7 @@ pre {
   border: 1px solid transparent;
   border-bottom: 0;
 }
-.tabnav-tab[aria-selected=true], .tabnav-tab.selected {
+.tabnav-tab.selected, .tabnav-tab[aria-selected=true], .tabnav-tab[aria-current] {
   color: #24292e;
   background-color: #ffffff;
   border-color: #f2ebfe;
