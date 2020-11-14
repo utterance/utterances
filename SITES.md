@@ -103,6 +103,7 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [alexpnt.github.io](https://alexpnt.github.io)
 * [Pratik Daigavane Blog](https://blog.pratikdaigavane.me)
 * [Ben Mezger](https://benmezger.nl)
 * [Raptazure's Blog](https://raptazure.github.io/)
