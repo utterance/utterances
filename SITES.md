@@ -103,6 +103,7 @@
 * [Smoothlog](https://smoothlog.com/)
 * [shiveenp.com](https://shiveenp.com)
 * [IcePlugins](https://iceplugins.xyz)
+* [yennj12 Blog](https://yennj12.js.org/yennj12_blog_V2/)
 * [EXP2](https://exp2.uniuni.space)
 * [Sen-machine-learning](https://senyang-ml.github.io)
 * [kdheepak's blog](https://blog.kdheepak.com)
