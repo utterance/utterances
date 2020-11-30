@@ -4,6 +4,7 @@
 * [os.phil-opp.com](https://os.phil-opp.com/second-edition)
 * [winterland.me](http://winterland.me/)
 * [davidbaker.is/scribbling](https://davidbaker.is/scribbling)
+* [abdelaziz321.github.io](https://abdelaziz321.github.io/#/blog)
 * [lonr.github.io](https://lonr.github.io)
 * [Mapping thoughts to language](http://blog.ville.oikarinen.org)
 * [fdp.io](https://fdp.io)
