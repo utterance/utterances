@@ -164,7 +164,83 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var _default = /^([\w-_]+)\/([\w-_.]+)$/i;
 exports.default = _default;
-},{}],"utterances-api.ts":[function(require,module,exports) {
+},{}],"page-attributes.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.pageAttributes = void 0;
+
+var _deparam = require("./deparam");
+
+var _repoRegex = _interopRequireDefault(require("./repo-regex"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function readPageAttributes() {
+  var params = (0, _deparam.deparam)(location.search.substr(1));
+  var issueTerm = null;
+  var issueNumber = null;
+
+  if ('issue-term' in params) {
+    issueTerm = params['issue-term'];
+
+    if (issueTerm !== undefined) {
+      if (issueTerm === '') {
+        throw new Error('When issue-term is specified, it cannot be blank.');
+      }
+
+      if (['title', 'url', 'pathname', 'og:title'].indexOf(issueTerm) !== -1) {
+        if (!params[issueTerm]) {
+          throw new Error("Unable to find \"" + issueTerm + "\" metadata.");
+        }
+
+        issueTerm = params[issueTerm];
+      }
+    }
+  } else if ('issue-number' in params) {
+    issueNumber = +params['issue-number'];
+
+    if (issueNumber.toString(10) !== params['issue-number']) {
+      throw new Error("issue-number is invalid. \"" + params['issue-number']);
+    }
+  } else {
+    throw new Error('"issue-term" or "issue-number" must be specified.');
+  }
+
+  if (!('repo' in params)) {
+    throw new Error('"repo" is required.');
+  }
+
+  if (!('origin' in params)) {
+    throw new Error('"origin" is required.');
+  }
+
+  var matches = _repoRegex.default.exec(params.repo);
+
+  if (matches === null) {
+    throw new Error("Invalid repo: \"" + params.repo + "\"");
+  }
+
+  return {
+    owner: matches[1],
+    repo: matches[2],
+    issueTerm: issueTerm,
+    issueNumber: issueNumber,
+    origin: params.origin,
+    url: params.url,
+    title: params.title,
+    description: params.description,
+    label: params.label,
+    theme: params.theme || 'github-light',
+    session: params.session
+  };
+}
+
+var pageAttributes = readPageAttributes();
+exports.pageAttributes = pageAttributes;
+},{"./deparam":"deparam.ts","./repo-regex":"repo-regex.ts"}],"utterances-api.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -186,6 +262,8 @@ exports.token = void 0;
 var _utterancesApi = require("./utterances-api");
 
 var _deparam = require("./deparam");
+
+var _pageAttributes = require("./page-attributes");
 
 var __awaiter = void 0 && (void 0).__awaiter || function (thisArg, _arguments, P, generator) {
   function adopt(value) {
@@ -351,11 +429,19 @@ function loadToken() {
             return [2, token.value];
           }
 
+          if (!_pageAttributes.pageAttributes.session) {
+            return [2, null];
+          }
+
           url = _utterancesApi.UTTERANCES_API + "/token";
           return [4, fetch(url, {
             method: 'POST',
             mode: 'cors',
-            credentials: 'include'
+            credentials: 'include',
+            headers: {
+              'content-type': 'application/json'
+            },
+            body: JSON.stringify(_pageAttributes.pageAttributes.session)
           })];
 
         case 1:
@@ -374,88 +460,7 @@ function loadToken() {
     });
   });
 }
-},{"./utterances-api":"utterances-api.ts","./deparam":"deparam.ts"}],"page-attributes.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.pageAttributes = void 0;
-
-var _deparam = require("./deparam");
-
-var _repoRegex = _interopRequireDefault(require("./repo-regex"));
-
-var _oauth = require("./oauth");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function readPageAttributes() {
-  var params = (0, _deparam.deparam)(location.search.substr(1));
-  var issueTerm = null;
-  var issueNumber = null;
-
-  if ('issue-term' in params) {
-    issueTerm = params['issue-term'];
-
-    if (issueTerm !== undefined) {
-      if (issueTerm === '') {
-        throw new Error('When issue-term is specified, it cannot be blank.');
-      }
-
-      if (['title', 'url', 'pathname', 'og:title'].indexOf(issueTerm) !== -1) {
-        if (!params[issueTerm]) {
-          throw new Error("Unable to find \"" + issueTerm + "\" metadata.");
-        }
-
-        issueTerm = params[issueTerm];
-      }
-    }
-  } else if ('issue-number' in params) {
-    issueNumber = +params['issue-number'];
-
-    if (issueNumber.toString(10) !== params['issue-number']) {
-      throw new Error("issue-number is invalid. \"" + params['issue-number']);
-    }
-  } else {
-    throw new Error('"issue-term" or "issue-number" must be specified.');
-  }
-
-  if (!('repo' in params)) {
-    throw new Error('"repo" is required.');
-  }
-
-  if (!('origin' in params)) {
-    throw new Error('"origin" is required.');
-  }
-
-  var matches = _repoRegex.default.exec(params.repo);
-
-  if (matches === null) {
-    throw new Error("Invalid repo: \"" + params.repo + "\"");
-  }
-
-  if (params.token) {
-    _oauth.token.value = params.token;
-  }
-
-  return {
-    owner: matches[1],
-    repo: matches[2],
-    issueTerm: issueTerm,
-    issueNumber: issueNumber,
-    origin: params.origin,
-    url: params.url,
-    title: params.title,
-    description: params.description,
-    label: params.label,
-    theme: params.theme || 'github-light'
-  };
-}
-
-var pageAttributes = readPageAttributes();
-exports.pageAttributes = pageAttributes;
-},{"./deparam":"deparam.ts","./repo-regex":"repo-regex.ts","./oauth":"oauth.ts"}],"encoding.ts":[function(require,module,exports) {
+},{"./utterances-api":"utterances-api.ts","./deparam":"deparam.ts","./page-attributes":"page-attributes.ts"}],"encoding.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
