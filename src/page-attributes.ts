@@ -1,6 +1,5 @@
 import { deparam } from './deparam';
 import repoRegex from './repo-regex';
-import { token } from './oauth';
 
 function readPageAttributes() {
   const params = deparam(location.search.substr(1));
@@ -42,10 +41,6 @@ function readPageAttributes() {
     throw new Error(`Invalid repo: "${params.repo}"`);
   }
 
-  if (params.token) {
-    token.value = params.token;
-  }
-
   return {
     owner: matches[1],
     repo: matches[2],
@@ -56,7 +51,8 @@ function readPageAttributes() {
     title: params.title,
     description: params.description,
     label: params.label,
-    theme: params.theme || 'github-light'
+    theme: params.theme || 'github-light',
+    session: params.session
   };
 }
 

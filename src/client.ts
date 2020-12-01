@@ -2,10 +2,11 @@ import { param, deparam } from './deparam';
 import { ResizeMessage } from './measure';
 import { preferredThemeId, preferredTheme } from './preferred-theme';
 
-// slice access token from query string
+// slice session from query string
 const params = deparam(location.search.substr(1));
-const token = params.utterances;
-if (token) {
+const session = params.utterances;
+if (session) {
+  localStorage.setItem('utterances-session', session);
   delete params.utterances;
   let search = param(params);
   if (search.length) {
@@ -46,7 +47,7 @@ if (len > 1000) {
 }
 const ogtitleMeta = document.querySelector(`meta[property='og:title'],meta[name='og:title']`) as HTMLMetaElement;
 attrs['og:title'] = ogtitleMeta ? ogtitleMeta.content : '';
-attrs.token = token;
+attrs.session = session || localStorage.getItem('utterances-session') || '';
 
 // create the standard utterances styles and insert them at the beginning of the
 // <head> for easy overriding.
