@@ -151,3 +151,4 @@
 * [tommi.space](https://tommi.space)
 * [devliusir.github.io](https://devliusir.github.io)
 * [爱前端](https://ifront.net)
+* [blog.psousa.dev](https://blog.psousa.dev)
