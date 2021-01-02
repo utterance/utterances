@@ -3,6 +3,7 @@
 * [danyow.net](https://danyow.net)
 * [os.phil-opp.com](https://os.phil-opp.com/second-edition)
 * [winterland.me](http://winterland.me/)
+* [irosyadi](https://irosyadi.netlify.app/)
 * [davidbaker.is/scribbling](https://davidbaker.is/scribbling)
 * [lonr.github.io](https://lonr.github.io)
 * [Mapping thoughts to language](http://blog.ville.oikarinen.org)
