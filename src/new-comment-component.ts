@@ -69,7 +69,7 @@ export class NewCommentComponent {
             Styling with Markdown is supported
           </a>
           <button class="btn btn-primary" type="submit">Comment</button>
-          <a class="btn btn-primary" href="${getLoginUrl(page.url)}" target="_top">Sign in to comment</a>
+          <a class="btn btn-primary" href="${getLoginUrl(page.url)}" target="_top">Sign in with GitHub to comment</a>
         </footer>
       </form>`;
 
@@ -106,7 +106,7 @@ export class NewCommentComponent {
       this.avatar.alt = '@anonymous';
       this.avatar.src = anonymousAvatarUrl;
       this.textarea.disabled = true;
-      this.textarea.placeholder = 'Sign in to comment';
+      this.textarea.placeholder = 'Sign in with GitHub to comment';
     }
   }
 
