@@ -8,10 +8,10 @@
     <link rel="preconnect" href="https://api.github.com">
     <link rel="preconnect" href="https://avatars3.githubusercontent.com">
     <if condition="NODE_ENV === 'production'">
-      <link id="theme-stylesheet" rel="stylesheet" href="https://utteranc.es/stylesheets/themes/github-light/index.css">
+      <link id="theme-stylesheet" rel="stylesheet" href="https://utterances.allenfrostline.com/stylesheets/themes/nella-red/index.css">
     </if>
     <else>
-      <link id="theme-stylesheet" rel="stylesheet" href="http://localhost:4000/stylesheets/themes/github-light/index.css">
+      <link id="theme-stylesheet" rel="stylesheet" href="http://localhost:4000/stylesheets/themes/nella-red/index.css">
     </else>
     <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32x32.png">
@@ -20,7 +20,7 @@
     <link rel="mask-icon" href="./icons/safari-pinned-tab.svg" color="#4c2889">
     <link rel="shortcut icon" href="./icons/favicon.ico">
     <if condition="NODE_ENV === 'production'">
-      <link rel="canonical" href="https://utteranc.es">
+      <link rel="canonical" href="https://utterances.allenfrostline.com">
     </if>
     <else>
       <link rel="canonical" href="http://localhost:4000/index.html">
@@ -67,11 +67,11 @@
     <script src="./index.ts"></script>
 
     <if condition="NODE_ENV === 'production'">
-      <script src="https://utteranc.es/client.js"
-              repo="utterance/utterances"
-              issue-term="homepage"
+      <script src="https://utterances.allenfrostline.com/client.js"
+              repo="allenfrostline/allenfrostline.github.io"
+              issue-term="pathname"
               crossorigin="anonymous"
-              theme="github-light"
+              theme="nella-red"
               async>
       </script>
     </if>
@@ -81,7 +81,7 @@
               issue-term="pathname"
               label="💬 comment"
               crossorigin="anonymous"
-              theme="github-light"
+              theme="nella-red"
               async>
       </script>
     </else>

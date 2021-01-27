@@ -1,0 +1,51 @@
+.timeline summary:hover {
+    color: $red-light;
+}
+
+.timeline a {
+    text-decoration: none;
+}
+
+.current-user .comment-header {
+    background: $red-lighter!important;
+}
+
+.author-association-badge {
+    border-color: $gray-dark!important;
+}
+
+.markdown-body a {
+    color: $red-light;
+}
+
+.markdown-body pre, code {
+    font-size: 14px!important;
+}
+
+.markdown-info svg {
+    vertical-align: -4px!important;
+    padding-left: 2px;
+}
+
+.timeline-comment button {
+    font-size: 14px;
+}
+
+.timeline-comment textarea {
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.comment-footer {
+    border-width: 0;
+    line-height: 25px;
+    height: 40px!important;
+}
+
+.timeline-header em {
+    display: none;
+}
+
+.timeline-header .text-link {
+    font-style: italic;
+}
