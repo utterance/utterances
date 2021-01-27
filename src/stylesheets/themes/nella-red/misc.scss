@@ -6,12 +6,20 @@
     text-decoration: none;
 }
 
+.current-user .comment-header {
+    background: $red-lighter!important;
+}
+
+.author-association-badge {
+    border-color: $gray-dark!important;
+}
+
 .markdown-body a {
     color: $red-light;
 }
 
 .markdown-body pre, code {
-    font-size: 75%!important;
+    font-size: 14px!important;
 }
 
 .markdown-info svg {

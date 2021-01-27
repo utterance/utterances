@@ -20,8 +20,8 @@
     "start": "parcel serve src/*.html src/client.ts src/stylesheets/themes/*/{index,utterances}.scss --no-hmr --port 4000",
     "build": "parcel build src/*.html src/client.ts src/stylesheets/themes/*/{index,utterances}.scss --experimental-scope-hoisting",
     "lint": "tslint --project tsconfig.json",
-    "predeploy": "yarn run build && touch dist/.nojekyll",
-    "deploy": "gh-pages --dest utterances --dist dist"
+    "predeploy": "yarn run build && touch dist/.nojekyll && echo 'utterances.allenfrostline.com' > dist/CNAME",
+    "deploy": "gh-pages --dist dist"
   },
   "devDependencies": {
     "@primer/css": "^14.2.0",

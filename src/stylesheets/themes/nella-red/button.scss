@@ -40,14 +40,13 @@
 }
 
 .btn-outline:hover {
-    color: $white;
-    background: $red-normal;
+    color: $black;
+    background: $red-lighter;
     border-width: 0px;
 }
 
 .btn-outline:disabled {
     color: $white;
-    background: none;
     border-width: 0px;
 }
 
