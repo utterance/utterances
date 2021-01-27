@@ -1,0 +1,56 @@
+.btn-primary {
+  display: inline-block;
+  padding: 5px 8px;
+  background: $red-normal;
+  border-bottom: 4px solid $red-dark;
+  border-right: 4px solid $red-dark;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  font-weight: 600;
+  font-size: 16px;
+  position: relative;
+  height: 34px;
+  line-height: 20px;
+  outline-width: 0px;
+  vertical-align: middle;
+  color: $white;
+}
+
+.btn-primary:hover {
+  background: $red-light;
+}
+
+.btn-primary:active {
+  background: $red-dark2;
+}
+
+.btn-primary:disabled {
+  background: $red-normal;
+  opacity: 0.4;
+}
+
+.btn-outline {
+    color: $gray-dark;
+    background: none;
+    vertical-align: middle;
+    border-width: 0px;
+    padding: 8px 6px!important;
+}
+
+.btn-outline:hover {
+    color: $white;
+    background: $red-normal;
+    border-width: 0px;
+}
+
+.btn-outline:disabled {
+    color: $white;
+    background: none;
+    border-width: 0px;
+}
+
+.reactions-popover summary {
+  padding: 8px 10px!important;
+}
