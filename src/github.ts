@@ -28,7 +28,7 @@ function githubRequest(relativeUrl: string, init?: RequestInit) {
   init.cache = 'no-cache'; // force conditional request
   const request = new Request(GITHUB_API + relativeUrl, init);
   request.headers.set('Accept', GITHUB_ENCODING__REACTIONS_PREVIEW);
-  if (!/^search\//.test(relativeUrl) && token.value !== null) {
+  if (token.value !== null) {
     request.headers.set('Authorization', `token ${token.value}`);
   }
   return request;
