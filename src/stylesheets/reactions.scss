@@ -8,14 +8,14 @@
   overflow-x: hidden;
   overflow-y: visible;
   > .reaction-button:last-child {
-    border-right: none!important;
+    border-right: none !important;
   }
 }
 
 .reaction-list > .reaction-button {
   font-weight: normal;
   padding: $spacer-2 $spacer-3;
-  border-radius: 0!important;
+  border-radius: 0 !important;
 
   &[reaction-count="0"] {
     display: none;
@@ -49,7 +49,7 @@
     padding: $spacer-1;
     display: flex;
     flex-wrap: wrap;
-    width: 48px * 4;
+    width: 150px;
     background-color: $bg-white;
     border: $border;
     border-radius: $border-radius;
@@ -64,11 +64,12 @@
 
   .reaction-button {
     border: none;
-    border-radius: 0!important;
-    transition: transform .15s cubic-bezier(.2, 0, .13, 2);
-    background: transparent!important;
+    border-radius: 0 !important;
+    transition: transform 0.15s cubic-bezier(0.2, 0, 0.13, 2);
+    background: transparent !important;
     white-space: nowrap;
-    
+    padding: $spacer-1 $spacer-2;
+
     &:hover {
       transform: scale(1.2);
       color: $text-blue !important;
@@ -92,5 +93,14 @@
 
   .reaction-button:hover + & {
     display: block;
+  }
+}
+
+.reaction-button {
+  box-shadow: none;
+  &:focus-visible {
+    box-shadow: none;
+    outline: 1px dotted #000;
+    outline-offset: -1px;
   }
 }
