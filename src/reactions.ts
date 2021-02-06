@@ -32,7 +32,7 @@ export function getReactionHtml(url: string, reaction: ReactionID, disabled: boo
     type="submit"
     action="javascript:"
     formaction="${url}"
-    class="btn BtnGroup-item btn-outline reaction-button"
+    class="btn BtnGroup-item reaction-button"
     value="${reaction}"
     aria-label="Toggle ${reactionNames[reaction]} reaction"
     reaction-count="${count}"
