@@ -135,7 +135,7 @@
 * [程序员wxianfeng](http://wxianfeng.com)
 * [Nick's Blog](https://stx.ie)
 * [arunvelsriram.dev](https://arunvelsriram.dev)
-* [Vasant's Homepage] (https://vasantmarur.net)
+* [Vasant's Homepage](https://vasantmarur.net)
 * [LuisCarlosPando.com](https://luiscarlospando.com)
 * [rizkhal.github.io](https://rizkhal.github.io)
 * [Gopherlabs](https://gopherlabs.kubedaily.com/)
