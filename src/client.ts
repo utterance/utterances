@@ -64,6 +64,7 @@ document.head.insertAdjacentHTML(
       margin-right: auto;
     }
     .utterances-frame {
+      color-scheme: light;
       position: absolute;
       left: 0;
       right: 0;
