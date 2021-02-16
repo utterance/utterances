@@ -29,6 +29,8 @@
     color: $text-gray;
     background-color: $bg-gray;
     border-bottom: $border;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
   }
 
   .comment-meta {
