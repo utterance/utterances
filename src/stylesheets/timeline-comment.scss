@@ -47,6 +47,8 @@
     background-color: $bg-gray;
     border-bottom: $border;
     margin-bottom: 0;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
   }
 
   .markdown-body {
