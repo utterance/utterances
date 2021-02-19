@@ -151,3 +151,4 @@
 * [tommi.space](https://tommi.space)
 * [devliusir.github.io](https://devliusir.github.io)
 * [爱前端](https://ifront.net)
+* [白小飞のBlog](https://blog.baixf.tk)
