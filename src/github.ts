@@ -153,8 +153,8 @@ export function loadIssueByTerm(term: string) {
       }
     }
     // tslint:disable-next-line:no-console
-    console.warn(`Issue search results do not contain an issue with title matching "${term}". Using first result.`);
-    return results.items[0];
+    console.warn(`Issue search results do not contain an issue with title matching "${term}".`);
+    return null;
   });
 }
 
