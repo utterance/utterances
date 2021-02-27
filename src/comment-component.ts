@@ -98,7 +98,7 @@ export class CommentComponent {
 
 export function processRenderedMarkdown(markdownBody: Element) {
   Array.from(markdownBody.querySelectorAll<HTMLAnchorElement>(':not(.email-hidden-toggle) > a'))
-    .forEach(a => { a.target = '_top'; a.rel = 'noopener noreferrer'; });
+    .forEach(a => { a.target = '_blank'; a.rel = 'external nofollow noopener noreferrer'; });
   Array.from(markdownBody.querySelectorAll<HTMLImageElement>('img'))
     .forEach(img => img.onload = scheduleMeasure);
   Array.from(markdownBody.querySelectorAll<HTMLAnchorElement>('a.commit-tease-sha'))
