@@ -49,6 +49,14 @@
     margin-bottom: 0;
     border-top-left-radius: $border-radius;
     border-top-right-radius: $border-radius;
+
+    .tabnav-tabs[role="tablist"] {
+      padding: 2px 0 0 2px;
+
+      .tab-write {
+        margin-right: 2px;
+      }
+    }
   }
 
   .markdown-body {
