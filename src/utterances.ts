@@ -105,7 +105,8 @@ async function renderComments(issue: Issue, timeline: TimelineComponent) {
     pageLoads.push(loadCommentsPage(issue.number, pageCount));
   }
   // if the last page is small, load the penultimate page.
-  if (pageCount > 2 && issue.comments % PAGE_SIZE < 3) {
+  if (pageCount > 2 && issue.comments % PAGE_SIZE < 3 &&
+    issue.comments % PAGE_SIZE !== 0) {
     pageLoads.push(loadCommentsPage(issue.number, pageCount - 1));
   }
   // await all loads to reduce jank.
