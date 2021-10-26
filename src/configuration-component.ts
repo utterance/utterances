@@ -137,6 +137,7 @@ export class ConfigurationComponent {
         <option value="dark-blue">Dark Blue</option>
         <option value="photon-dark">Photon Dark</option>
         <option value="boxy-light">Boxy Light</option>
+        <option value="gruvbox-dark">Gruvbox Dark</option>
       </select>
 
       <h3 id="heading-enable">Enable Utterances</h3>
