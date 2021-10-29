@@ -1,47 +1,46 @@
 /* Gruvbox Color Variables; intended to be plugged into Dark Orange below */
 
-$dark0-hard:     #1d2021;
-$dark0:          #282828;
-$dark0-soft:     #32302f;
-$dark1:          #3c3836;
-$dark2:          #504945;
-$dark3:          #665c54;
-$dark4:          #7c6f64;
+$dark0-hard: #1d2021;
+$dark0: #282828;
+$dark0-soft: #32302f;
+$dark1: #3c3836;
+$dark2: #504945;
+$dark3: #665c54;
+$dark4: #7c6f64;
 
-$gray:           #928374;
+$gray: #928374;
 
-$light0-hard:    #f9f5d7;
-$light0:         #fbf1c7;
-$light0-soft:    #f2e5bc;
-$light1:         #ebdbb2;
-$light2:         #d5c4a1;
-$light3:         #bdae93;
-$light4:         #a89984;
+$light0-hard: #f9f5d7;
+$light0: #fbf1c7;
+$light0-soft: #f2e5bc;
+$light1: #ebdbb2;
+$light2: #d5c4a1;
+$light3: #bdae93;
+$light4: #a89984;
 
-$bright-red:     #fb4934;
-$bright-green:   #b8bb26;
-$bright-yellow:  #fabd2f;
-$bright-blue:    #83a598;
-$bright-purple:  #d3869b;
-$bright-aqua:    #8ec07c;
-$bright-orange:  #fe8019;
+$bright-red: #fb4934;
+$bright-green: #b8bb26;
+$bright-yellow: #fabd2f;
+$bright-blue: #83a598;
+$bright-purple: #d3869b;
+$bright-aqua: #8ec07c;
+$bright-orange: #fe8019;
 
-$neutral-red:    #cc241d;
-$neutral-green:  #98971a;
+$neutral-red: #cc241d;
+$neutral-green: #98971a;
 $neutral-yellow: #d79921;
-$neutral-blue:   #458588;
+$neutral-blue: #458588;
 $neutral-purple: #b16286;
-$neutral-aqua:   #689d6a;
+$neutral-aqua: #689d6a;
 $neutral-orange: #d65d0e;
 
-$faded-red:      #9d0006;
-$faded-green:    #79740e;
-$faded-yellow:   #b57614;
-$faded-blue:     #076678;
-$faded-purple:   #8f3f71;
-$faded-aqua:     #427b58;
-$faded-orange:   #af3a03;
-
+$faded-red: #9d0006;
+$faded-green: #79740e;
+$faded-yellow: #b57614;
+$faded-blue: #076678;
+$faded-purple: #8f3f71;
+$faded-aqua: #427b58;
+$faded-orange: #af3a03;
 
 /* Dark Orange Vars */
 
@@ -49,6 +48,7 @@ $gray-400: $light1;
 $bg-white: $dark0;
 $bg-gray: $dark1;
 $bg-gray-light: $dark1;
+$bg-blue-light: $dark0;
 $border-gray: $gray;
 $border-gray-dark: $border-gray;
 $black-fade-15: rgba(#fff, 0.15);
