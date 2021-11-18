@@ -37,6 +37,10 @@ const canonicalLink = document.querySelector(`link[rel='canonical']`) as HTMLLin
 attrs.url = canonicalLink ? canonicalLink.href : location.origin + location.pathname + location.search;
 attrs.origin = location.origin;
 attrs.pathname = location.pathname.length < 2 ? 'index' : location.pathname.substr(1).replace(/\.\w+$/, '');
+// Remove version segment to create pathnameVersion ( ex: v4.24/my/doc/page -> my/doc/page)
+attrs.pathnameVersion = (attrs.pathname.split("/").length > 1) ?
+  attrs.pathname.split("/").slice(1).join("/") :
+  attrs.pathname;
 attrs.title = document.title;
 const descriptionMeta = document.querySelector(`meta[name='description']`) as HTMLMetaElement;
 attrs.description = descriptionMeta ? descriptionMeta.content : '';
