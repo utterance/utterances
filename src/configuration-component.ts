@@ -49,6 +49,17 @@ export class ConfigurationComponent {
         </div>
         <div class="form-checkbox">
           <label>
+            <input type="radio" value="pathnameVersion" name="mapping">
+            Issue title contains page pathname without version segment
+            <p class="note">
+              Utterances will search for an issue whose title contains the blog post's pathname
+              URL component, without version segment. If a matching issue is not found, Utterances will automatically
+              create one the first time someone comments on your post.
+            </p>
+          </label>
+        </div>
+        <div class="form-checkbox">
+          <label>
             <input type="radio" value="url" name="mapping">
             Issue title contains page URL
             <p class="note">
