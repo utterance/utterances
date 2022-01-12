@@ -36,7 +36,26 @@ function readPageAttributes() {
     throw new Error('"origin" is required.');
   }
 
-  const matches = repoRegex.exec(params.repo);
+  let repo = params.repo;
+  let repoParts = repo.split('/');
+
+  if (repoParts.length >= 2) {
+    let repoOwner = repoParts[repoParts.length - 2];
+    let colonIndex = repoOwner.lastIndexOf(':');
+    if (colonIndex > -1 && repoOwner.length - 1 > colonIndex) {
+      repoOwner = repoOwner.substring(colonIndex + 1);
+    }
+
+    let repoName = repoParts[repoParts.length - 1];
+    let gitExtension = '.git';
+    if (repoName.endsWith(gitExtension)) {
+      repoName = repoName.substring(0, repoName.length - gitExtension.length - 1);
+    }
+
+    repo = repoOwner + '/' + repoName;
+  }
+
+  const matches = repoRegex.exec(repo);
   if (matches === null) {
     throw new Error(`Invalid repo: "${params.repo}"`);
   }
