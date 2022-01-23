@@ -1,3 +1,4 @@
+@import "./scaling";
 @import "@primer/css/base/index";
 @import "@primer/css/utilities/details";
 @import "@primer/css/utilities/box-shadow";
@@ -15,6 +16,10 @@
 @import "./zigzag";
 @import "./reactions";
 
+html {
+  font-size: $scaling * 100%;
+}
+
 html,
 body {
   background-color: transparent;
@@ -22,11 +27,12 @@ body {
 
 body {
   overflow: hidden;
-  padding-bottom: 20px;
+  padding-bottom: rem(20px);  
+  font-size: rem(14px);
 }
 
 .form-control {
-  font-size: $body-font-size;
+  font-size: rem($body-font-size);
 }
 
 .flash-not-installed {

@@ -1,0 +1,13 @@
+$scaling: 0.625;
+
+@function rem($number) {
+    $unit: str-slice($number * 0 + "", 2, -1);
+    
+    @if $unit != 'px' or unitless($number) {
+        @error "The 'rem' function is only applicable to 'px'.";
+    }
+    
+    $defaultFontSize: 16;
+    $remUnit: $number / ($number * 0 + 1) / ($defaultFontSize * $scaling) * 1rem;
+    @return $remUnit;
+}

@@ -4,11 +4,11 @@
 
 .email-hidden-toggle a {
   display: inline-block;
-  height: 12px;
-  padding: 0 9px;
-  font-size: 12px;
+  height: rem(12px);
+  padding: 0 rem(9px);
+  font-size: rem($font-size-small);
   font-weight: 600;
-  line-height: 6px;
+  line-height: rem(6px);
   color: $border-gray-darker;
   text-decoration: none;
   vertical-align: middle;
@@ -35,8 +35,8 @@
 
 .email-quoted-reply,
 .email-signature-reply {
-  padding: 0 15px;
-  margin: 15px 0;
+  padding: 0 rem(15px);
+  margin: rem(15px) 0;
   color: $text-gray;
   border-left: 4px solid $gray-200;
 }

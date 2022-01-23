@@ -1,12 +1,8 @@
 .reaction-list {
   display: flex;
   flex-wrap: nowrap;
-  margin-top: -1px;
-  margin-bottom: -1px;
-  margin-left: -1px;
   border-right: $border;
-  overflow-x: hidden;
-  overflow-y: visible;
+  overflow: visible;
   > .reaction-button:last-child {
     border-right: none !important;
   }
@@ -14,8 +10,17 @@
 
 .reaction-list > .reaction-button {
   font-weight: normal;
-  padding: $spacer-2 $spacer-3;
+  padding: rem($spacer-2) rem($spacer-3);
   border-radius: 0 !important;
+  border-top: none;
+  border-bottom: none;
+
+  &:first-child {
+    border-left: $border;
+    border-bottom: $border;
+    margin-left: -1px;
+    margin-bottom: -1px;
+  }
 
   &[reaction-count="0"] {
     display: none;
@@ -23,20 +28,34 @@
 
   &::after {
     display: inline-block;
-    margin-left: 2px;
+    margin-left: rem(2px);
     content: attr(reaction-count);
   }
 }
 
 .reactions-popover {
   summary {
-    margin: -1px 0;
-    padding: $spacer-2 $spacer-3;
+    height: 100%;
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
     color: $text-gray;
     white-space: nowrap;
     transition: opacity 0.3s ease-in-out;
+    padding: 0 rem($spacer-3);
     &:hover {
       color: $text-blue;
+    }
+
+    .plus-icon {
+      margin-right: rem(3px);
+      width: rem(7px);
+      height: rem(16px);
+    }
+
+    .smile-icon {
+      width: rem(16px);
+      height: rem(16px);
     }
   }
 
@@ -46,10 +65,10 @@
 
   .Popover-message {
     position: relative;
-    padding: $spacer-1;
+    padding: rem($spacer-1);
     display: flex;
     flex-wrap: wrap;
-    width: 150px;
+    width: rem(150px);
     background-color: $bg-white;
     border: $border;
     border-radius: $border-radius;
@@ -57,8 +76,11 @@
 
   .BtnGroup {
     margin: 0 auto;
+    height: rem(28px);
+    display: flex;
+
     &:first-of-type {
-      margin-top: $spacer-6;
+      margin-top: rem($spacer-6);
     }
   }
 
@@ -68,7 +90,7 @@
     transition: transform 0.15s cubic-bezier(0.2, 0, 0.13, 2);
     background: transparent !important;
     white-space: nowrap;
-    padding: $spacer-1 $spacer-2;
+    padding: rem($spacer-1) rem($spacer-2);
 
     &:hover {
       transform: scale(1.2);
@@ -83,9 +105,9 @@
   left: 0;
   right: 0;
   border-bottom: $border;
-  padding: $spacer-2 $spacer-3;
-  background-color: $bg-white;
+  padding: rem($spacer-2) rem($spacer-3);
   pointer-events: none;
+  background-color: $bg-white;
 
   .reaction-button + & {
     display: none;
