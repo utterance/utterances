@@ -36,7 +36,7 @@ body {
 }
 
 .flash-not-installed {
-  margin-bottom: $spacer-3;
+  margin-bottom: rem($spacer-3);
 }
 
 textarea[disabled] {

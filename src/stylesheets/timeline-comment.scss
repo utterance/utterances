@@ -110,10 +110,16 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 rem($spacer-2) rem($spacer-2) rem($spacer-2);
+    flex-direction: column;
+
+    @media screen and (min-width: em(map-get($breakpoints, sm))) {
+      flex-direction: row;
+    }    
 
     .markdown-info {
       font-size: rem($font-size-small);
       margin-right: rem($spacer-1);
+      margin-bottom: rem($spacer-2); 
 
       .markdown-icon {
         width: rem(16px); 
@@ -124,6 +130,8 @@
     }
 
     .btn-sign-in {
+      margin-bottom: rem($spacer-2); 
+
       * {
         vertical-align: middle;
       }
@@ -153,7 +161,7 @@
     display: none;
   }
 
-  @media screen and (min-width: map-get($breakpoints, sm)) {
+  @media screen and (min-width: em(map-get($breakpoints, sm))) {
     .avatar {
       display: block;
       margin-right: rem($spacer-3);

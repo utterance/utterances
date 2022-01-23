@@ -1,4 +1,5 @@
 $scaling: 0.625;
+$default-browser-font-size: 16;
 
 @function rem($number) {
     $unit: str-slice($number * 0 + "", 2, -1);
@@ -7,7 +8,17 @@ $scaling: 0.625;
         @error "The 'rem' function is only applicable to 'px'.";
     }
     
-    $defaultFontSize: 16;
-    $remUnit: $number / ($number * 0 + 1) / ($defaultFontSize * $scaling) * 1rem;
-    @return $remUnit;
+    $remValue: $number / ($number * 0 + 1) / ($default-browser-font-size * $scaling) * 1rem;
+    @return $remValue;
+}
+
+@function em($number) {
+  $unit: str-slice($number * 0 + "", 2, -1);
+  
+  @if $unit != 'px' or unitless($number) {
+      @error "The 'em' function is only applicable to 'px'.";
+  }
+  
+  $emValue: $number / ($number * 0 + 1) / $default-browser-font-size * 1em;
+  @return $emValue;
 }

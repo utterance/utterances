@@ -8,7 +8,7 @@
   padding-left: rem($spacer-3);
   font-size: rem($body-font-size);
   color: $text-gray;
-  @media screen and (min-width: map-get($breakpoints, sm)) {
+  @media screen and (min-width: em(map-get($breakpoints, sm))) {
     padding-left: rem(44 + $spacer-3);
   }
 }
