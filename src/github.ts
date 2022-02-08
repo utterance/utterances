@@ -5,7 +5,7 @@ import { UTTERANCES_API } from './utterances-api';
 const GITHUB_API = 'https://api.github.com/';
 const GITHUB_ENCODING__HTML_JSON = 'application/vnd.github.VERSION.html+json';
 const GITHUB_ENCODING__HTML = 'application/vnd.github.VERSION.html';
-const GITHUB_ENCODING__REACTIONS_PREVIEW = 'application/vnd.github.squirrel-girl-preview';
+const GITHUB_ENCODING__REST_V3 = 'application/vnd.github.v3+json';
 
 export const PAGE_SIZE = 25;
 
@@ -27,7 +27,7 @@ function githubRequest(relativeUrl: string, init?: RequestInit) {
   init.mode = 'cors';
   init.cache = 'no-cache'; // force conditional request
   const request = new Request(GITHUB_API + relativeUrl, init);
-  request.headers.set('Accept', GITHUB_ENCODING__REACTIONS_PREVIEW);
+  request.headers.set('Accept', GITHUB_ENCODING__REST_V3);
   if (token.value !== null) {
     request.headers.set('Authorization', `token ${token.value}`);
   }
@@ -171,7 +171,7 @@ export function loadIssueByNumber(issueNumber: number) {
 function commentsRequest(issueNumber: number, page: number) {
   const url = `repos/${owner}/${repo}/issues/${issueNumber}/comments?page=${page}&per_page=${PAGE_SIZE}`;
   const request = githubRequest(url);
-  const accept = `${GITHUB_ENCODING__HTML_JSON},${GITHUB_ENCODING__REACTIONS_PREVIEW}`;
+  const accept = `${GITHUB_ENCODING__HTML_JSON},${GITHUB_ENCODING__REST_V3}`;
   request.headers.set('Accept', accept);
   return request;
 }
@@ -208,7 +208,7 @@ export function createIssue(issueTerm: string, documentUrl: string, title: strin
       body: `# ${title}\n\n${description}\n\n[${documentUrl}](${documentUrl})`
     })
   });
-  request.headers.set('Accept', GITHUB_ENCODING__REACTIONS_PREVIEW);
+  request.headers.set('Accept', GITHUB_ENCODING__REST_V3);
   request.headers.set('Authorization', `token ${token.value}`);
   return fetch(request).then<Issue>(response => {
     if (!response.ok) {
@@ -222,7 +222,7 @@ export function postComment(issueNumber: number, markdown: string) {
   const url = `repos/${owner}/${repo}/issues/${issueNumber}/comments`;
   const body = JSON.stringify({ body: markdown });
   const request = githubRequest(url, { method: 'POST', body });
-  const accept = `${GITHUB_ENCODING__HTML_JSON},${GITHUB_ENCODING__REACTIONS_PREVIEW}`;
+  const accept = `${GITHUB_ENCODING__HTML_JSON},${GITHUB_ENCODING__REST_V3}`;
   request.headers.set('Accept', accept);
   return githubFetch(request).then<IssueComment>(response => {
     if (!response.ok) {
@@ -238,7 +238,7 @@ export async function toggleReaction(url: string, content: ReactionID) {
   // API responds that the reaction already exists, delete it.
   const body = JSON.stringify({ content });
   const postRequest = githubRequest(url, { method: 'POST', body });
-  postRequest.headers.set('Accept', GITHUB_ENCODING__REACTIONS_PREVIEW);
+  postRequest.headers.set('Accept', GITHUB_ENCODING__REST_V3);
   const response = await githubFetch(postRequest);
   const reaction: Reaction = response.ok ? await response.json() : null;
   if (response.status === 201) { // reaction created.
@@ -249,7 +249,7 @@ export async function toggleReaction(url: string, content: ReactionID) {
   }
   // reaction already exists... delete.
   const deleteRequest = githubRequest(`reactions/${reaction.id}`, { method: 'DELETE' });
-  deleteRequest.headers.set('Accept', GITHUB_ENCODING__REACTIONS_PREVIEW);
+  deleteRequest.headers.set('Accept', GITHUB_ENCODING__REST_V3);
   await githubFetch(deleteRequest);
   return { reaction, deleted: true };
 }
