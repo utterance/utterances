@@ -1,7 +1,7 @@
 .timeline-comment {
   display: flex;
   align-items: flex-start;
-  margin: $spacer-3 0;
+  margin: rem($spacer-3) 0;
 
   .avatar {
     display: none;
@@ -10,13 +10,15 @@
 
   .avatar > img {
     border-radius: $border-radius;
+    height: rem(44px);
+    width: rem(44px);
   }
 
   .comment {
     position: relative;
     flex-grow: 1;
     flex-basis: 0;
-    min-width: 0px;
+    min-width: 0;
     background-color: $bg-white;
     border: $border;
     border-radius: $border-radius;
@@ -34,7 +36,7 @@
   }
 
   .comment-meta {
-    padding: 10px $spacer-3;
+    padding: rem(10px) rem($spacer-3);
   }
 
   .comment-actions {
@@ -43,7 +45,7 @@
   }
 
   .new-comment-header {
-    padding: $spacer-2 $spacer-2 0 $spacer-2;
+    padding: rem($spacer-2) rem($spacer-2) 0 rem($spacer-2);
     background-color: $bg-gray;
     border-bottom: $border;
     margin-bottom: 0;
@@ -52,25 +54,25 @@
   }
 
   .markdown-body {
-    padding: $spacer-3 $spacer-3;
-    font-size: $body-font-size;
+    padding: rem($spacer-3) rem($spacer-3);
+    font-size: rem($body-font-size);
   }
 
   .comment-body {
-    padding: $spacer-2;
+    padding: rem($spacer-2);
 
     textarea {
       appearance: none;
       display: block;
-      max-height: 550px;
+      max-height: rem(550px);
       resize: vertical;
     }
 
     textarea,
     .markdown-body {
-      padding: $spacer-2;
+      padding: rem($spacer-2);
       width: 100%;
-      min-height: 90px;
+      min-height: rem(90px);
       border: $border;
       border-radius: $border-radius;
     }
@@ -95,7 +97,6 @@
     }
 
     &:not(:hover) .reactions-popover:not([open]) {
-      height: 0;
       overflow: hidden;
       opacity: 0;
       summary {
@@ -108,11 +109,37 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 $spacer-2 $spacer-2 $spacer-2;
+    padding: 0 rem($spacer-2) rem($spacer-2) rem($spacer-2);
+    flex-direction: column;
+
+    @media screen and (min-width: em(map-get($breakpoints, sm))) {
+      flex-direction: row;
+    }    
 
     .markdown-info {
-      font-size: $font-size-small;
-      margin-right: $spacer-1;
+      font-size: rem($font-size-small);
+      margin-right: rem($spacer-1);
+      margin-bottom: rem($spacer-2); 
+
+      .markdown-icon {
+        width: rem(16px); 
+        height: rem(16px); 
+        vertical-align: bottom;
+        fill: currentColor;
+      }
+    }
+
+    .btn-sign-in {
+      margin-bottom: rem($spacer-2); 
+
+      * {
+        vertical-align: middle;
+      }
+
+      .github-icon {
+        width: rem(16px);
+        height: rem(16px);
+      }
     }
   }
 
@@ -121,12 +148,12 @@
   }
 
   .author-association-badge {
-    margin-top: -1px;
-    margin-right: $spacer-1;
-    padding: 2px 5px;
+    margin-top: rem(-1px);
+    margin-right: rem($spacer-1);
+    padding: rem(2px) rem(5px);
     border: $border;
     border-radius: $border-radius;
-    font-size: $font-size-small;
+    font-size: rem($font-size-small);
     font-weight: $font-weight-semibold;
   }
 
@@ -134,10 +161,10 @@
     display: none;
   }
 
-  @media screen and (min-width: map-get($breakpoints, sm)) {
+  @media screen and (min-width: em(map-get($breakpoints, sm))) {
     .avatar {
       display: block;
-      margin-right: $spacer-3;
+      margin-right: rem($spacer-3);
     }
 
     .comment {

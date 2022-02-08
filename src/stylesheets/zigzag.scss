@@ -8,7 +8,7 @@ $zz-line-color: $border-gray;
 .zigzag {
 	background: $zz-background-color;
 	position: relative;
-	height: $zz-height;
+	height: rem($zz-height);
 	z-index: 1;
 	&:before,
 	&:after {
@@ -24,7 +24,7 @@ $zz-line-color: $border-gray;
 		background: linear-gradient(-135deg, $zz-line-color $zz-halfheight, transparent 0) 0 $zz-halfheight, linear-gradient( 135deg, $zz-line-color $zz-halfheight, transparent 0) 0 $zz-halfheight;
 		background-position: top left;
 		background-repeat: repeat-x;
-		background-size: $zz-height $zz-height;
+		background-size: rem($zz-height) rem($zz-height);
 	}
 	&:after {
 		height: $zz-height;
@@ -32,6 +32,6 @@ $zz-line-color: $border-gray;
 		background: linear-gradient(-135deg, $zz-background-color $zz-halfheight, transparent 0) 0 $zz-halfheight, linear-gradient( 135deg, $zz-background-color $zz-halfheight, transparent 0) 0 $zz-halfheight;
 		background-position: top left;
 		background-repeat: repeat-x;
-		background-size: $zz-height $zz-height;
+		background-size: rem($zz-height) rem($zz-height);
 	}
 }

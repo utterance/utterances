@@ -1,15 +1,15 @@
 .timeline {
-  margin: $spacer-3 0;
-  padding: 0 $spacer-1;
+  margin: rem($spacer-3) 0;
+  padding: 0 rem($spacer-1);
 }
 
 .timeline-header {
   margin: 0;
-  padding-left: $spacer-3;
-  font-size: $body-font-size;
+  padding-left: rem($spacer-3);
+  font-size: rem($body-font-size);
   color: $text-gray;
-  @media screen and (min-width: map-get($breakpoints, sm)) {
-    padding-left: 44 + $spacer-3;
+  @media screen and (min-width: em(map-get($breakpoints, sm))) {
+    padding-left: rem(44 + $spacer-3);
   }
 }
 
@@ -19,7 +19,7 @@
 
 .page-loader {
   position: relative;
-  margin: 40px 0;
+  margin: rem(40px) 0;
   
   .btn {
     position: absolute;

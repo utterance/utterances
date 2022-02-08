@@ -12,14 +12,26 @@
 }
 
 .markdown-body-scrollable {
-  max-height: 450px;
+  max-height: rem(450px);
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
+.markdown-body {
+  kbd {
+    font-size: rem($font-size-small);
+    padding: rem(3px) rem(5px);
+  }
+}
+
 .markdown-body .highlight-source-js > pre {
   -webkit-overflow-scrolling: touch;
+}
+
+.btn {
+  font-size: rem($body-font-size);
+  padding: rem(5px) rem(16px);
 }
 
 .btn-outline {
@@ -35,4 +47,9 @@
         display: none;
     }
   }
+}
+
+.tabnav-tab {
+  font-size: rem($font-size-small);
+  padding: rem(8px) rem(16px);
 }

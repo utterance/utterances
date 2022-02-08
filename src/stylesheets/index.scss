@@ -1,3 +1,4 @@
+@import "./scaling";
 @import "@primer/css/base/index";
 @import "@primer/css/buttons/button";
 @import "@primer/css/forms/form-control";
@@ -9,38 +10,84 @@
 @import "./timeline";
 @import "./timeline-comment";
 
+html {
+  font-size: $scaling * 100%;
+}
+
+body {
+  font-size: rem(14px);
+}
+
 .timeline {
   width: 100%;
-  max-width: 760px;
+  max-width: rem(760px);
   margin-left: auto;
   margin-right: auto;
 }
 
 .markdown-body {
-  font-size: 16px;
+  font-size: rem(16px);
 }
 
 form {
-  font-size: $body-font-size;
+  font-size: rem($body-font-size);
 }
 
 fieldset {
   border: none;
-  margin: 0 $spacer-3;
+  margin: 0 rem($spacer-3);
   padding: 0;
 }
 
 input:not([type=radio]) {
-  margin: $spacer-1 0;
+  margin: rem($spacer-1) 0;
 }
 
-.form-checkbox label {
-  display: block;
-  cursor: pointer;
+.form-checkbox {
+  label {
+    display: block;
+    cursor: pointer;
+
+    input {
+      margin: rem(5px) 0 0 rem(-20px) !important;
+    }
+  }
+
+  .note {
+    font-size: rem($font-size-small);
+  }
+}
+
+.config-field {
+  pre {
+    margin-bottom: 0;
+  }
 }
 
 .code-action {
   float: right;
-  margin-top: -$spacer-2;
-  margin-bottom: $spacer-3;
+  margin-top: rem($spacer-2);
+  margin-bottom: rem($spacer-3);
+}
+
+.utterances {
+  max-width: 76rem;
+}
+
+.note {
+  font-size: rem($font-size-small);
+}
+
+.form-control, .form-select {
+  font-size: rem($body-font-size);
+}
+
+.form-select {
+  height: rem($size-5);
+  padding-right: rem($spacer-4);
+  padding: rem(5px) rem(12px);
+  font-size: rem(14px);
+  line-height: rem(20px);
+  background-position: right rem(8px) center;
+  background-size: rem(8px) rem(10px);
 }

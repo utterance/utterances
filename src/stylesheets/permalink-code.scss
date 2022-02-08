@@ -21,12 +21,12 @@
 }
 
 .f6 {
-  font-size: 12px !important;
+  font-size: rem(12px) !important;
 }
 
 .my-2 {
-  margin-top: $spacer-2 !important;
-  margin-bottom: $spacer-2 !important;
+  margin-top:  rem($spacer-2) !important;
+  margin-bottom:  rem($spacer-2) !important;
 }
 
 .mb-0 {
@@ -34,8 +34,8 @@
 }
 
 .px-3 {
-  padding-right: $spacer-3 !important;
-  padding-left: $spacer-3 !important;
+  padding-right:  rem($spacer-3) !important;
+  padding-left:  rem($spacer-3) !important;
 }
 
 .py-0 {
@@ -44,12 +44,12 @@
 }
 
 .py-2 {
-  padding-top: $spacer-2 !important;
-  padding-bottom: $spacer-2 !important;
+  padding-top:  rem($spacer-2) !important;
+  padding-bottom:  rem($spacer-2) !important;
 }
 
 .blob-wrapper-embedded {
-  max-height: 240px;
+  max-height:  rem(240px);
 }
 
 .blob-wrapper {
@@ -65,11 +65,11 @@
 
 .blob-num {
   width: 1%;
-  min-width: 50px;
-  padding-right: 10px;
-  padding-left: 10px;
+  min-width:  rem(50px);
+  padding-right:  rem(10px);
+  padding-left:  rem(10px);
   font-family: $mono-font;
-  font-size: $font-size-small;
+  font-size:  rem($font-size-small);
   line-height: $lh-default;
   color: $black-fade-30;
   text-align: right;
@@ -86,7 +86,7 @@
 .blob-code-inner {
   overflow: visible;
   font-family: $mono-font;
-  font-size: $font-size-small;
+  font-size:  rem($font-size-small);
   color: $text-gray-dark;
   word-wrap: normal;
   white-space: pre;
@@ -94,8 +94,8 @@
 
 .blob-code {
   position: relative;
-  padding-right: 10px;
-  padding-left: 10px;
+  padding-right:  rem(10px);
+  padding-left:  rem(10px);
   line-height: $lh-default;
   vertical-align: top;
 }
