@@ -643,7 +643,7 @@ var __generator = void 0 && (void 0).__generator || function (thisArg, body) {
 var GITHUB_API = 'https://api.github.com/';
 var GITHUB_ENCODING__HTML_JSON = 'application/vnd.github.VERSION.html+json';
 var GITHUB_ENCODING__HTML = 'application/vnd.github.VERSION.html';
-var GITHUB_ENCODING__REACTIONS_PREVIEW = 'application/vnd.github.squirrel-girl-preview';
+var GITHUB_ENCODING__REST_V3 = 'application/vnd.github.v3+json';
 var PAGE_SIZE = 25;
 exports.PAGE_SIZE = PAGE_SIZE;
 var reactionTypes = ['+1', '-1', 'laugh', 'hooray', 'confused', 'heart', 'rocket', 'eyes'];
@@ -662,7 +662,7 @@ function githubRequest(relativeUrl, init) {
   init.mode = 'cors';
   init.cache = 'no-cache';
   var request = new Request(GITHUB_API + relativeUrl, init);
-  request.headers.set('Accept', GITHUB_ENCODING__REACTIONS_PREVIEW);
+  request.headers.set('Accept', GITHUB_ENCODING__REST_V3);
 
   if (_oauth.token.value !== null) {
     request.headers.set('Authorization', "token " + _oauth.token.value);
@@ -823,7 +823,7 @@ function loadIssueByNumber(issueNumber) {
 function commentsRequest(issueNumber, page) {
   var url = "repos/" + owner + "/" + repo + "/issues/" + issueNumber + "/comments?page=" + page + "&per_page=" + PAGE_SIZE;
   var request = githubRequest(url);
-  var accept = GITHUB_ENCODING__HTML_JSON + "," + GITHUB_ENCODING__REACTIONS_PREVIEW;
+  var accept = GITHUB_ENCODING__HTML_JSON + "," + GITHUB_ENCODING__REST_V3;
   request.headers.set('Accept', accept);
   return request;
 }
@@ -862,7 +862,7 @@ function createIssue(issueTerm, documentUrl, title, description, label) {
       body: "# " + title + "\n\n" + description + "\n\n[" + documentUrl + "](" + documentUrl + ")"
     })
   });
-  request.headers.set('Accept', GITHUB_ENCODING__REACTIONS_PREVIEW);
+  request.headers.set('Accept', GITHUB_ENCODING__REST_V3);
   request.headers.set('Authorization', "token " + _oauth.token.value);
   return fetch(request).then(function (response) {
     if (!response.ok) {
@@ -882,7 +882,7 @@ function postComment(issueNumber, markdown) {
     method: 'POST',
     body: body
   });
-  var accept = GITHUB_ENCODING__HTML_JSON + "," + GITHUB_ENCODING__REACTIONS_PREVIEW;
+  var accept = GITHUB_ENCODING__HTML_JSON + "," + GITHUB_ENCODING__REST_V3;
   request.headers.set('Accept', accept);
   return githubFetch(request).then(function (response) {
     if (!response.ok) {
@@ -908,7 +908,7 @@ function toggleReaction(url, content) {
             method: 'POST',
             body: body
           });
-          postRequest.headers.set('Accept', GITHUB_ENCODING__REACTIONS_PREVIEW);
+          postRequest.headers.set('Accept', GITHUB_ENCODING__REST_V3);
           return [4, githubFetch(postRequest)];
 
         case 1:
@@ -941,7 +941,7 @@ function toggleReaction(url, content) {
           deleteRequest = githubRequest("reactions/" + reaction.id, {
             method: 'DELETE'
           });
-          deleteRequest.headers.set('Accept', GITHUB_ENCODING__REACTIONS_PREVIEW);
+          deleteRequest.headers.set('Accept', GITHUB_ENCODING__REST_V3);
           return [4, githubFetch(deleteRequest)];
 
         case 5:
@@ -2218,7 +2218,7 @@ function renderComments(issue, timeline) {
             pageLoads.push((0, _github.loadCommentsPage)(issue.number, pageCount));
           }
 
-          if (pageCount > 2 && issue.comments % _github.PAGE_SIZE < 3) {
+          if (pageCount > 2 && issue.comments % _github.PAGE_SIZE < 3 && issue.comments % _github.PAGE_SIZE !== 0) {
             pageLoads.push((0, _github.loadCommentsPage)(issue.number, pageCount - 1));
           }
 
