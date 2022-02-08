@@ -1,8 +1,7 @@
-import { deparam } from './deparam';
 import repoRegex from './repo-regex';
 
 function readPageAttributes() {
-  const params = deparam(location.search.substr(1));
+  const params = Object.fromEntries(new URL(location.href).searchParams)
 
   let issueTerm: string | null = null;
   let issueNumber: number | null = null;

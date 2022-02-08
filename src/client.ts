@@ -1,18 +1,13 @@
-import { param, deparam } from './deparam';
 import { ResizeMessage } from './measure';
 import { preferredThemeId, preferredTheme } from './preferred-theme';
 
+const url = new URL(location.href);
 // slice session from query string
-const params = deparam(location.search.substr(1));
-const session = params.utterances;
+const session = url.searchParams.get('utterances')
 if (session) {
   localStorage.setItem('utterances-session', session);
-  delete params.utterances;
-  let search = param(params);
-  if (search.length) {
-    search = '?' + search;
-  }
-  history.replaceState(undefined, document.title, location.pathname + search + location.hash);
+  url.searchParams.delete('utterances');
+  history.replaceState(undefined, document.title, url.href);
 }
 
 let script = document.currentScript as HTMLScriptElement;
@@ -34,9 +29,9 @@ if (attrs.theme === preferredThemeId) {
 
 // gather page attributes
 const canonicalLink = document.querySelector(`link[rel='canonical']`) as HTMLLinkElement;
-attrs.url = canonicalLink ? canonicalLink.href : location.origin + location.pathname + location.search;
-attrs.origin = location.origin;
-attrs.pathname = location.pathname.length < 2 ? 'index' : location.pathname.substr(1).replace(/\.\w+$/, '');
+attrs.url = canonicalLink ? canonicalLink.href : url.origin + url.pathname + url.search;
+attrs.origin = url.origin;
+attrs.pathname = url.pathname.length < 2 ? 'index' : url.pathname.substr(1).replace(/\.\w+$/, '');
 attrs.title = document.title;
 const descriptionMeta = document.querySelector(`meta[name='description']`) as HTMLMetaElement;
 attrs.description = descriptionMeta ? descriptionMeta.content : '';
@@ -78,11 +73,11 @@ document.head.insertAdjacentHTML(
 
 // create the comments iframe and it's responsive container
 const utterancesOrigin = script.src.match(/^https:\/\/utteranc\.es|http:\/\/localhost:\d+/)![0];
-const url = `${utterancesOrigin}/utterances.html`;
+const frameUrl = `${utterancesOrigin}/utterances.html`;
 script.insertAdjacentHTML(
   'afterend',
   `<div class="utterances">
-    <iframe class="utterances-frame" title="Comments" scrolling="no" src="${url}?${param(attrs)}" loading="lazy"></iframe>
+    <iframe class="utterances-frame" title="Comments" scrolling="no" src="${frameUrl}?${new URLSearchParams(attrs)}" loading="lazy"></iframe>
   </div>`);
 const container = script.nextElementSibling as HTMLDivElement;
 script.parentElement!.removeChild(script);

@@ -1,12 +1,11 @@
 import { UTTERANCES_API } from './utterances-api';
-import { param } from './deparam';
 import { pageAttributes } from './page-attributes';
 
 export const token = { value: null as null | string };
 
 // tslint:disable-next-line:variable-name
 export function getLoginUrl(redirect_uri: string) {
-  return `${UTTERANCES_API}/authorize?${param({ redirect_uri })}`;
+  return `${UTTERANCES_API}/authorize?${new URLSearchParams({ redirect_uri })}`;
 }
 
 export async function loadToken(): Promise<string | null> {
