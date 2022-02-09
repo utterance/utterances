@@ -16,19 +16,27 @@
     "type": "git",
     "url": "https://github.com/utterance/utterances.git"
   },
+  "browserslist": "last 3 Chrome versions,last 3 Safari versions,last 3 Firefox versions",
+  "targets": {
+    "main": false
+  },
   "scripts": {
     "preparcel": "rm -rf dist;mkdir dist",
-    "parcel": "parcel $RUN src/*.html src/client.ts src/stylesheets/themes/*/{index,utterances}.scss --no-autoinstall --no-cache",
+    "parcel": "parcel $RUN src/*.html src/client.ts src/stylesheets/themes/*/{index,utterances}.scss",
     "build": "RUN=build npm run parcel --",
-    "start": "RUN=watch npm run parcel -- --port 4000",
+    "start": "RUN=serve npm run parcel -- --port 4000",
     "predeploy": "npm run build && touch dist/.nojekyll && echo 'utteranc.es' > dist/CNAME",
     "deploy": "gh-pages --dist dist",
     "reinstall": "git clean -fxd -e .env && rm -f package-lock.json && npm install",
     "update-deps": "npm exec --package npm-check-updates --call 'ncu -u -x @primer/css' && git clean -fxd -e .env && rm package-lock.json && npm install"
   },
   "devDependencies": {
+    "@parcel/packager-raw-url": "^2.2.1",
+    "@parcel/packager-xml": "^2.2.1",
     "@parcel/transformer-sass": "^2.2.1",
     "@parcel/transformer-typescript-tsc": "^2.2.1",
+    "@parcel/transformer-webmanifest": "^2.2.1",
+    "@parcel/transformer-xml": "^2.2.1",
     "@primer/css": "^15.2.0",
     "autoprefixer": "^10.4.2",
     "gh-pages": "^3.2.3",
