@@ -2,12 +2,12 @@
 
 A lightweight comments widget built on GitHub issues. Use GitHub issues for blog comments, wiki pages and more!
 
-* [Open source](https://github.com/utterance). 🙌
-* No tracking, no ads, always free. 📡🚫
-* No lock-in. All data stored in GitHub issues. 🔓
-* Styled with [Primer](http://primer.style), the css toolkit that powers GitHub. 💅
-* Dark theme. 🌘
-* Lightweight. Vanilla TypeScript. No font downloads, JavaScript frameworks or polyfills for evergreen browsers. 🐦🌲
+- [Open source](https://github.com/utterance). 🙌
+- No tracking, no ads, always free. 📡🚫
+- No lock-in. All data stored in GitHub issues. 🔓
+- Styled with [Primer](http://primer.style), the css toolkit that powers GitHub. 💅
+- Dark theme. 🌘
+- Lightweight. Vanilla TypeScript. No font downloads, JavaScript frameworks or polyfills for evergreen browsers. 🐦🌲
 
 ## how it works
 
@@ -19,10 +19,10 @@ To comment, users must authorize the utterances app to post on their behalf usin
 
 ## sites using utterances
 
-* Haxe [documentation](https://haxe.org/manual) and [cookbook](https://code.haxe.org/)
-* [danyow.net](https://danyow.net)
-* [os.phil-opp.com](https://os.phil-opp.com/second-edition)
-* **[and many more...](https://github.com/topics/utterances)**
+- Haxe [documentation](https://haxe.org/manual) and [cookbook](https://code.haxe.org/)
+- [sadsloth.net](https://sadsloth.net/)
+- [danyow.net](https://danyow.net)
+- **[and many more...](https://github.com/topics/utterances)**
 
 Are you using utterances? [Add the `utterances` topic on your repo](https://docs.github.com/en/github/administering-a-repository/classifying-your-repository-with-topics)!
 
