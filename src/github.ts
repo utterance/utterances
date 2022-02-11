@@ -248,7 +248,7 @@ export async function toggleReaction(url: string, content: ReactionID) {
     throw new Error('expected "201 reaction created" or "200 reaction already exists"');
   }
   // reaction already exists... delete.
-  const deleteRequest = githubRequest(`reactions/${reaction.id}`, { method: 'DELETE' });
+  const deleteRequest = githubRequest(`${url}/${reaction.id}`, { method: 'DELETE' });
   deleteRequest.headers.set('Accept', GITHUB_ENCODING__REST_V3);
   await githubFetch(deleteRequest);
   return { reaction, deleted: true };
