@@ -17,6 +17,46 @@ To comment, users must authorize the utterances app to post on their behalf usin
 
 ## configuration
 
+Add the following script tag to your blog's template. Position it where you want the comments to appear. Customize the layout using the .utterances and .utterances-frame selectors.
+```html
+<script src="https://utteranc.es/client.js"
+        repo="<repo>"
+        issue-term="<issue-term>"
+        label="<label>"
+        theme="<theme>"
+        crossorigin="anonymous"
+        async>
+</script>
+```
+The above variables are explained below:
+* repo: Choose the repository utterances will connect to.
+    * Make sure the repo is public, otherwise your readers will not be able to view the issues/comments.
+    * Make sure the [utterances app](https://github.com/apps/utterances) is installed on the repo, otherwise users will not be able to post comments.
+    * If your repo is a fork, navigate to its settings tab and confirm the issues feature is turned on.
+    * Format: `owner/repo`, eg: `utterance/utterances`
+* issue-term: Choose the mapping between blog posts and GitHub issues. Issue term can have one of the following values
+    * pathname - Utterances will search for an issue whose title contains the blog post's pathname URL component. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post. 
+    * url - Utterances will search for an issue whose title contains the blog post's URL. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post. 
+    * title - Utterances will search for an issue whose title contains the blog post's title. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post. 
+    * og:title - Utterances will search for an issue whose title contains the page's Open Graph title meta. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post. 
+    * [ISSUE NUMBER] - You configure Utterances to load a specific issue by number. Issues are not automatically created. 
+    * [SPECIFIC ISSUE TERM] - You configure Utterances to search for an issue whose title contains a specific term of your choosing. If a matching issue is not found, Utterances will automatically create one the first time someone comments on your post. The issue's title will be the term you chose. 
+* label: Choose the label that will be assigned to issues created by Utterances. 
+    * Label names are case sensitive. 
+    * The label must exist in your repo- Utterances cannot attach labels that do not exist. 
+    * Emoji are supported in label names.✨💬✨ 
+ * theme: Choose an Utterances theme that matches your blog. Currently, Utterances supports the following themes
+    * github-light
+    * github-dark
+    * preferred-color-scheme
+    * github-dark-orange
+    * icy-dark
+    * dark-blue
+    * photon-dark
+    * boxy-light
+    
+    Can't find a theme you like? [Contribute](https://github.com/utterance/utterances/blob/master/CONTRIBUTING.md) a custom theme.
+
 ## sites using utterances
 
 - Haxe [documentation](https://haxe.org/manual) and [cookbook](https://code.haxe.org/)
