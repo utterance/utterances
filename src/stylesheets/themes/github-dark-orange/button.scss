@@ -4,9 +4,13 @@
   background: #376b39;
 }
 
-button[role=tab] {
+button[role="tab"] {
   color: $gray-600;
   .selected {
     color: $text-gray-dark;
   }
+}
+
+.tabnav-tab:focus-visible {
+  border-radius: 6px 6px 0 0 !important;
 }
