@@ -5,7 +5,9 @@
 }
 
 button[role=tab] {
+  margin: 0.1rem 0 0 0.1rem;
   color: $light4;
+
   .selected {
     color: $light0;
   }
