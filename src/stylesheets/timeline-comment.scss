@@ -59,6 +59,37 @@
   .comment-body {
     padding: $spacer-2;
 
+    text-expander {
+      display: block;
+      position: relative;
+    }
+
+    .suggester {
+      list-style: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      min-width: 180px;
+      max-height: 84px;
+      overflow: hidden;
+      padding: 0;
+      margin: 0;
+      margin-top: 24px;
+      list-style: none;
+      cursor: pointer;
+      background-color: $bg-white !important;
+      border: 1px solid $border;
+      border-radius: 6px;
+      box-shadow: $box-shadow-medium;
+
+      li[aria-selected=true],
+      li.navigation-focus {
+        color: $blue-000;
+        text-decoration: none;
+        background: $blue-400;
+      }
+    }
+
     textarea {
       appearance: none;
       display: block;

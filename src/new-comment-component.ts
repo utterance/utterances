@@ -4,6 +4,26 @@ import { scheduleMeasure } from './measure';
 import { processRenderedMarkdown } from './comment-component';
 import { getRepoConfig } from './repo-config';
 import { getLoginUrl } from './oauth';
+import '@github/text-expander-element';
+
+type TextExpanderChangeResult = {
+  fragment: HTMLElement;
+  matched: boolean;
+};
+
+interface CustomEventTextExpanderChange extends Event {
+  detail: {
+    provide: (
+      result: Promise<TextExpanderChangeResult> | TextExpanderChangeResult,
+    ) => number;
+    text: string;
+    key: string;
+  };
+}
+
+interface CustomEventTextExpanderValue extends Event {
+  detail: { item: HTMLElement; key: string; value: null | string };
+}
 
 // tslint:disable-next-line:max-line-length
 const anonymousAvatar = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 16" version="1.1"><path fill="rgb(179,179,179)" fill-rule="evenodd" d="M8 10.5L9 14H5l1-3.5L5.25 9h3.5L8 10.5zM10 6H4L2 7h10l-2-1zM9 2L7 3 5 2 4 5h6L9 2zm4.03 7.75L10 9l1 2-2 3h3.22c.45 0 .86-.31.97-.75l.56-2.28c.14-.53-.19-1.08-.72-1.22zM4 9l-3.03.75c-.53.14-.86.69-.72 1.22l.56 2.28c.11.44.52.75.97.75H5l-2-3 1-2z"></path></svg>`;
@@ -19,6 +39,7 @@ export class NewCommentComponent {
   private avatar: HTMLImageElement;
   private form: HTMLFormElement;
   private textarea: HTMLTextAreaElement;
+  private textExpander: HTMLElement;
   private preview: HTMLDivElement;
   private submitButton: HTMLButtonElement;
   private signInAnchor: HTMLAnchorElement;
@@ -51,7 +72,9 @@ export class NewCommentComponent {
           </div>
         </header>
         <div class="comment-body">
-          <textarea class="form-control" placeholder="Leave a comment" aria-label="comment"></textarea>
+          <text-expander keys="@">
+            <textarea class="form-control" placeholder="Leave a comment" aria-label="comment"></textarea>
+          </text-expander>
           <div class="markdown-body" style="display: none">
             ${nothingToPreview}
           </div>
@@ -79,7 +102,8 @@ export class NewCommentComponent {
     this.avatarAnchor = this.element.firstElementChild as HTMLAnchorElement;
     this.avatar = this.avatarAnchor.firstElementChild as HTMLImageElement;
     this.form = this.avatarAnchor.nextElementSibling as HTMLFormElement;
-    this.textarea = this.form!.firstElementChild!.nextElementSibling!.firstElementChild as HTMLTextAreaElement;
+    this.textExpander = this.form!.firstElementChild!.nextElementSibling!.firstElementChild! as HTMLElement;
+    this.textarea = this.form!.firstElementChild!.nextElementSibling!.firstElementChild!.firstElementChild! as HTMLTextAreaElement;
     this.preview = this.form!.firstElementChild!.nextElementSibling!.lastElementChild as HTMLDivElement;
     this.signInAnchor = this.form!.lastElementChild!.lastElementChild! as HTMLAnchorElement;
     this.submitButton = this.signInAnchor.previousElementSibling! as HTMLButtonElement;
@@ -92,6 +116,7 @@ export class NewCommentComponent {
     this.form.addEventListener('click', this.handleClick);
     this.form.addEventListener('keydown', this.handleKeyDown);
     handleTextAreaResize(this.textarea);
+    this.textExpand();
   }
 
   public setUser(user: User | null) {
@@ -139,6 +164,45 @@ export class NewCommentComponent {
         500);
     }
   }
+
+  private textExpand = () => {
+    this.textExpander.addEventListener('text-expander-change', (event) => {
+      const customEvent = event as CustomEventTextExpanderChange;
+      const { key, provide, text } = customEvent.detail;
+      if (key === '@') {
+        const menu = document.createElement('ul');
+        menu.id = 'option-userList';
+        menu.classList.add(
+          ...['suggester', 'position-absolute', 'list-style-none'],
+        );
+        const commentUserList =
+          (JSON.parse(
+            sessionStorage.getItem('commentUserList') as string,
+          ) as string[]) || [];
+        if (commentUserList?.length > 0) {
+          for (const user of commentUserList) {
+            if (user.toLowerCase().includes(text.toLowerCase())) {
+              const item = document.createElement('li');
+              item.setAttribute('role', 'option');
+              item.textContent = user;
+              item.setAttribute('data-value', user.split(' ')[0]);
+              item.id = `option-${user.split(' ')[0]}`;
+              menu.append(item);
+            }
+          }
+          provide(Promise.resolve({ matched: true, fragment: menu }));
+        }
+      }
+    });
+
+    this.textExpander.addEventListener('text-expander-value', (event) => {
+      const customEvent = event as CustomEventTextExpanderValue;
+      const { key, item } = customEvent.detail;
+      if (key === '@')
+        customEvent.detail.value =
+          item.getAttribute('data-value') || item.textContent;
+    });
+  };
 
   private handleSubmit = async (event: Event) => {
     event.preventDefault();
