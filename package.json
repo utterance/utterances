@@ -31,6 +31,7 @@
     "update-deps": "npm exec --package npm-check-updates --call 'ncu -u -x @primer/css' && git clean -fxd -e .env && rm package-lock.json && npm install"
   },
   "devDependencies": {
+    "@github/text-expander-element": "^2.2.2",
     "@parcel/packager-raw-url": "^2.3.1",
     "@parcel/packager-xml": "^2.3.1",
     "@parcel/transformer-sass": "^2.3.1",

@@ -51,6 +51,10 @@ export class TimelineComponent {
   }
 
   public insertComment(comment: IssueComment, incrementCount: boolean) {
+    if (this.user?.login !== comment.user?.login) {
+      setCommentUserList(comment.user?.login);
+    }
+
     const component = new CommentComponent(
       comment,
       this.user ? this.user.login : null,
@@ -110,3 +114,20 @@ export class TimelineComponent {
     this.countAnchor.textContent = `${this.count} Comment${this.count === 1 ? '' : 's'}`;
   }
 }
+
+const setCommentUserList = (userLogin: string | undefined) => {
+  if (!userLogin) {
+    return;
+  }
+  let commentUserList = JSON.parse(
+    sessionStorage.getItem('commentUserList') as string,
+  );
+  if (!commentUserList) {
+    commentUserList = [];
+  }
+
+  if (!commentUserList.includes(`@${userLogin}`)) {
+    commentUserList.push(`@${userLogin}`);
+    sessionStorage.setItem('commentUserList', JSON.stringify(commentUserList));
+  }
+};
