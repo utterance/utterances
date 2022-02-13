@@ -10,6 +10,7 @@ type TextExpanderChangeResult = {
   fragment: HTMLElement;
   matched: boolean;
 };
+
 interface CustomEventTextExpanderChange extends Event {
   detail: {
     provide: (
