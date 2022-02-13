@@ -1,0 +1,14 @@
+@import "./variables";
+
+@mixin selection($element) {
+  #{$element}::selection { @content; }
+}
+
+@include selection("") {
+  background: $highlight;
+  color: $text-gray-dark !important;
+}
+
+@include selection("img") {
+  background: transparentize($highlight, 0.25);
+}

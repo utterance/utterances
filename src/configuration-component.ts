@@ -133,6 +133,7 @@ export class ConfigurationComponent {
         <option value="github-dark">GitHub Dark</option>
         <option value="preferred-color-scheme">Preferred Color Scheme</option>
         <option value="github-dark-orange">GitHub Dark Orange</option>
+        <option value="hugo-terminal-orange">Hugo Terminal Orange</option>
         <option value="icy-dark">Icy Dark</option>
         <option value="dark-blue">Dark Blue</option>
         <option value="photon-dark">Photon Dark</option>

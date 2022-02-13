@@ -1,0 +1,9 @@
+@import "./variables";
+
+@mixin placeholder {
+  ::placeholder { @content; }
+}
+
+@include placeholder {
+  color: $text-gray-dark;
+}

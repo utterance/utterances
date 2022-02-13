@@ -1,0 +1,18 @@
+@import "./variables";
+
+*:focus {
+  outline: none !important;
+  box-shadow: 0 0 0.2em 0.1em opacify($highlight, 0.1);
+  border-radius: 1px;
+}
+
+.tabnav-tab,
+.form-control,
+.form-select {
+  &.focus,
+  &:focus {
+    border-color: transparent;
+    box-shadow: 0 0 0 0.11em opacify($highlight, 0.1) !important;
+    outline-color: transparent;
+  }
+}
