@@ -1,23 +1,24 @@
 import { pageAttributes as page } from './page-attributes';
 import {
+  createIssue as createGitHubIssue,
   Issue,
-  setRepoContext,
-  loadIssueByTerm,
-  loadIssueByNumber,
+  IssueComment,
   loadCommentsPage,
+  loadIssueByNumber,
+  loadIssueByTerm,
   loadUser,
-  postComment,
-  createIssue,
   PAGE_SIZE,
-  IssueComment
+  postComment,
+  setRepoContext
 } from './github';
 import { TimelineComponent } from './timeline-component';
 import { NewCommentComponent } from './new-comment-component';
-import { startMeasuring, scheduleMeasure } from './measure';
+import { scheduleMeasure, startMeasuring } from './measure';
 import { loadTheme } from './theme';
 import { getRepoConfig } from './repo-config';
 import { loadToken } from './oauth';
 import { enableReactions } from './reactions';
+import { PostReactionComponent } from './post-reaction-component';
 
 setRepoContext(page);
 
@@ -29,6 +30,9 @@ function loadIssue(): Promise<Issue | null> {
 }
 
 async function bootstrap() {
+  const main = document.createElement('main');
+  document.body.appendChild(main);
+
   await loadToken();
   // tslint:disable-next-line:prefer-const
   let [issue, user] = await Promise.all([
@@ -40,7 +44,13 @@ async function bootstrap() {
   startMeasuring(page.origin);
 
   const timeline = new TimelineComponent(user, issue);
-  document.body.appendChild(timeline.element);
+  const createIssueCallback = async (newIssue: Issue) => {
+    issue = newIssue;
+    timeline.setIssue(issue);
+  }
+  const postReactionComponent = new PostReactionComponent(user, issue, createIssueCallback);
+  main.appendChild(postReactionComponent.element);
+  main.appendChild(timeline.element);
 
   if (issue && issue.comments > 0) {
     renderComments(issue, timeline);
@@ -57,14 +67,16 @@ async function bootstrap() {
   const submit = async (markdown: string) => {
     await assertOrigin();
     if (!issue) {
-      issue = await createIssue(
+      const newIssue = await createGitHubIssue(
         page.issueTerm as string,
         page.url,
         page.title,
         page.description || '',
         page.label
       );
+      issue = await loadIssueByNumber(newIssue.number);
       timeline.setIssue(issue);
+      postReactionComponent.setIssue(issue);
     }
     const comment = await postComment(issue.number, markdown);
     timeline.insertComment(comment, true);
@@ -137,8 +149,8 @@ async function renderComments(issue: Issue, timeline: TimelineComponent) {
 }
 
 export async function assertOrigin() {
-  const { origins } = await getRepoConfig();
-  const { origin, owner, repo } = page;
+  const {origins} = await getRepoConfig();
+  const {origin, owner, repo} = page;
   if (origins.indexOf(origin) !== -1) {
     return;
   }
@@ -152,7 +164,7 @@ export async function assertOrigin() {
     </a>
     to include <code>${origin}</code> in the list of origins.<br/><br/>
     Suggested configuration:<br/>
-    <pre><code>${JSON.stringify({ origins: [origin] }, null, 2)}</code></pre>
+    <pre><code>${JSON.stringify({origins: [origin]}, null, 2)}</code></pre>
   </div>`);
   scheduleMeasure();
   throw new Error('Origin not permitted.');
