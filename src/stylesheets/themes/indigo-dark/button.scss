@@ -1,0 +1,22 @@
+.btn-primary {
+  background: $button-normal;
+  border: 0;
+  color: $text-gray;
+}
+
+.btn-primary:hover {
+  background: $button-hover;
+}
+
+.btn-primary:active {
+  background: $button-pressed;
+}
+
+.btn-primary:focus {
+  box-shadow: 0 0 0 1px #4f46e5 inset, 0 0 0 1px #4f46e5, 0 0 0 4px #818cf8;
+}
+
+.btn-primary:disabled {
+  background: $button-normal;
+  opacity: 0.4;
+}

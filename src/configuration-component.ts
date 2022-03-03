@@ -138,6 +138,7 @@ export class ConfigurationComponent {
         <option value="photon-dark">Photon Dark</option>
         <option value="boxy-light">Boxy Light</option>
         <option value="gruvbox-dark">Gruvbox Dark</option>
+        <option value="indigo-dark">Indigo Dark</option>
       </select>
 
       <h3 id="heading-enable">Enable Utterances</h3>
