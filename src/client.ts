@@ -29,9 +29,9 @@ if (attrs.theme === preferredThemeId) {
 
 // gather page attributes
 const canonicalLink = document.querySelector(`link[rel='canonical']`) as HTMLLinkElement;
-attrs.url = canonicalLink ? canonicalLink.href : url.origin + url.pathname + url.search;
-attrs.origin = url.origin;
-attrs.pathname = url.pathname.length < 2 ? 'index' : url.pathname.substr(1).replace(/\.\w+$/, '');
+attrs.url = decodeURI(canonicalLink ? canonicalLink.href : url.origin + url.pathname + url.search);
+attrs.origin = decodeURI(url.origin);
+attrs.pathname = decodeURI(url.pathname.length < 2 ? 'index' : url.pathname.substr(1).replace(/\.\w+$/, ''));
 attrs.title = document.title;
 const descriptionMeta = document.querySelector(`meta[name='description']`) as HTMLMetaElement;
 attrs.description = descriptionMeta ? descriptionMeta.content : '';
