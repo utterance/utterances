@@ -1,0 +1,12 @@
+@import "./variables";
+
+.btn-primary:disabled {
+  background: $gray;
+}
+
+button[role=tab] {
+  color: $light4;
+  .selected {
+    color: $light0;
+  }
+}

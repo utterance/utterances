@@ -1,0 +1,62 @@
+/* Minimal-Mistakes Color Variables; intended to be plugged into Dark Orange below */
+
+$dark0-hard: #1c2226;
+$dark0: #283036;
+$dark0-soft: #384148;
+$dark1: #434c5e;
+$dark2: #4d5360;
+$dark3: #505560;
+$dark4: #494b51;
+
+$gray: #5f6164;
+
+$light0-hard: #e5e9f0;
+$light0: #d0d6df;
+$light0-soft: #a9b7d0;
+$light1: #91a4c4;
+$light2: #7889a7;
+$light3: #5d6e8c;
+$light4: #505e78;
+
+$bright-red: #ffa6a6;
+$bright-green: #a6ffa6;
+$bright-yellow: #ffffa6;
+$bright-blue: #a6fffc;
+$bright-purple: #c5a6ff;
+$bright-aqua: #ffa6fc;
+$bright-orange: #ffc9a6;
+
+$neutral-red: #ff5959;
+$neutral-green: #59ff59;
+$neutral-yellow: #ffff59;
+$neutral-blue: #59fff9;
+$neutral-purple: #9059ff;
+$neutral-aqua: #ff59f9;
+$neutral-orange: #ff9c59;
+
+$faded-red: #800505;
+$faded-green: #038303;
+$faded-yellow: #7f7f07;
+$faded-blue: #057a76;
+$faded-purple: #34088e;
+$faded-aqua: #7e057a;
+$faded-orange: #833703;
+
+/* Dark Orange Vars */
+
+$gray-400: $light1;
+$bg-white: $dark0;
+$bg-gray: $dark1;
+$bg-gray-light: $dark1;
+$bg-blue-light: $dark0;
+$border-gray: $gray;
+$border-gray-dark: $border-gray;
+$black-fade-15: rgba(#fff, 0.15);
+$black-fade-30: rgba(#fff, 0.3);
+$text-gray: $light1;
+$text-gray-dark: $light0;
+$text-blue: $bright-orange;
+$bg-page: $dark0-hard;
+
+$highlight: rgba(168, 153, 132, 0.5);
+$line: #6f6e6e;

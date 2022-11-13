@@ -1,0 +1,46 @@
+@import "./variables";
+
+.pl-c /* comment, punctuation.definition.comment, string.comment */ {
+  color: $gray;
+}
+
+.pl-c1 /* constant, entity.name.constant, variable.other.constant, variable.language, support, meta.property-name, support.constant, support.variable, meta.module-reference, markup.quote, markup.raw, meta.diff.header */,
+.pl-s .pl-v /* string variable */ {
+  color: $light0;
+}
+
+.pl-e /* entity */,
+.pl-en /* entity.name */ {
+  color: $light0;
+}
+
+.pl-smi /* variable.parameter.function, storage.modifier.package, storage.modifier.import, storage.type.java, variable.other */{
+  color: $bright-blue;
+}
+.pl-s .pl-s1 /* string source */ {
+  color: $bright-orange;
+}
+
+.pl-ent /* entity.name.tag */ {
+  color: $bright-red;
+}
+
+.pl-k /* keyword, storage, storage.type */ {
+  color: $bright-red;
+}
+
+.pl-s /* string */,
+.pl-pds /* punctuation.definition.string, source.regexp, string.regexp.character-class */,
+.pl-s .pl-pse .pl-s1 /* string punctuation.section.embedded source */,
+.pl-sr /* string.regexp */,
+.pl-sr .pl-cce /* string.regexp constant.character.escape */,
+.pl-sr .pl-sre /* string.regexp source.ruby.embedded */,
+.pl-sr .pl-sra /* string.regexp string.regexp.arbitrary-repitition */ {
+  color: $bright-green;
+}
+
+.pl-v /* variable */,
+.pl-ml /* markup.list, sublimelinter.mark.warning */ {
+  color: $bright-orange;
+}
+
