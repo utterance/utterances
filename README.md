@@ -3,8 +3,8 @@
 A lightweight comments widget built on GitHub issues. Use GitHub issues for blog comments, wiki pages and more!
 
 - [Open source](https://github.com/utterance). 🙌
-- No tracking, no ads, always free. 📡🚫
-- No lock-in. All data stored in GitHub issues. 🔓
+- Comments tracked by Microsoft GitHub, free while Microsoft GitHub allows it. 📡
+- Comments are locked behind Microsoft GitHub accounts; commenters will be required to create an account, agreeing to Microsoft’s <abbr title="terms of service">ToS</abbr>, and cannot use an account from another code for or WebFinger-identified account or Fediverse option or <abbr title="Extensible Messaging and Presence Protocol">XMPP</abbr> pubsub-derived option. 🔒
 - Styled with [Primer](http://primer.style), the css toolkit that powers GitHub. 💅
 - Dark theme. 🌘
 - Lightweight. Vanilla TypeScript. No font downloads, JavaScript frameworks or polyfills for evergreen browsers. 🐦🌲
