@@ -1,0 +1,19 @@
+@import "./variables";
+@import "../../index";
+@import "./syntax";
+@import "./button.scss";
+
+a {
+	text-decoration: none;
+	color: $color-blossom;
+
+	&:visited {
+		color: darken($color-blossom, 10%);
+	}
+
+	&:hover {
+		text-decoration: none;
+		color: $color-fade;
+		border-bottom: 2px solid $color-text;
+	}
+}

@@ -1,0 +1,21 @@
+@import "./variables";
+@import "../../utterances";
+@import "./syntax";
+@import "./button.scss";
+
+.timeline-comment {
+	a {
+			text-decoration: none;
+			color: $color-blossom;
+	
+			&:visited {
+				color: darken($color-blossom, 10%);
+			}
+	
+			&:hover {
+				text-decoration: none;
+				color: $color-fade;
+				border-bottom: 2px solid $color-text;
+			}	
+		}
+}

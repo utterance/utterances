@@ -138,6 +138,8 @@ export class ConfigurationComponent {
         <option value="photon-dark">Photon Dark</option>
         <option value="boxy-light">Boxy Light</option>
         <option value="gruvbox-dark">Gruvbox Dark</option>
+        <option value="sakura">Sakura</option>
+        <option value="sakura-vader">Sakura Vader</option>
       </select>
 
       <h3 id="heading-enable">Enable Utterances</h3>

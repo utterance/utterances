@@ -1,0 +1,21 @@
+@import "./variables";
+
+.btn-primary {
+	background-color: $color-blossom;
+	border: 1px solid $color-blossom;
+  color: $color-bg;
+
+	.octicon{
+		color: $color-bg;
+	}
+}
+
+.btn-primary:hover {
+	background-color: $color-fade;
+	color: $color-bg;
+	outline: 0;
+}
+
+.btn-primary:disabled {
+	opacity: .5;
+}

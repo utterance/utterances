@@ -1,0 +1,22 @@
+@import "./sakura.scss";
+
+/* Icy-Dark overwrites */
+
+$gray-000: $color-blossom;
+$gray-100: $color-blossom;
+$gray-200: $color-blossom;
+$gray-300: $color-blossom;
+$gray-400: $color-text;
+$gray-600: $color-text;
+$gray-700: $color-text;
+$bg-white: $color-bg;
+$bg-gray: $color-bg-alt;
+$bg-gray-light: darken($bg-gray, 5%);
+$border-gray: $color-bg-alt;
+$border-gray-dark: $border-gray;
+$text-gray: $color-text;
+$text-gray-dark: $color-text;
+$text-blue: $color-blossom;
+$bg-blue-light: $color-blossom;
+$black-fade-15: rgba(#fff, 0.15);
+$black-fade-30: rgba(#fff, 0.3);
