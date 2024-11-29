@@ -29,17 +29,25 @@ function loadIssue(): Promise<Issue | null> {
 }
 
 async function bootstrap() {
+	/* Enable the loading spinner */
+	await loadTheme(page.theme, page.origin);
+	document.getElementById('loadingSpinner')!.style.display = 'block';
+	scheduleMeasure();
+
   await loadToken();
   // tslint:disable-next-line:prefer-const
   let [issue, user] = await Promise.all([
     loadIssue(),
-    loadUser(),
-    loadTheme(page.theme, page.origin)
+    loadUser()
   ]);
 
   startMeasuring(page.origin);
 
   const timeline = new TimelineComponent(user, issue);
+
+	/* Disable the loading spinner */
+	document.getElementById('loadingSpinner')!.style.display = 'none';
+
   document.body.appendChild(timeline.element);
 
   if (issue && issue.comments > 0) {
