@@ -20,7 +20,6 @@ To comment, users must authorize the utterances app to post on their behalf usin
 ## sites using utterances
 
 - Haxe [documentation](https://haxe.org/manual) and [cookbook](https://code.haxe.org/)
-- [sadsloth.net](https://sadsloth.net/)
 - [danyow.net](https://danyow.net)
 - **[and many more...](https://github.com/topics/utterances)**
 
