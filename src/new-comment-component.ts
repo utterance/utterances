@@ -30,7 +30,8 @@ export class NewCommentComponent {
     private user: User | null,
     private readonly submit: (markdown: string) => Promise<void>
   ) {
-    this.element = document.createElement('article');
+    this.element = document.createElement('section');
+    this.element.setAttribute('aria-label', 'Write a comment');
     this.element.classList.add('timeline-comment');
 
     this.element.innerHTML = `

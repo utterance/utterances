@@ -76,10 +76,10 @@ const utterancesOrigin = script.src.match(/^https:\/\/utteranc\.es|http:\/\/loca
 const frameUrl = `${utterancesOrigin}/utterances.html`;
 script.insertAdjacentHTML(
   'afterend',
-  `<div class="utterances">
+  `<aside class="utterances" aria-label="Comments">
     <iframe class="utterances-frame" title="Comments" scrolling="no" src="${frameUrl}?${new URLSearchParams(attrs)}" loading="lazy"></iframe>
-  </div>`);
-const container = script.nextElementSibling as HTMLDivElement;
+  </aside>`);
+const container = script.nextElementSibling as HTMLElement;
 script.parentElement!.removeChild(script);
 
 // adjust the iframe's height when the height of it's content changes
