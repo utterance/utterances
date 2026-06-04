@@ -138,7 +138,7 @@ async function renderComments(issue: Issue, timeline: TimelineComponent) {
 
 export async function assertOrigin() {
   const { origins } = await getRepoConfig();
-  const { origin, owner, repo } = page;
+  const { origin, owner, repo, branch } = page;
   if (origins.indexOf(origin) !== -1) {
     return;
   }
@@ -147,7 +147,7 @@ export async function assertOrigin() {
   <div class="flash flash-error flash-not-installed">
     Error: <code>${origin}</code> is not permitted to post to <code>${owner}/${repo}</code>.
     Confirm this is the correct repo for this site's comments. If you own this repo,
-    <a href="https://github.com/${owner}/${repo}/edit/master/utterances.json" target="_top">
+    <a href="https://github.com/${owner}/${repo}/edit/${branch}/utterances.json" target="_top">
       <strong>update the utterances.json</strong>
     </a>
     to include <code>${origin}</code> in the list of origins.<br/><br/>

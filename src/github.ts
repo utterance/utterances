@@ -15,11 +15,14 @@ export const reactionTypes: ReactionID[] = ['+1', '-1', 'laugh', 'hooray', 'conf
 
 let owner: string;
 let repo: string;
-const branch = 'master';
+let branch = 'master';
 
-export function setRepoContext(context: { owner: string; repo: string; }) {
+export function setRepoContext(context: { owner: string; repo: string; branch?: string; }) {
   owner = context.owner;
   repo = context.repo;
+  if (context.branch) {
+    branch = context.branch;
+  }
 }
 
 function githubRequest(relativeUrl: string, init?: RequestInit) {

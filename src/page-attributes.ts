@@ -51,7 +51,8 @@ function readPageAttributes() {
     description: params.description,
     label: params.label,
     theme: params.theme || 'github-light',
-    session: params.session
+    session: params.session,
+    branch: params.branch || 'master'
   };
 }
 
